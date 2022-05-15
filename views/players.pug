@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .text-center
+        img.img-fluid(src='/logo.png' width='30%')
+        p: h1 National Science Bowl Association
+    p Below is a list of all users.
+    table#table.table.table-striped
+        thead
+            tr
+                th(onclick='sortTable(0)' scope='col') Username
+                th(onclick='sortTable(1)' scope='col') Discord
+                th(onclick='sortTable(2)' scope='col') Name
+                th(onclick='sortTable(3)' scope='col') Grade
+                th(onclick='sortTable(4)' scope='col') Team
+        tbody
+        if users
+            each user in users
+                tr
+                    td= user.username
+                    td= user.discord
+                    td= user.firstName + ' ' + user.lastName
+                    td= user.grade
+                    if user.team
+                        td= user.team.name
+                    else
+                        td= '-'
+
+block scripts
+    script(src='/players.js')

@@ -1,4 +1,4 @@
-if (localStorage.getItem('loggedIn') === 'true') {
+if (sessionStorage.getItem('loggedIn') === 'true') {
     window.location.href = '/';
 }
 // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -19,8 +19,8 @@ if (localStorage.getItem('loggedIn') === 'true') {
                     event.stopPropagation();
                 } else {
                     document.getElementById('submission').innerHTML = "Submitting...";
-                    localStorage.setItem('loggedIn', 'true');
-                    localStorage.setItem('username', document.getElementById('username').value);
+                    sessionStorage.setItem('loggedIn', 'true');
+                    sessionStorage.setItem('username', document.getElementById('username').value);
                     fetch('/api/signup', {
                         method: 'POST',
                         headers: {
@@ -31,6 +31,7 @@ if (localStorage.getItem('loggedIn') === 'true') {
                             lastName: document.getElementById('last-name').value,
                             email: document.getElementById('email').value,
                             discord: document.getElementById('discord').value,
+                            grade: document.getElementById('grade').value,
                             username: document.getElementById('username').value,
                             password: document.getElementById('password').value
                         })
@@ -39,8 +40,8 @@ if (localStorage.getItem('loggedIn') === 'true') {
                             window.location.href = '/';
                         } else {
                             document.getElementById('submission').innerHTML = "Submit";
-                            localStorage.setItem('loggedIn', 'false');
-                            localStorage.removeItem('username');
+                            sessionStorage.setItem('loggedIn', 'false');
+                            sessionStorage.removeItem('username');
                             alert("Username already exists.");
                         }
                     });

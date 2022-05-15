@@ -1,4 +1,4 @@
-if (localStorage.getItem('loggedIn') === 'true') {
+if (sessionStorage.getItem('loggedIn') === 'true') {
     window.location.href = '/';
 }
 // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -23,8 +23,8 @@ if (localStorage.getItem('loggedIn') === 'true') {
 
                 document.getElementById('submission').innerHTML = "Logging in...";
 
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('username', document.getElementById('username').value);
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('username', document.getElementById('username').value);
 
                 fetch('/api/login', {
                     method: 'POST',
@@ -40,8 +40,8 @@ if (localStorage.getItem('loggedIn') === 'true') {
                         window.location.href = '/';
                     } else {
                         document.getElementById('submission').innerHTML = "Login";
-                        localStorage.setItem('loggedIn', 'false');
-                        localStorage.removeItem('username');
+                        sessionStorage.setItem('loggedIn', 'false');
+                        sessionStorage.removeItem('username');
                         alert("Invalid username or password.");
                     }
                 });
