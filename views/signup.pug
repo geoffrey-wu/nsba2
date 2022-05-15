@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    .text-center
+        img.img-fluid(src='/logo.png' width='30%')
+        p: h1 National Science Bowl Association
+    form#signup-form.needs-validation(novalidate='')
+        .row
+            .col-12.col-md-5.mb-3
+                label.form-label(for='first-name') First Name
+                input#first-name.form-control(type='text' name='first-name' required='')
+                .invalid-feedback
+                        | Enter your first name.
+            .col-12.col-md-7.mb-3
+                label.form-label(for='last-name') Last Name
+                input#last-name.form-control(type='text' name='last-name' required='')
+                .invalid-feedback
+                        | Enter your last name.
+        .row
+            .col-12.col-md-7.mb-3
+                label.form-label(for='email') Email
+                input#email.form-control(type='email' name='email' placeholder='user@example.com' required='')
+                .invalid-feedback
+                    | Enter a proper email.
+            .col-12.col-md-5.mb-3
+                label.form-label(for='discord') Discord
+                input#discord.form-control(type='text' name='discord' placeholder='user#1234' required='')
+                .invalid-feedback
+                    | Enter your discord tag.
+        .col-12.mb-3
+            label.form-label(for='username') Username
+            input#username.form-control(type='text' name='username' required='')
+            .invalid-feedback
+                | Enter your username.
+        .col-12.mb-3
+            label.form-label(for='password') Password
+            input#password.form-control(type='password' name='password' required='')
+            .invalid-feedback
+                | Enter your password.
+        button#submission.btn.btn-primary(type='submit') Sign Up
+
+block scripts
+    script(src='/signup.js')

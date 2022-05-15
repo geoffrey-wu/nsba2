@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .row.mb-3
+        .col-12.col-md-4
+            img.img-fluid(src='/logo.png')
+            .text-center
+                button.btn.btn-secondary.disabled Upload profile picture
+        .col-12.col-md-8
+            h1
+                | Welcome,
+                span= username
+            p
+                strong Name:
+                span#first-name=firstName
+                span#last-name=lastName
+            p
+                strong Role:
+                span#role=role
+            p
+                strong Team:
+                span#team=team
+    h2
+        | My 
+        span#role-2
+    p
+        | The 
+        strong National Science Bowl Association
+        |  (NSBA) is a league-style tournament inspired by the NBA starting 
+        strong June 11th
+        | . 60 players will register and 12 general managers will draft their team of 5 and compete in the regular season and the playoffs for cash prizes. There will be an all-star game, trades, home court advantage, awards and much more. This will truly be a competition 
+        em like no other
+        | . (Except for SBL and the NBA.)
