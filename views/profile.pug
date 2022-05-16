@@ -9,25 +9,25 @@ block content
         .col-12.col-md-8
             h1
                 | Welcome,
-                span= username
+                span= ' ' + user.username
             p
                 strong Name:
-                span#first-name=firstName
-                span#last-name=lastName
+                = ' ' + user.firstName + ' ' + user.lastName
             p
                 strong Role:
-                span#role=role
+                if role in user
+                    = ' ' + user.role
+                else
+                    = ' N/A'
             p
                 strong Team:
-                span#team=team
-    h2
-        | My 
-        span#role-2
-    p
-        | The 
-        strong National Science Bowl Association
-        |  (NSBA) is a league-style tournament inspired by the NBA starting 
-        strong June 11th
-        | . 60 players will register and 12 general managers will draft their team of 5 and compete in the regular season and the playoffs for cash prizes. There will be an all-star game, trades, home court advantage, awards and much more. This will truly be a competition 
-        em like no other
-        | . (Except for SBL and the NBA.)
+                if team in user
+                    = ' ' + user.team
+                else
+                    = ' N/A'
+
+    h2 My Team
+    if team in user
+        p Hey!
+    else
+        p Looks like you're not part of a team yet.

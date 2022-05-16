@@ -40,8 +40,24 @@ var users = {
     kahtrashcan: { firstName: 'Sarthak', lastName: '', email: 'sarthaka1878@gmail.com', discord: 'kahtrashcan#1966', grade: 'Senior', username: 'kahtrashcan', password: 'password' },
 };
 
+function getUser(username) {
+    if (username in users) {
+        return users[username];
+    } else {
+        return null;
+    }
+}
+
 function getUsers() {
     return users;
+}
+
+function getTeam(teamname) {
+    if (teamname in teams) {
+        return teams[teamname];
+    } else {
+        return null;
+    }
 }
 
 function getTeams() {

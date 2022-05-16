@@ -21,13 +21,13 @@ if (loggedIn === 'true') {
     // li.appendChild(a);
     // navMainContent.appendChild(li);
 
-    navMainContent = document.getElementById('nav-main-content');
-    a = document.createElement('a');
-    a.className = 'nav-link';
-    a.innerText = 'Players';
-    a.href = `/players/`;
-    li = document.createElement('li');
-    li.className = 'nav-item';
-    li.appendChild(a);
-    navMainContent.appendChild(li); 
+    // navMainContent = document.getElementById('nav-main-content');
+    // a = document.createElement('a');
+    // a.className = 'nav-link';
+    // a.innerText = 'Players';
+    // a.href = `/players/`;
+    // li = document.createElement('li');
+    // li.className = 'nav-item';
+    // li.appendChild(a);
+    // navMainContent.appendChild(li); 
 }

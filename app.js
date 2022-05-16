@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var playersRouter = require('./routes/players');
 var profileRouter = require('./routes/profile');
+var resultsRouter = require('./routes/results');
 var signupRouter = require('./routes/signup');
 var staffRouter = require('./routes/staff');
 
@@ -38,6 +39,7 @@ app.use('/', indexRouter);
 app.use('/players', playersRouter);
 app.use('/profile', profileRouter);
 app.use('/login', loginRouter);
+app.use('/results', resultsRouter);
 app.use('/signup', signupRouter);
 app.use('/staff', staffRouter);
 
@@ -47,12 +49,12 @@ app.use('/*.png', imageRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
