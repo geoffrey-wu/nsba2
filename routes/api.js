@@ -9,7 +9,7 @@ router.post('/', function (req, res, next) {
 
 router.post('/login', function (req, res, next) {
     console.log(req.body);
-    let users = database.getUsers();
+    let users = database.getPlayers();
     if (req.body.username in users && users[req.body.username]['password'] === req.body.password) {
         res.sendStatus(200);
     } else {
@@ -18,7 +18,7 @@ router.post('/login', function (req, res, next) {
 });
 
 router.post('/signup', (req, res, next) => {
-    if (database.addUser(req.body.username, req.body) === 0) {
+    if (database.addPlayer(req.body.username, req.body) === 0) {
         res.sendStatus(200);
     } else { // username already exists
         res.sendStatus(409);

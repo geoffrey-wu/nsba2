@@ -6,11 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var draftRouter = require('./routes/draft');
+var gmRouter = require('./routes/gms');
 var playersRouter = require('./routes/players');
 var profileRouter = require('./routes/profile');
 var resultsRouter = require('./routes/results');
 var signupRouter = require('./routes/signup');
 var staffRouter = require('./routes/staff');
+var teamsRouter = require('./routes/teams');
 
 var apiRouter = require('./routes/api');
 
@@ -36,12 +39,16 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
+app.use('/draft', draftRouter);
+app.use('/gm', gmRouter);
 app.use('/players', playersRouter);
+app.use('/players/*', playersRouter);
 app.use('/profile', profileRouter);
 app.use('/login', loginRouter);
 app.use('/results', resultsRouter);
 app.use('/signup', signupRouter);
 app.use('/staff', staffRouter);
+app.use('/teams', teamsRouter);
 
 app.use('/*.js', jsRouter);
 app.use('/*.png', imageRouter);

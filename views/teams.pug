@@ -1,0 +1,33 @@
+extends _layout
+
+block content
+    //- .text-center
+    //-     img.img-fluid(src='/logo.png' width='30%')
+    //-     p: h1 National Science Bowl Association
+    p.lead Teams consist of a GM and between 4-6 players.
+    p There are currently #{Object.keys(teams).length} teams registered. Below is a list of all teams:
+    table#table.table.table-striped
+        thead
+            tr
+                th(onclick='sortTable(0)' scope='col') Team Name
+                th(onclick='sortTable(1)' scope='col') GM
+                th(onclick='sortTable(2)' scope='col') Player 1
+                th(onclick='sortTable(3)' scope='col') Player 2
+                th(onclick='sortTable(4)' scope='col') Player 3
+                th(onclick='sortTable(5)' scope='col') Player 4
+        tbody
+        if teams
+            each team in teams
+                tr
+                    - for (let i = 0; i < team.length; i++)
+                        td= team[i]
+                    
+                    //- td= user.firstName + ' ' + user.lastName
+                    //- td= user.grade
+                    //- if user.team
+                    //-     td= user.team.name
+                    //- else
+                    //-     td= '-'
+
+block scripts
+    script(src='/users.js')

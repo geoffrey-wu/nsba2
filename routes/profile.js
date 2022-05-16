@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     res.render('profile',
         {
-            user: database.getUsers()[req.query.username],
+            user: database.getPlayer(req.query.username),
             // firstName: 'Geoffrey',
             title: 'profile',
             // username: req.query.username

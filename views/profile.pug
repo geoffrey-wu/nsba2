@@ -1,4 +1,4 @@
-extends layout
+extends _layout
 
 block content
     .row.mb-3
@@ -7,7 +7,7 @@ block content
             .text-center
                 button.btn.btn-secondary.disabled Upload profile picture
         .col-12.col-md-8
-            h1
+            p: h1
                 | Welcome,
                 span= ' ' + user.username
             p

@@ -1,0 +1,33 @@
+extends _layout
+
+block content
+    p: h3 #{role} Info - #{user.username}
+    p
+        strong Name:
+        = ' ' + user.firstName + ' ' + user.lastName
+    p
+        strong Grade:
+        = ' ' + user.grade
+    p
+        strong Discord:
+        = ' ' + user.discord
+    p
+        strong Team:
+        if team in user
+            = ' ' + user.team
+        else
+            = ' N/A'
+    p
+        if role === 'Player'
+            strong Draft Pick:
+            = ' #' + (user.draftPick ? user.draftPick : 'N/A')
+        else if role === 'GM'
+            strong Draft Picks:
+            = ' ' + (user.draftPicks ? user.draftPicks : 'N/A')
+
+    h4 Bio:
+    p= user.bio ? user.bio : ' N/A'
+    h4 Stats:
+    p There are no stats to display.
+    h4 Transaction History:
+    p There is no transaction history to display.
