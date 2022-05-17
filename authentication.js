@@ -1,7 +1,7 @@
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-const secret = 'ChBvkoAPoyZ7gdaxIRwjcA5P6G8IuFbANrmcW+KJ';
-const salt = 'ncrjxNrTdw+CSFG/5VAX1zArYYaAZ4s3Vd6Jse+Q';
+const secret = process.env.SECRET ? process.env.SECRET : 'ChBvkoAPoyZ7gdaxIRwjcA5P6G8IuFbANrmcW+KJ';
+const salt = process.env.SALT ? process.env.SALT : 'ncrjxNrTdw+CSFG/5VAX1zArYYaAZ4s3Vd6Jse+Q';
 
 /**
  * NEVER store plaintext passwords. These passwords should be salted and hashed.

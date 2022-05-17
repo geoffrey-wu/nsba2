@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cookieSession({
     name: 'session',
-    keys: ['secretKey1', 'secretKey2']
+    keys: [process.env.secretKey1 ? process.env.secretKey1 : 'secretKey1', process.env.secretKey2 ? process.env.secretKey2 : 'secretKey2']
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
