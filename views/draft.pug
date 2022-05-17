@@ -37,13 +37,15 @@ block content
     table#table.table.table-striped
         thead
             th(onclick='sortTable(0)' scope='col') Player
-            th(onclick='sortTable(1)' scope='col') Profile
-            th(onclick='sortTable(2)' scope='col') Grade
-            th(onclick='sortTable(3)' scope='col') Projected
+            th(                       scope='col') 
+            th(onclick='sortTable(2)' scope='col') Profile
+            th(onclick='sortTable(3)' scope='col') Grade
+            th(onclick='sortTable(4)' scope='col') Projected
         tbody 
             each player in players
                 tr 
                     td= player.firstName + ' ' + player.lastName
+                    td: button.btn.btn-primary Draft
                     td
                         a(href='/players/' + player.username + '/')
                             = player.username

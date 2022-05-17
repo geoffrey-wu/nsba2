@@ -8,42 +8,42 @@ block content
         .row
             .col-12.col-md-5.mb-3
                 label.form-label(for='first-name') First Name
-                input#first-name.form-control(type='text' name='first-name' required='')
+                input#first-name.form-control(type='text' name='first-name' required='' value=user.firstName)
                 .invalid-feedback
                         | Enter your first name.
             .col-12.col-md-7.mb-3
                 label.form-label(for='last-name') Last Name
-                input#last-name.form-control(type='text' name='last-name' required='')
+                input#last-name.form-control(type='text' name='last-name' required='' value=user.lastName)
                 .invalid-feedback
                         | Enter your last name.
         .row
             .col-12.col-md-5.mb-3
                 label.form-label(for='email') Email
-                input#email.form-control(type='email' name='email' placeholder='user@example.com' required='')
+                input#email.form-control(type='email' name='email' placeholder='user@example.com' required='' value=user.email)
                 .invalid-feedback
                     | Enter a proper email.
             .col-12.col-md-4.mb-3
                 label.form-label(for='discord') Discord
-                input#discord.form-control(type='text' name='discord' placeholder='user#1234' required='')
+                input#discord.form-control(type='text' name='discord' placeholder='user#1234' required='' value=value=user.discord)
                 .invalid-feedback
                     | Enter your discord tag.
             .col-12.col-md-3.mb-3
                 label.form-label(for='grade') Grade
-                input#grade.form-control(type='text' name='grade' placeholder='Freshman' required='')
+                input#grade.form-control(type='text' name='grade' placeholder='Freshman' required='' value=user.grade)
                 .invalid-feedback
                     | Enter your grade.
 
         .col-12.mb-3
             label.form-label(for='username') Username
-            input#username.form-control(type='text' name='username' required='')
+            input#username.form-control.disabled(type='text' name='username' required='' value=user.username disabled)
             .invalid-feedback
                 | Enter your username.
         .col-12.mb-3
             label.form-label(for='password') Password
-            input#password.form-control(type='password' name='password' required='')
+            input#password.form-control(type='password' name='password' required='' value='password' disabled)
             .invalid-feedback
                 | Enter your password.
-        button#submission.btn.btn-primary(type='submit') Sign Up
+        button#submission.btn.btn-primary(type='submit') Edit Profile
 
 block scripts
-    script(src='/signup.js')
+    script(src='/edit-profile.js')

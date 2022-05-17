@@ -27,6 +27,19 @@ router.post('/signup', (req, res, next) => {
     }
 });
 
+router.post('/edit-profile', (req, res, next) => {
+    // username already exists
+    if (!(req.body.username in database.getPlayers())) {
+        res.sendStatus(401);
+    } else {
+        let password = database.getPlayer(req.body.username)['password'];
+        req.body.password = password;
+        console.log(req.body);
+        database.addPlayer(req.body.username, req.body);
+        res.sendStatus(200);
+    }
+});
+
 
 
 module.exports = router;

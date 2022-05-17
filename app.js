@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var editProfileRouter = require('./routes/edit-profile');
 var loginRouter = require('./routes/login');
 var draftRouter = require('./routes/draft');
 var gmRouter = require('./routes/gms');
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
+app.use('/edit-profile', editProfileRouter);
 app.use('/draft', draftRouter);
 app.use('/gm', gmRouter);
 app.use('/players', playersRouter);

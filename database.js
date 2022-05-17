@@ -70,6 +70,18 @@ var players = {
     ClownFrogg: { firstName: 'Harry', lastName: 'Jin', email: 'redbirdy319@gmail.com', discord: 'ClownFrogg 𓆏#3571', grade: 'Sophomore', username: 'ClownFrogg 𓆏', password: 'password' },
     jucijuce: { firstName: 'Justin', lastName: 'Chen', email: 'jschen6178@gmail.com', discord: 'jucijuce#1534', grade: 'Senior', username: 'jucijuce', password: 'password' },
     reverse: { firstName: 'Yuchen', lastName: 'Li', email: 'yuchenli713@gmail.com', discord: 'reverse#7326', grade: 'College', username: 'reverse', password: 'password' },
+    dannyridel: { firstName: 'Daniel', lastName: 'Lu', email: 'dannyridel@protonmail.com', discord: 'dannyridel#2256', grade: 'Sophomore', username: 'dannyridel', password: 'password' },
+    DanDan0101: { firstName: 'Daniel', lastName: 'Sun', email: 'danielcsun@hotmail.com', discord: 'DanDan0101#5928', grade: 'College', username: 'DanDan0101', password: 'password' },
+    abcisosm5: { firstName: 'William', lastName: 'Huang', email: 'williamhuang678@gmail.com', discord: 'abcisosm5#8971', grade: 'College', username: 'abcisosm5', password: 'password' },
+    rbald02: { firstName: 'Ridings', lastName: '', email: 'ridingsbald@gmail.com', discord: 'rbald02#6476', grade: 'College', username: 'rbald02', password: 'password' },
+    somath: { firstName: 'Srijan', lastName: 'Oduru', email: 'srijanoduru9@gmail.com', discord: 'somath#6820', grade: 'College', username: 'somath', password: 'password' },
+    APandasBamboo: { firstName: 'Sashank', lastName: 'Ganapathiraju', email: 'sashank9912@gmail.com', discord: 'APandasBamboo#3338', grade: 'College', username: 'APandasBamboo', password: 'password' },
+    gorilla97: { firstName: 'Pranav', lastName: 'Kosuri', email: 'pranav.kosuri1@gmail.com', discord: 'gorilla97#4016', grade: 'College', username: 'gorilla97', password: 'password' },
+    HA: { firstName: 'Harsh', lastName: 'Ambardekar', email: 'ambardekarharsh@gmail.com', discord: 'HA#7810', grade: 'Junior', username: 'HA', password: 'password' },
+    DanZ137: { firstName: 'Daniel', lastName: '', email: 'dczhang11@gmail.com', discord: 'DanZ137#6479', grade: 'College', username: 'DanZ137', password: 'password' },
+    mmoz999: { firstName: 'Leon', lastName: '', email: 'liang000liang@gmail.com', discord: 'mmoz999#1975', grade: 'College', username: 'mmoz999', password: 'password' },
+    MangoPotato: { firstName: 'Rushil', lastName: 'Shah', email: 'rushilshah2@yahoo.com', discord: 'MangoPotato#5460', grade: 'Junior', username: 'MangoPotato', password: 'password' },
+    steviewonder24 : { firstName: 'Jacob', lastName: 'Stevens', email: 'jqsefc03@gmail.com', discord: 'steviewonder24 #7171', grade: 'College', username: 'steviewonder24 ', password: 'password' },
 };
 
 function getGMs() {
