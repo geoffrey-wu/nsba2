@@ -1,15 +1,13 @@
-var username = sessionStorage.getItem('username');
-var loggedIn = sessionStorage.getItem('loggedIn');
-
+/*
 if (loggedIn === 'true') {
-    let a = document.createElement('a');
-    a.className = 'nav-link active';
-    a.innerText = username;
-    a.href = `/profile/${username}/`;
+    // let a = document.createElement('a');
+    // a.className = 'nav-link active';
+    // a.innerText = username;
+    // a.href = `/profile/`;
     
-    let navLogin = document.getElementById('nav-login');
-    navLogin.innerHTML = "";
-    navLogin.appendChild(a);
+    // let navLogin = document.getElementById('nav-login');
+    // navLogin.innerHTML = "";
+    // navLogin.appendChild(a);
 
     // let navMainContent = document.getElementById('nav-main-content');
     // a = document.createElement('a');
@@ -31,3 +29,4 @@ if (loggedIn === 'true') {
     // li.appendChild(a);
     // navMainContent.appendChild(li); 
 }
+*/

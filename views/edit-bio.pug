@@ -1,13 +1,13 @@
 extends _layout
 
 block content
-    h4 Editing #{user.username}'s bio:
-    if bio in user
-        h6 Current bio:
+    p: h2 Editing #{user.username}'s bio:
+    if user.bio
+        h4 Current bio:
         p= user.bio
     
     form#form
-        label.form-label(for='bio') Enter your new bio here:
+        label.form-label(for='bio'): h4 Enter your new bio here:
         textarea#bio.form-control(rows='5')
         button#submission.btn.btn-primary(type='submit') Submit
 

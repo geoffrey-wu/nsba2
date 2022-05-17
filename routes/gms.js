@@ -12,7 +12,8 @@ router.get(/\/.+/, function (req, res, next) {
         res.render('user', {
             title: gmName,
             role: 'GM',
-            user: gm
+            user: gm,
+            username: req.session.username
         });
     } else {
         res.status(404).render('error', {
@@ -31,7 +32,8 @@ router.get('/', function (req, res, next) {
             description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
             title: 'GMs',
             role: 'GM',
-            users: database.getGMs()
+            users: database.getGMs(),
+            username: req.session.username
         }
     );
 });

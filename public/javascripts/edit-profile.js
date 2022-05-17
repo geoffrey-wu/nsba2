@@ -1,6 +1,3 @@
-if (sessionStorage.getItem('loggedIn') === 'false') {
-    window.location.href = '/';
-}
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
     'use strict'
@@ -19,8 +16,6 @@ if (sessionStorage.getItem('loggedIn') === 'false') {
                     event.stopPropagation();
                 } else {
                     document.getElementById('submission').innerHTML = "Submitting...";
-                    sessionStorage.setItem('loggedIn', 'true');
-                    sessionStorage.setItem('username', document.getElementById('username').value);
                     fetch('/api/edit-profile', {
                         method: 'POST',
                         headers: {
@@ -32,11 +27,10 @@ if (sessionStorage.getItem('loggedIn') === 'false') {
                             email: document.getElementById('email').value,
                             discord: document.getElementById('discord').value,
                             grade: document.getElementById('grade').value,
-                            username: document.getElementById('username').value,
                         })
                     }).then(function (response) {
                         if (response.status === 200) {
-                            window.location.href = '/profile/' + document.getElementById('username').value;
+                            window.location.href = '/profile/';
                         } else {
                             alert("Error updating profile.");
                         }

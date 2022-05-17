@@ -1,6 +1,3 @@
-if (sessionStorage.getItem('loggedIn') === 'true') {
-    window.location.href = '/';
-}
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
     'use strict'
@@ -19,8 +16,6 @@ if (sessionStorage.getItem('loggedIn') === 'true') {
                     event.stopPropagation();
                 } else {
                     document.getElementById('submission').innerHTML = "Submitting...";
-                    sessionStorage.setItem('loggedIn', 'true');
-                    sessionStorage.setItem('username', document.getElementById('username').value);
                     fetch('/api/signup', {
                         method: 'POST',
                         headers: {
@@ -40,8 +35,6 @@ if (sessionStorage.getItem('loggedIn') === 'true') {
                             window.location.href = '/';
                         } else {
                             document.getElementById('submission').innerHTML = "Submit";
-                            sessionStorage.setItem('loggedIn', 'false');
-                            sessionStorage.removeItem('username');
                             alert("Username already exists.");
                         }
                     });

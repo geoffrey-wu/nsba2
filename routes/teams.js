@@ -5,7 +5,8 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     res.render('teams', { 
         title: 'Teams',
-        teams: database.getTeams()
+        teams: database.getTeams(),
+        username: req.session.username
     });
 });
 

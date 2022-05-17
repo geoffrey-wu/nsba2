@@ -29,7 +29,7 @@ html
                             li.nav-item: a.nav-link(href='/draft/') Draft
                             li.nav-item: a.nav-link(href='/staff/') Staff
                         ul.navbar-nav.ms-auto.me-2.mb-2.mb-lg-0
-                            li#nav-login.nav-item: a.nav-link(href='/login/') Login
+                            li.nav-item: a.nav-link(href=`/${username ? 'profile' : 'login'}/`) #{username ? username : 'Login'}
         .container-lg.mt-3.mb-5
             block content
 

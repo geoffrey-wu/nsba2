@@ -32,13 +32,13 @@ block content
                 else
                     = ' N/A'
         
-            a.btn.btn-primary.me-2(href=`/edit-profile/${user.username}/`) Edit profile
+            a.btn.btn-primary.me-2(href=`/edit-profile/`) Edit profile
             button.btn.btn-primary(type='button' onclick='logout()') Logout
 
     h2 Bio 
     p= user.bio ? user.bio : 'No bio set.'
     
-    p: a.btn.btn-primary.me-2(href=`/edit-bio/${user.username}/`) Edit bio
+    p: a.btn.btn-primary.me-2(href=`/edit-bio/`) Edit bio
     
     h2 My Team
     if team in user
@@ -47,4 +47,4 @@ block content
         p Looks like you're not part of a team yet.
 
 block scripts
-    script(src='/profile.js')
+    script(src='/signout.js')

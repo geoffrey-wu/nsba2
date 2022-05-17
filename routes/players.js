@@ -12,7 +12,8 @@ router.get(/\/.+/, function (req, res, next) {
         res.render('user', {
             title: playerName,
             role: 'Player',
-            user: player
+            user: player,
+            username: req.session.username
         });
     } else {
         res.status(404).render('error', {
@@ -30,7 +31,8 @@ router.get('/', function (req, res, next) {
         description: 'Players compete in science bowl games. They can be traded and drafted.',
         title: 'players',
         role: 'player',
-        users: database.getPlayers()
+        users: database.getPlayers(),
+        username: req.session.username
     });
 });
 
