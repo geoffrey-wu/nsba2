@@ -35,14 +35,18 @@ block content
 
         .col-12.mb-3
             label.form-label(for='username') Username
-            input#username.form-control.disabled(type='text' name='username' required='' value=user.username disabled)
+            input#username.form-control.disabled(type='text' name='username' required='' value=user.username)
             .invalid-feedback
                 | Enter your username.
         .col-12.mb-3
             label.form-label(for='password') Password
             input#password.form-control(type='password' name='password' required='' value='password' disabled)
+            #emailHelp.form-text For security reasons, to reset your password, click 
+                a(href="#") here
+                | .
             .invalid-feedback
                 | Enter your password.
+            
         button#submission.btn.btn-primary(type='submit') Edit Profile
 
 block scripts

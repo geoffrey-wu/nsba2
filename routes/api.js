@@ -2,13 +2,12 @@ var express = require('express');
 var router = express.Router();
 var database = require('../database.js');
 
-router.post('/', function (req, res, next) {
+router.use(function (req, res, next) {
     console.log(req.body);
     next();
 });
 
 router.post('/login', function (req, res, next) {
-    console.log(req.body);
     let users = database.getPlayers();
     if (req.body.username in users && users[req.body.username]['password'] === req.body.password) {
         res.sendStatus(200);
@@ -34,12 +33,18 @@ router.post('/edit-profile', (req, res, next) => {
     } else {
         let password = database.getPlayer(req.body.username)['password'];
         req.body.password = password;
-        console.log(req.body);
         database.addPlayer(req.body.username, req.body);
         res.sendStatus(200);
     }
 });
 
-
+router.post('/edit-bio', (req, res, next) => {
+    if (req.body.username in database.getPlayers()) {
+        database.editAttribute(req.body.username, 'bio', req.body.bio);
+        res.sendStatus(200);
+    } else {
+        res.sendStatus(401);
+    }
+});
 
 module.exports = router;

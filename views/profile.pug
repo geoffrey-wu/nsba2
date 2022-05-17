@@ -2,11 +2,11 @@ extends _layout
 
 block content
     .row.mb-3
-        .col-12.col-md-6.col-lg-6
+        .col-12.col-md-5
             img.img-fluid(src='/logo.png')
             .text-center
                 button.mt-1.btn.btn-secondary.disabled Upload profile picture
-        .col-12.col-md-6.col-lg-6
+        .col-12.col-md-7
             p: h1
                 | Welcome,
                 span= ' ' + user.username + '!'
@@ -36,10 +36,9 @@ block content
             button.btn.btn-primary(type='button' onclick='logout()') Logout
 
     h2 Bio 
-    if bio in user
-        p= user.bio
-    else
-        p= 'No bio set.'
+    p= user.bio ? user.bio : 'No bio set.'
+    
+    p: a.btn.btn-primary.me-2(href=`/edit-bio/${user.username}/`) Edit bio
     
     h2 My Team
     if team in user

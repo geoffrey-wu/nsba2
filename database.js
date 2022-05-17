@@ -135,6 +135,18 @@ function addPlayer(playerName, player) {
     return status;
 }
 
+/**
+ * 
+ * @param {String} playerName 
+ * @param {String} key 
+ * @param {String} value 
+ */
+function editAttribute(playerName, key, value) {
+    if (playerName in players) {
+        players[playerName][key] = value;
+    }
+}
+
 module.exports = {
-    addPlayer, getGM, getGMs, getPlayer, getPlayers, getTeam, getTeams
+    getGM, getGMs, getPlayer, getPlayers, getTeam, getTeams, addPlayer, editAttribute
 };
