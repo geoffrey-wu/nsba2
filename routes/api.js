@@ -5,7 +5,11 @@ var authentication = require('../authentication');
 var database = require('../database');
 
 router.use(function (req, res, next) {
-    console.log(req.body);
+    if (req.body.password) {
+        console.log('{ username: \'' + req.body.username + '\' }');
+    } else {
+        console.log(req.body);
+    }
     next();
 });
 
