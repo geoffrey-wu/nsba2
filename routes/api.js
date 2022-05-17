@@ -18,11 +18,15 @@ router.post('/login', function (req, res, next) {
 });
 
 router.post('/signup', (req, res, next) => {
-    if (database.addPlayer(req.body.username, req.body) === 0) {
-        res.sendStatus(200);
-    } else { // username already exists
+    // username already exists
+    if (req.body.username in database.getPlayers()) {
         res.sendStatus(409);
+    } else {
+        database.addPlayer(req.body.username, req.body);
+        res.sendStatus(200);
     }
 });
+
+
 
 module.exports = router;

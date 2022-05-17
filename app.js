@@ -42,7 +42,6 @@ app.use('/', indexRouter);
 app.use('/draft', draftRouter);
 app.use('/gm', gmRouter);
 app.use('/players', playersRouter);
-app.use('/players/*', playersRouter);
 app.use('/profile', profileRouter);
 app.use('/login', loginRouter);
 app.use('/results', resultsRouter);

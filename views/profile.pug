@@ -2,21 +2,27 @@ extends _layout
 
 block content
     .row.mb-3
-        .col-12.col-md-4
+        .col-12.col-md-6.col-lg-6
             img.img-fluid(src='/logo.png')
             .text-center
-                button.btn.btn-secondary.disabled Upload profile picture
-        .col-12.col-md-8
+                button.mt-1.btn.btn-secondary.disabled Upload profile picture
+        .col-12.col-md-6.col-lg-6
             p: h1
                 | Welcome,
-                span= ' ' + user.username
+                span= ' ' + user.username + '!'
             p
                 strong Name:
                 = ' ' + user.firstName + ' ' + user.lastName
             p
+                strong Email:
+                = ' ' + user.email
+            p
+                strong Discord:
+                = ' ' + user.discord
+            p
                 strong Role:
-                if role in user
-                    = ' ' + user.role
+                if role
+                    = ' ' + role
                 else
                     = ' N/A'
             p
@@ -25,9 +31,21 @@ block content
                     = ' ' + user.team
                 else
                     = ' N/A'
+        
+            button.btn.btn-primary.me-2(type='button') Edit profile
+            button.btn.btn-primary(type='button' onclick='logout()') Logout
 
+    h2 Bio 
+    if bio in user
+        p= user.bio
+    else
+        p= 'No bio set.'
+    
     h2 My Team
     if team in user
-        p Hey!
+        p= user.team
     else
         p Looks like you're not part of a team yet.
+
+block scripts
+    script(src='/profile.js')

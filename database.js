@@ -105,20 +105,22 @@ function getTeams() {
 }
 
 /**
- * 
+ * Adds the player to the database. If the player already exists, it will update the player's information.
  * @param {String} playerName
  * @param {JSON} player 
  * 
  * @returns {Number} -1 if username already exists, 0 if username is valid, 1 if username is invalid 
  */
 function addPlayer(playerName, player) {
+    let status = 1;
     if (!(playerName in players)) {
-        players[playerName] = player;
         console.log(player);
-        return 0;
+        status = 0
     } else {
-        return -1;
+        status = -1;
     }
+    players[playerName] = player;
+    return status;
 }
 
 module.exports = {

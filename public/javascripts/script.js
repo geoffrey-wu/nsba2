@@ -5,7 +5,7 @@ if (loggedIn === 'true') {
     let a = document.createElement('a');
     a.className = 'nav-link active';
     a.innerText = username;
-    a.href = `/profile?username=${username}`;
+    a.href = `/profile/${username}/`;
     
     let navLogin = document.getElementById('nav-login');
     navLogin.innerHTML = "";
