@@ -10,16 +10,16 @@ block content
     form#form
         .col-12.mb-3
             label.form-label(for='general') General Information:
-            textarea#general.form-control(name='general')
+            textarea#general.form-control(name='general' value=user.bio ? user.bio.general : '')
         .col-12.mb-3
             label.form-label(for='experience') Scibowl Experience/Awards:
-            input#experience.form-control(name='experience' type='text')
+            input#experience.form-control(name='experience' type='text' value=user.bio ? user.bio.experience : '')
         .col-12.mb-3
             label.form-label(for='competitions') Olympiads/Other Competitions:
-            input#competitions.form-control(name='competitions' type='text')
+            input#competitions.form-control(name='competitions' type='text' value=user.bio ? user.bio.competitions : '')
         .col-12.mb-3
             label.form-label(for='textbooks') Textbooks/Courses:
-            input#textbooks.form-control(name='textbooks' type='text')
+            input#textbooks.form-control(name='textbooks' type='text' value=user.bio ? user.bio.textbooks : '')
         button#submission.btn.btn-primary(type='submit') Submit
 
 block scripts
