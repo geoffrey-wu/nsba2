@@ -60,10 +60,12 @@ async function getTeams() {
  * @param {JSON} player 
  * 
  */
-async function addUser(playerName, player, role = '') {
+async function addUser(playerName, player) {
     player['_id'] = playerName;
     player['username'] = playerName;
-    player['role'] = role;
+    if (!(role in player)) {
+        player['role'] = 'Player';
+    }
 
     const result = await users.insertOne(player);
 

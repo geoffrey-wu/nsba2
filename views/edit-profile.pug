@@ -33,15 +33,27 @@ block content
                 .invalid-feedback
                     | Enter your grade.
 
-        .col-12.mb-3
-            label.form-label(for='username') Username
-            input#username.form-control.disabled(type='text' name='username' required='' value=user.username disabled)
-            .invalid-feedback
-                | Enter your username.
+        .row
+            .col-12.col-md-9.mb-3
+                label.form-label(for='username') Username
+                input#username.form-control(type='text' name='username' required='' value=user.username)
+                .invalid-feedback
+                    | Enter your username.
+                #usernameHelp.form-text Changing your username will log you out of your account.
+            .col-12.col-md-3.mb-3
+                label.form-label(for="role") Role (Player/GM):
+                select#role.form-select.disabled(name='role' disabled)
+                    if user.role == "Player"
+                        option(value="Player" selected) Player
+                        option(value="GM") GM
+                    else
+                        option(value="Player") Player
+                        option(value="GM" selected) GM
+                    
         .col-12.mb-3
             label.form-label(for='password') Password
             input#password.form-control(type='password' name='password' required='' value='password' disabled)
-            #emailHelp.form-text For security reasons, to reset your password, click 
+            #passwordHelp.form-text For security reasons, to reset your password, click 
                 a(href="#") here
                 | .
             .invalid-feedback

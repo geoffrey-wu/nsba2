@@ -15,8 +15,10 @@ block content
             input#password.form-control(type='password' name='password' required='')
             .invalid-feedback
                 | Enter your password.
+            #passwordHelp.form-text
+                | Forgot your password? Please contact a system admin.
         button#submission.btn.btn-primary(type='submit') Log in
-    p.text-muted
+    p.mt-1.text-muted
         | Don&apos;t have an account?
         | Sign up 
         a(href='/signup/') here
