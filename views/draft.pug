@@ -4,34 +4,37 @@ block content
     p.lead The draft begins on June 11th at 0:00 PM.
     .row.mb-5
             .col-3.pt-2.mx-auto.border.border-danger
-                h5 Previous Pick (11)
+                h5 Previous Pick (0)
                 p GM:
                 p Team:
                 p Player selected:
             .col-3.pt-2.mx-auto.border.border-success
-                h5 Current Pick (12)
+                h5 Current Pick (1)
                 p GM:
                 p Team:
                 p 
             .col-3.pt-2.mx-auto.border.border-warning
-                h5 Upcoming Pick (13)
+                h5 Upcoming Pick (2)
                 p GM:
                 p Team:
                 p
     
     p: h4 Draft Order:
 
-    .d-flex.flex-nowrap.overflow-auto
-        - var index = 1;
-        each j in [1, 2]
-            each gm in gms
-                .p-1.border.col-1(index=index)
-                    h6.m-0 Pick #{index++}
-                    div=gm.firstName + ' ' + gm.lastName
-            each gm in Object.values(gms).reverse()
-                .p-1.border.col-1(index=index)
-                    h6.m-0 Pick #{index++}
-                    div=gm.firstName + ' ' + gm.lastName
+    if false
+        .d-flex.flex-nowrap.overflow-auto
+            - var index = 1;
+            each j in [1, 2]
+                each gm in gms
+                    .p-1.border.col-1(index=index)
+                        h6.m-0 Pick #{index++}
+                        div=gm.firstName + ' ' + gm.lastName
+                each gm in Object.values(gms).reverse()
+                    .p-1.border.col-1(index=index)
+                        h6.m-0 Pick #{index++}
+                        div=gm.firstName + ' ' + gm.lastName
+    else
+        p The draft order has not been released yet.
 
     p: h4 Remaining Players:
     table#table.table.table-striped
@@ -45,7 +48,7 @@ block content
             each player in players
                 tr 
                     td= player.firstName + ' ' + player.lastName
-                    td: button.btn.btn-primary Draft
+                    td: button.btn.btn-primary(disabled) Draft
                     td
                         a(href='/players/' + player.username + '/')
                             = player.username

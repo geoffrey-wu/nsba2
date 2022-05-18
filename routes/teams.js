@@ -2,10 +2,10 @@ var express = require('express');
 var database = require('../database');
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     res.render('teams', { 
         title: 'Teams',
-        teams: database.getTeams(),
+        teams: await database.getTeams(),
         username: req.session.username
     });
 });

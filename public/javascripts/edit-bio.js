@@ -13,7 +13,7 @@
             body: JSON.stringify({
                 bio: document.getElementById('bio').value
             })
-        }).then(function (response) {
+        }).then((response) => {
             if (response.status === 200) {
                 window.location.href = '/profile/';
             } else {

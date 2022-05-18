@@ -4,27 +4,17 @@ var router = express.Router();
 var authentication = require('../authentication');
 var database = require('../database');
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     
-    if (!authentication.checkToken(username, token)) {
-        res.redirect('/');
-    } else {
-        let player = database.getPlayer(username);
-        let gm = database.getGM(username);
-        if (player) {
+    if (authentication.checkToken(username, token)) {
+        let user = await database.getUser(username);
+        if (user) {
             res.render('profile', {
                 title: username,
-                role: 'Player',
-                user: player,
-                username: req.session.username
-            });
-        } else if (gm) {
-            res.render('profile', {
-                title: username,
-                role: 'GM',
-                user: gm,
+                role: user.role,
+                user: user,
                 username: req.session.username
             });
         } else {
@@ -36,6 +26,8 @@ router.get('/', function (req, res, next) {
                 }
             });
         }
+    } else {
+        res.redirect('/');
     }
 });
 

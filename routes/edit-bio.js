@@ -4,12 +4,12 @@ var router = express.Router();
 var authentication = require('../authentication');
 var database = require('../database');
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
 
     if (authentication.checkToken(username, token)) {
-        let player = database.getPlayer(username);
+        let player = await database.getUser(username);
         if (player) {
             res.render('edit-bio', {
                 title: 'Edit Bio',

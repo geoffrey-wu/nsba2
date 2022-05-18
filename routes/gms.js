@@ -2,12 +2,12 @@ var express = require('express');
 var database = require('../database');
 var router = express.Router();
 
-router.get(/\/.+/, function (req, res, next) {
+router.get(/\/.+/, async (req, res, next) => {
     let gmName = req.url.substring(1);
     if (gmName.charAt(gmName.length - 1) === '/') {
         gmName = gmName.substring(0, gmName.length - 1);
     }
-    let gm = database.getGM(gmName);
+    let gm = await database.getGM(gmName);
     if (gm) {
         res.render('user', {
             title: gmName,
@@ -26,13 +26,13 @@ router.get(/\/.+/, function (req, res, next) {
     }
 });
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     res.render('users',
         {
             description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
             title: 'GMs',
             role: 'GM',
-            users: database.getGMs(),
+            users: await database.getGMs(),
             username: req.session.username
         }
     );

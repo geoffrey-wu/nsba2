@@ -13,10 +13,10 @@ router.use(function (req, res, next) {
     next();
 });
 
-router.post('/login', function (req, res, next) {
+router.post('/login', async (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
-    if (authentication.checkCredentials(username, password)) {
+    if (await authentication.checkCredentials(username, password)) {
         req.session.username = username;
         req.session.token = authentication.generateToken(username);
         res.sendStatus(200);
@@ -30,41 +30,44 @@ router.post('/logout', (req, res, next) => {
     res.sendStatus(200);
 });
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     let username = req.body.username;
 
     // return error if username already exists
-    if (username in database.getPlayers()) {
+    let results = await database.getPlayer(username);
+    if (results.length > 0) {
         res.sendStatus(409);
     } else {
-        authentication.addCredentials(username, req.body.password);
         req.session.username = username;
         req.session.token = authentication.generateToken(username);
 
-        delete req.body.password;
-        database.addPlayer(username, req.body);
+        req.body.role = 'Player';
+        req.body.password = authentication.saltAndHashPassword(req.body.password);
+        await database.addUser(username, req.body);
         res.sendStatus(200);
     }
 });
 
-router.post('/edit-profile', (req, res, next) => {
+router.post('/edit-profile', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        let password = database.getPlayer(username)['password'];
-        req.body.password = password;
-        database.addPlayer(username, req.body);
+        let user = await database.getUser(username);
+
+        req.body.role = user.role;
+        req.body.password = user.password;
+        await database.replaceUser(username, req.body);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
     }
 });
 
-router.post('/edit-bio', (req, res, next) => {
+router.post('/edit-bio', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        database.editAttribute(username, 'bio', req.body.bio);
+        await database.editAttribute(username, 'bio', req.body.bio);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);

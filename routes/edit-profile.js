@@ -4,16 +4,16 @@ var router = express.Router();
 var authentication = require('../authentication');
 var database = require('../database');
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
 
     if (authentication.checkToken(username, token)) {
-        let player = database.getPlayer(username);
-        if (player) {
+        let user = await database.getUser(username);
+        if (user) {
             res.render('edit-profile', {
                 title: 'Edit Profile',
-                user: player,
+                user: user,
                 username: req.session.username
             });
         } else {
