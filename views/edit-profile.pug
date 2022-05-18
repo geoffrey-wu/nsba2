@@ -43,12 +43,7 @@ block content
             .col-12.col-md-3.mb-3
                 label.form-label(for="role") Role (Player/GM):
                 select#role.form-select.disabled(name='role' disabled)
-                    if user.role == "Player"
-                        option(value="Player" selected) Player
-                        option(value="GM") GM
-                    else
-                        option(value="Player") Player
-                        option(value="GM" selected) GM
+                    option(value=user.role selected) #{user.role}
                     
         .col-12.mb-3
             label.form-label(for='password') Password
