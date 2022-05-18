@@ -10,7 +10,7 @@ block content
     form#form
         .col-12.mb-3
             label.form-label(for='general') General Information:
-            textarea#general.form-control(name='general' value=user.bio ? user.bio.general : '')
+            textarea#general.form-control(name='general' value=user.bio ? user.bio.generalBio : '')
         .col-12.mb-3
             label.form-label(for='experience') Scibowl Experience/Awards:
             input#experience.form-control(name='experience' type='text' value=user.bio ? user.bio.experience : '')
