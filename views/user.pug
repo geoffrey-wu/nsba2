@@ -27,7 +27,10 @@ block content
             = ' ' + (user.draftPicks ? user.draftPicks : 'N/A')
 
     h4 Bio:
-    p= user.bio ? user.bio : ' N/A'
+    if user.bio
+        include bio.pug
+    else
+        p N/A
     h4 Stats:
     p There are no stats to display.
     h4 Transaction History:

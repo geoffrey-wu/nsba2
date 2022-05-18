@@ -4,11 +4,22 @@ block content
     p: h2 Editing #{user.username}'s bio:
     if user.bio
         h4 Current bio:
-        p= user.bio
+        include bio.pug
     
+    p: h4 Enter your new bio here:
     form#form
-        label.form-label(for='bio'): h4 Enter your new bio here:
-        textarea#bio.form-control(rows='5')
+        .col-12.mb-3
+            label.form-label(for='general') General Information:
+            textarea#general.form-control(name='general')
+        .col-12.mb-3
+            label.form-label(for='experience') Scibowl Experience/Awards:
+            input#experience.form-control(name='experience' type='text')
+        .col-12.mb-3
+            label.form-label(for='competitions') Olympiads/Other Competitions:
+            input#competitions.form-control(name='competitions' type='text')
+        .col-12.mb-3
+            label.form-label(for='textbooks') Textbooks/Courses:
+            input#textbooks.form-control(name='textbooks' type='text')
         button#submission.btn.btn-primary(type='submit') Submit
 
 block scripts

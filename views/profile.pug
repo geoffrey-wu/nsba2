@@ -36,7 +36,10 @@ block content
             button.btn.btn-primary(type='button' onclick='logout()') Logout
 
     h2 Bio 
-    p= user.bio ? user.bio : 'No bio set.'
+    if user.bio
+        include bio.pug
+    else 
+        p No bio set.
     
     p: a.btn.btn-primary.me-2(href=`/edit-bio/`) Edit bio
     

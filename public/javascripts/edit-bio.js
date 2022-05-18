@@ -11,7 +11,12 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                bio: document.getElementById('bio').value
+                bio: {
+                    generalBio: document.getElementById('general').value,
+                    experience: document.getElementById('experience').value,
+                    competitions: document.getElementById('competitions').value,
+                    textbooks: document.getElementById('textbooks').value,
+                }
             })
         }).then((response) => {
             if (response.status === 200) {
