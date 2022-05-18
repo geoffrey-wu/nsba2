@@ -5,12 +5,6 @@ var authentication = require('../authentication');
 var database = require('../database');
 
 router.use(function (req, res, next) {
-    // if (req.body.password) {
-    //     console.log('{ username: \'' + req.body.username + '\' }');
-    // } else {
-    //     console.log(req.body);
-    // }
-    console.log(req.body);
     next();
 });
 
@@ -74,6 +68,22 @@ router.post('/edit-bio', async (req, res, next) => {
     if (authentication.checkToken(username, token)) {
         await database.editAttribute(username, 'bio', req.body.bio);
         res.sendStatus(200);
+    } else {
+        res.sendStatus(401);
+    }
+});
+
+router.post('/edit-password', async (req, res, next) => {
+    let username = req.session.username;
+    let token = req.session.token;
+    if (authentication.checkToken(username, token)) {
+        if (await authentication.checkCredentials(username, req.body.oldPassword)) {
+            let newPassword = authentication.saltAndHashPassword(req.body.newPassword);
+            await database.editAttribute(username, 'password', newPassword);
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(403);
+        }
     } else {
         res.sendStatus(401);
     }

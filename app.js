@@ -7,6 +7,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var editBioRouter = require('./routes/edit-bio');
+var editPasswordRouter = require('./routes/edit-password');
 var editProfileRouter = require('./routes/edit-profile');
 var loginRouter = require('./routes/login');
 var draftRouter = require('./routes/draft');
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/edit-bio', editBioRouter);
+app.use('/edit-password', editPasswordRouter);
 app.use('/edit-profile', editProfileRouter);
 app.use('/draft', draftRouter);
 app.use('/gm', gmRouter);
