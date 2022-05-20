@@ -1,12 +1,12 @@
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-const secret = process.env.SECRET ? process.env.SECRET : 'secret';
-const salt = process.env.SALT ? process.env.SALT : 'salt';
-
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
+
+const secret = process.env.SECRET ? process.env.SECRET : 'secret';
+const salt = process.env.SALT ? process.env.SALT : 'salt';
 
 var database = require('./database');
 
