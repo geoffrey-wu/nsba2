@@ -60,24 +60,22 @@ async function getTeams() {
 
 /**
  * Adds the player to the database. Throws an error if the player is already in the database.
- * @param {String} playerName
- * @param {JSON} player 
- * 
+ * @param {String} username - the username of the player to be added.
+ * @param {JSON} player - the player to be added to the database.
  */
-async function addUser(playerName, player) {
-    player['_id'] = playerName;
-    player['username'] = playerName;
+async function addUser(username, player) {
+    player['_id'] = username;
+    player['username'] = username;
     if (!(role in player)) {
         player['role'] = 'Player';
     }
 
-    const result = await users.insertOne(player);
-
-    return result;
+    await users.insertOne(player);
 }
 
 /**
- * 
+ * Sets field `key` to value `value` of user with username `username`.
+ * Does nothing if `username` is not found.
  * @param {String} username
  * @param {String} key 
  * @param {String} value 
@@ -92,8 +90,9 @@ async function editAttribute(username, key, value) {
 
 /**
  * Edit multiple attributes of a user at one time.
+ * Does nothing if `username` is not found.
  * @param {String} username 
- * @param {JSON} newAttributes - the attributes to be added or modified to the user.
+ * @param {JSON} newAttributes - the attributes to be added or modified to the user in {field, value} pairs.
  */
 async function editAttributes(username, newAttributes) {
     const filter = { username: username };
@@ -106,7 +105,7 @@ async function editAttributes(username, newAttributes) {
  * Finds and replaces user with given `username` with `newUser`.
  * If `username` does not exist, adds `newUser` to database.
  * 
- * If you want to edit attributes, use `editAttribute` instead.
+ * If you want to edit attributes, use `editAttribute` or `editAttributes` instead.
  * This function will delete all existing fields, even if there is no corresponding field to replace it with.
  * @param {String} username 
  * @param {JSON} newUser 

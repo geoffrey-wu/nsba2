@@ -1,14 +1,14 @@
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+var database = require('./database');
 
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-const secret = process.env.SECRET ? process.env.SECRET : 'secret';
 const salt = process.env.SALT ? process.env.SALT : 'salt';
+const secret = process.env.SECRET ? process.env.SECRET : 'secret';
 
-var database = require('./database');
 
 /**
  * 
@@ -34,6 +34,16 @@ async function checkPassword(username, password) {
 }
 
 /**
+ * Creates a new set of credentials with the given username and password.
+ * `password` should be UNHASHED; the function will call `hashPassword` to hash it.
+ * @param {String} username 
+ * @param {String} password 
+ */
+async function updatePassword(username, password) {
+    await database.editAttribute(username, 'password', saltAndHashPassword(password));
+}
+
+/**
  * Checks that the token is valid and stores the corrent username.
  * `checkToken` guarantees that the username is in the database if the token is valid.
  * @param {String} username 
@@ -48,16 +58,6 @@ function checkToken(username, token) {
             return decoded.username === username;
         }
     });
-}
-
-/**
- * Creates a new set of credentials with the given username and password.
- * `password` should be UNHASHED; the function will call `hashPassword` to hash it.
- * @param {String} username 
- * @param {String} password 
- */
-async function updatePassword(username, password) {
-    await database.editAttribute(username, 'password', saltAndHashPassword(password));
 }
 
 /**
