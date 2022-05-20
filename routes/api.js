@@ -11,7 +11,7 @@ router.use(function (req, res, next) {
 router.post('/login', async (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
-    if (await authentication.checkCredentials(username, password)) {
+    if (await authentication.checkPassword(username, password)) {
         req.session.username = username;
         req.session.token = authentication.generateToken(username);
         res.sendStatus(200);
@@ -50,12 +50,9 @@ router.post('/edit-profile', async (req, res, next) => {
         let user = await database.getUser(username);
 
         // log out if player changed their username
-        if (username != req.body.username) {
-            req.session = null;
-        }
-        req.body.role = user.role;
-        req.body.password = user.password;
-        await database.replaceUser(username, req.body);
+        if (username != req.body.username) req.session = null;
+
+        await database.editAttributes(username, req.body);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
@@ -77,9 +74,8 @@ router.post('/edit-password', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        if (await authentication.checkCredentials(username, req.body.oldPassword)) {
-            let newPassword = authentication.saltAndHashPassword(req.body.newPassword);
-            await database.editAttribute(username, 'password', newPassword);
+        if (await authentication.checkPassword(username, req.body.oldPassword)) {
+            await authentication.updatePassword(username, 'password', req.body.newPassword);
             res.sendStatus(200);
         } else {
             res.sendStatus(403);

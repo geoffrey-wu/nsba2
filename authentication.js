@@ -23,7 +23,7 @@ function saltAndHashPassword(password) {
  * @param {String} username 
  * @param {String} password 
  */
-async function checkCredentials(username, password) {
+async function checkPassword(username, password) {
     let user = await database.getUser(username);
     return user && user.password === saltAndHashPassword(password);
 }
@@ -51,12 +51,13 @@ function checkToken(username, token) {
  * @param {String} username 
  * @param {String} password 
  */
-async function updateCredentials(username, password) {
+async function updatePassword(username, password) {
     await database.editAttribute(username, 'password', saltAndHashPassword(password));
 }
 
 /**
- * 
+ * Creates a new token for the given username.
+ * This token may be used for authentication purposes.
  * @param {String} username 
  * @returns A JWT token.
  */
@@ -65,5 +66,5 @@ function generateToken(username) {
 }
 
 module.exports = {
-    saltAndHashPassword, checkCredentials, checkToken, updateCredentials, generateToken
+    saltAndHashPassword, checkPassword, checkToken, updatePassword, generateToken
 };

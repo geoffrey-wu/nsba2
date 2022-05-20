@@ -19,15 +19,15 @@ async function getPlayer(username) {
 /**
  * 
  * @param {String} username the username of the user you are trying to retrieve.
- * @param {String} role (optional) the role of the user. Must be either 'player' or 'GM'.
- * @returns 
+ * @param {String} role (optional) the role of the user. Must be either 'player', 'GM', or 'Admin'.
+ * @returns JSON-like user object matching the parameters. Returns undefined if no users match the query.
  */
 async function getUser(username, role = '') {
     let query = { username: username };
     if (role) {
         query['role'] = role;
     }
-    
+
     return await users.findOne(query);
 }
 
@@ -87,7 +87,23 @@ async function editAttribute(username, key, value) {
 }
 
 /**
+ * Edit multiple attributes of a user at one time.
+ * @param {String} username 
+ * @param {JSON} newAttributes - the attributes to be added or modified to the user.
+ */
+async function editAttributes(username, newAttributes) {
+    const filter = { username: username };
+    const update = { $set: newAttributes };
+    await users.updateOne(filter, update);
+}
+
+
+/**
+ * Finds and replaces user with given `username` with `newUser`.
+ * If `username` does not exist, adds `newUser` to database.
  * 
+ * If you want to edit attributes, use `editAttribute` instead.
+ * This function will delete all existing fields, even if there is no corresponding field to replace it with.
  * @param {String} username 
  * @param {JSON} newUser 
  */
@@ -97,5 +113,5 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUsers, getTeams, addUser, editAttribute, replaceUser
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUsers, getTeams, addUser, editAttribute, editAttributes, replaceUser
 };
