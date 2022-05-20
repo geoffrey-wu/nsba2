@@ -47,10 +47,9 @@ router.post('/edit-profile', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        let user = await database.getUser(username);
-
         // log out if player changed their username
-        if (username != req.body.username) req.session = null;
+        if (username != req.body.username)
+            req.session = null;
 
         await database.editAttributes(username, req.body);
         res.sendStatus(200);
