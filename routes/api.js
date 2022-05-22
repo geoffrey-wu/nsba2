@@ -50,7 +50,7 @@ router.post('/create-team', async (req, res, next) => {
     if (await authentication.checkToken(username, token)) {
         let user = await database.getUser(username);
         if (user.role == 'GM') {
-            database.createTeam(user._id, username);
+            database.createTeam(username);
             res.sendStatus(200);
         } else {
             res.sendStatus(401);
