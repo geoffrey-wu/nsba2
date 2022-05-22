@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba.ujpbt.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
@@ -35,6 +35,11 @@ async function getUser(username, role = '') {
     return await users.findOne(query);
 }
 
+async function getUserById(id) {
+    const query = { _id: id };
+    return await users.findOne(query);
+}
+
 async function getGMs() {
     return await getUsers(role = 'GM');
 }
@@ -52,6 +57,30 @@ async function getUsers(role = '') {
     return cursor.toArray();
 }
 
+/**
+ * 
+ * @param {JSON} query 
+ * @returns 
+ */
+async function getTeam(query) {
+    // const query = { _id: id };
+    return await teams.findOne(query);
+}
+
+/**
+ * 
+ * @param {Array<String>} ids
+ */
+async function getTeamNames(ids) {
+    let names = [];
+    for (let i = 0; i < ids.length; i++) {
+        const team = await teams.findOne({ _id: ids[i] }, { projection: { name: 1 } });
+        names.push(team.name);
+    }
+
+    return names;
+}
+
 async function getTeams() {
     const query = {};
     const cursor = await teams.find(query);
@@ -64,13 +93,32 @@ async function getTeams() {
  * @param {JSON} player - the player to be added to the database.
  */
 async function addUser(username, player) {
-    player['_id'] = username;
+    player['_id'] = (new ObjectId()).toString();
     player['username'] = username;
     if (!(role in player)) {
         player['role'] = 'Player';
     }
 
     await users.insertOne(player);
+}
+
+/**
+ * Creates a new team, adds it to the database, and modifies the GM object to include the new team.
+ * @param {String} username
+ */
+async function createTeam(username) {
+    const team = {
+        _id: (new ObjectId()).toString(),
+        gm: username,
+        name: username,
+        player_ids: [],
+        draft_picks: [],
+    };
+    await teams.insertOne(team);
+
+    const filter = { username: username };
+    const update = { $set: { team: username } };
+    await users.updateOne(filter, update);
 }
 
 /**
@@ -116,5 +164,7 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUsers, getTeams, addUser, editAttribute, editAttributes, replaceUser
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames,
+    addUser, createTeam, editAttribute, editAttributes, replaceUser
 };
+

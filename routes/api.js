@@ -13,7 +13,8 @@ router.post('/login', async (req, res, next) => {
     let password = req.body.password;
     if (await authentication.checkPassword(username, password)) {
         req.session.username = username;
-        req.session.token = authentication.generateToken(username);
+        let user = await database.getUser(username);
+        req.session.token = authentication.generateToken(username, user.role);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
@@ -40,6 +41,22 @@ router.post('/signup', async (req, res, next) => {
         req.body.password = authentication.saltAndHashPassword(req.body.password);
         await database.addUser(username, req.body);
         res.sendStatus(200);
+    }
+});
+
+router.post('/create-team', async (req, res, next) => {
+    let username = req.session.username;
+    let token = req.session.token;
+    if (await authentication.checkToken(username, token)) {
+        let user = await database.getUser(username);
+        if (user.role == 'GM') {
+            database.createTeam(user._id, username);
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(401);
+        }
+    } else {
+        res.sendStatus(401);
     }
 });
 

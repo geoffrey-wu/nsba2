@@ -13,18 +13,15 @@ block content
         strong Discord:
         = ' ' + user.discord
     p
-        strong Team:
-        if team in user
-            = ' ' + user.team
+        strong Team: 
+        if user.team
+            a(href=`/teams/${encodeURI(user.team)}`)=user.team
         else
             = ' N/A'
     p
         if role === 'Player'
-            strong Draft Pick:
-            = ' #' + (user.draftPick ? user.draftPick : 'N/A')
-        else if role === 'GM'
-            strong Draft Picks:
-            = ' ' + (user.draftPicks ? user.draftPicks : 'N/A')
+            strong Draft Pick: 
+            = (user.draftPick ? '#' + user.draftPick : 'N/A')
 
     h4 Bio:
     if user.bio

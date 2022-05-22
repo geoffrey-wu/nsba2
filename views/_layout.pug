@@ -28,6 +28,10 @@ html
                                     li: a.dropdown-item(href='/pickem/') Pick'em
                             li.nav-item: a.nav-link(href='/draft/') Draft
                             li.nav-item: a.nav-link(href='/staff/') Staff
+                            if username
+                                li.nav-item: a.nav-link(href='/my-team/') My Team
+                            else
+                                li.nav-item: a.nav-link.disabled(href='/') My Team
                         ul.navbar-nav.ms-auto.me-2.mb-2.mb-lg-0
                             li.nav-item: a.nav-link(href=`/${username ? 'profile' : 'login'}/`) #{username ? username : 'Login'}
         .container-lg.mt-3.mb-5

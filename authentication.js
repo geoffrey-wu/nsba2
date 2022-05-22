@@ -25,8 +25,8 @@ function saltAndHashPassword(password) {
 
 /**
  * 
- * @param {String} username 
- * @param {String} password 
+ * @param {String} username - username of the user you are trying to retrieve.
+ * @param {String} password - plaintext password to check.
  */
 async function checkPassword(username, password) {
     let user = await database.getUser(username);
@@ -66,8 +66,8 @@ function checkToken(username, token) {
  * @param {String} username 
  * @returns A JWT token.
  */
-function generateToken(username) {
-    return jwt.sign({ username: username }, secret);
+function generateToken(username, role) {
+    return jwt.sign({ username: username, role: role }, secret);
 }
 
 module.exports = {

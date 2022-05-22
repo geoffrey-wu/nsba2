@@ -13,6 +13,10 @@ block content
             p
                 strong Name:
                 = ' ' + user.firstName + ' ' + user.lastName
+            
+            p
+                strong Grade: 
+                = ' ' + user.grade
             p
                 strong Email:
                 = ' ' + user.email
@@ -21,16 +25,16 @@ block content
                 = ' ' + user.discord
             p
                 strong Role:
-                if role
-                    = ' ' + role
+                if user.role
+                    = ' ' + user.role
                 else
                     = ' N/A'
             p
-                strong Team:
-                if team in user
-                    = ' ' + user.team
+                strong Team: 
+                if user.team
+                    a(href='/my-team/')= user.team
                 else
-                    = ' N/A'
+                    = 'N/A'
         
             a.btn.btn-primary.me-2(href=`/edit-profile/`) Edit profile
             a.btn.btn-primary.me-2(href=`/edit-password/`) Edit password
@@ -43,12 +47,6 @@ block content
         p No bio set.
     
     p: a.btn.btn-primary.me-2(href=`/edit-bio/`) Edit bio
-    
-    h2 My Team
-    if team in user
-        p= user.team
-    else
-        p Looks like you're not part of a team yet.
 
 block scripts
     script(src='/logout.js')
