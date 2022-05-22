@@ -13,8 +13,9 @@ router.get('/', async (req, res, next) => {
         if (player) {
             res.render('edit-bio', {
                 title: 'Edit Bio',
-                user: player,
-                username: req.session.username
+                username: req.session.username,
+
+                user: player
             });
         } else {
             res.status(404).render('error', {

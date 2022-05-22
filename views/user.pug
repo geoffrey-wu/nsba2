@@ -14,11 +14,11 @@ block content
     p
         strong Team: 
         if user.team
-            a(href=`/teams/${encodeURI(user.team)}`)=user.team
+            a(href=`/teams/${encodeURI(user.team)}`)= user.team
         else
             = ' N/A'
     p
-        if role === 'Player'
+        if user.role === 'Player'
             strong Draft Pick: 
             = (user.draftPick ? '#' + user.draftPick : 'N/A')
 

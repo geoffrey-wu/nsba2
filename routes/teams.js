@@ -3,27 +3,25 @@ var database = require('../database');
 var router = express.Router();
 
 router.get(/\/.+/, async (req, res, next) => {
-    let teamName = req.url.substring(1);
-    teamName = decodeURI(teamName);
-    if (teamName.charAt(teamName.length - 1) === '/') {
+    let teamName = decodeURI(req.url.substring(1));
+    if (teamName.charAt(teamName.length - 1) === '/')
         teamName = teamName.substring(0, teamName.length - 1);
-    }
 
-    let team = await database.getTeam({name: teamName});
-    let gm = await database.getUser(team.gm);
-    let playerIds = team.player_ids;
-    let players = [];
-    for (let id in playerIds) {
-        let player = await database.getUserById(playerIds[id]);
-        players.push(player);
-    }
+    let team = await database.getTeam(teamName);
+
     if (team) {
+        let gm = await database.getUser(team.gm);
+        let players = team.player_ids.map(async (id) => {
+            return await database.getUserById(id);
+        });
+
         res.render('team', {
             title: 'My Team',
-            gm: gm,
-            players: players,
-            picks: team.draft_picks,
             username: req.session.username,
+
+            gm: gm,
+            picks: team.draft_picks,
+            players: players,
             team: team
         });
 

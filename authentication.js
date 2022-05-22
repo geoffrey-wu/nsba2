@@ -24,9 +24,10 @@ function saltAndHashPassword(password) {
 }
 
 /**
- * 
+ * Check whether or not the given username and password are valid.
  * @param {String} username - username of the user you are trying to retrieve.
  * @param {String} password - plaintext password to check.
+ * @returns {Promise<Boolean>}
  */
 async function checkPassword(username, password) {
     let user = await database.getUser(username);
@@ -38,6 +39,7 @@ async function checkPassword(username, password) {
  * `password` should be UNHASHED; the function will call `hashPassword` to hash it.
  * @param {String} username 
  * @param {String} password 
+ * @returns {Void}
  */
 async function updatePassword(username, password) {
     await database.editAttribute(username, 'password', saltAndHashPassword(password));
@@ -48,7 +50,7 @@ async function updatePassword(username, password) {
  * `checkToken` guarantees that the username is in the database if the token is valid.
  * @param {String} username 
  * @param {String} token 
- * @returns Promise that resolves to true if the token is valid and false otherwise.
+ * @returns {Promise<Boolean>} Promise that resolves to true if the token is valid and false otherwise.
  */
 function checkToken(username, token) {
     return jwt.verify(token, secret, (err, decoded) => {
@@ -66,8 +68,8 @@ function checkToken(username, token) {
  * @param {String} username 
  * @returns A JWT token.
  */
-function generateToken(username, role) {
-    return jwt.sign({ username: username, role: role }, secret);
+function generateToken(username) {
+    return jwt.sign({ username: username }, secret);
 }
 
 module.exports = {

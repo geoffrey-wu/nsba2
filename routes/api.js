@@ -4,21 +4,18 @@ var router = express.Router();
 var authentication = require('../authentication');
 var database = require('../database');
 
-router.use(function (req, res, next) {
-    next();
-});
 
 router.post('/login', async (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     if (await authentication.checkPassword(username, password)) {
         req.session.username = username;
-        let user = await database.getUser(username);
-        req.session.token = authentication.generateToken(username, user.role);
+        req.session.token = authentication.generateToken(username);
         res.sendStatus(200);
-    } else {
-        res.sendStatus(401);
+        return;
     }
+
+    res.sendStatus(401);
 });
 
 router.post('/logout', (req, res, next) => {
@@ -33,15 +30,16 @@ router.post('/signup', async (req, res, next) => {
     let results = await database.getPlayer(username);
     if (results) {
         res.sendStatus(409);
-    } else {
-        req.session.username = username;
-        req.session.token = authentication.generateToken(username);
-
-        // req.body.role = 'Player';
-        req.body.password = authentication.saltAndHashPassword(req.body.password);
-        await database.addUser(username, req.body);
-        res.sendStatus(200);
+        return;
     }
+
+    // log the user in when they sign up
+    req.session.username = username;
+    req.session.token = authentication.generateToken(username);
+
+    req.body.password = authentication.saltAndHashPassword(req.body.password);
+    await database.addUser(username, req.body);
+    res.sendStatus(200);
 });
 
 router.post('/create-team', async (req, res, next) => {
@@ -52,12 +50,11 @@ router.post('/create-team', async (req, res, next) => {
         if (user.role == 'GM') {
             database.createTeam(username);
             res.sendStatus(200);
-        } else {
-            res.sendStatus(401);
+            return;
         }
-    } else {
-        res.sendStatus(401);
     }
+
+    res.sendStatus(401);
 });
 
 router.post('/edit-profile', async (req, res, next) => {

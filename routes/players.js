@@ -1,30 +1,32 @@
 var express = require('express');
-var database = require('../database');
 var router = express.Router();
 
+var database = require('../database');
+
 router.get(/\/.+/, async (req, res, next) => {
-    let playerName = req.url.substring(1);
-    playerName = decodeURI(playerName);
-    if (playerName.charAt(playerName.length - 1) === '/') {
+    let playerName = decodeURI(req.url.substring(1));
+    if (playerName.charAt(playerName.length - 1) === '/')
         playerName = playerName.substring(0, playerName.length - 1);
-    }
+
     let player = await database.getPlayer(playerName);
     if (player) {
         res.render('user', {
             title: playerName,
-            role: 'Player',
-            user: player,
-            username: req.session.username
+            username: req.session.username,
+
+            user: player
         });
-    } else {
-        res.status(404).render('error', {
-            message: 'Player not found',
-            error: {
-                status: 404,
-                stack: req.url
-            }
-        });
+
+        return;
     }
+
+    res.status(404).render('error', {
+        message: 'Player not found',
+        error: {
+            status: 404,
+            stack: req.url
+        }
+    });
 });
 
 router.get('/', async (req, res, next) => {

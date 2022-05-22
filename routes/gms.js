@@ -1,20 +1,20 @@
 var express = require('express');
-var database = require('../database');
 var router = express.Router();
 
+var database = require('../database');
+
 router.get(/\/.+/, async (req, res, next) => {
-    let gmName = req.url.substring(1);
-    gmName = decodeURI(gmName);
-    if (gmName.charAt(gmName.length - 1) === '/') {
+    let gmName = decodeURI(req.url.substring(1));
+    if (gmName.charAt(gmName.length - 1) === '/')
         gmName = gmName.substring(0, gmName.length - 1);
-    }
+    
     let gm = await database.getGM(gmName);
     if (gm) {
         res.render('user', {
             title: gmName,
-            role: 'GM',
-            user: gm,
-            username: req.session.username
+            username: req.session.username,
+
+            user: gm
         });
     } else {
         res.status(404).render('error', {

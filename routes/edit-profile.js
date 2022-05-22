@@ -13,8 +13,9 @@ router.get('/', async (req, res, next) => {
         if (user) {
             res.render('edit-profile', {
                 title: 'Edit Profile',
-                user: user,
-                username: req.session.username
+                username: req.session.username,
+
+                user: user
             });
         } else {
             res.status(404).render('error', {

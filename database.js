@@ -13,10 +13,20 @@ const users = database.collection('users');
 const teams = database.collection('teams');
 const mockDraft = database.collection('mock-draft');
 
+/**
+ * Equivalent to calling getUser(username, role='GM').
+ * @param {String} username 
+ * @returns {Promise<JSON>}
+ */
 async function getGM(username) {
     return await getUser(username, role = 'GM');
 }
 
+/**
+ * Equivalent to calling getUser(username, role='GM').
+ * @param {String} username 
+ * @returns {Promise<JSON>}
+ */
 async function getPlayer(username) {
     return await getUser(username, role = 'Player');
 }
@@ -25,7 +35,7 @@ async function getPlayer(username) {
  * 
  * @param {String} username the username of the user you are trying to retrieve.
  * @param {String} role (optional) the role of the user. Must be either 'player', 'GM', or 'Admin'.
- * @returns JSON-like user object matching the parameters. Returns undefined if no users match the query.
+ * @returns {Promise<JSON>} JSON-like user object matching the parameters. Returns undefined if no users match the query.
  */
 async function getUser(username, role = '') {
     let query = { username: username };
@@ -36,19 +46,40 @@ async function getUser(username, role = '') {
     return await users.findOne(query);
 }
 
+/**
+ * Finds and returns the user with the given id.
+ * If no user is found, returns `null`.
+ * @param {String} id 
+ * @returns <Promise<JSON>> - JSON-like user object.
+ */
 async function getUserById(id) {
     const query = { _id: id };
     return await users.findOne(query);
 }
 
+/**
+ * Returns an array of all users in database with 'GM' role.
+ * Equivalent to calling getUsers(role='GM').
+ * @returns {Promise<Array<JSON>>} - an array of JSON-like user objects with role 'GM'.
+ */
 async function getGMs() {
     return await getUsers(role = 'GM');
 }
 
+/**
+ * Returns an array of all users in database with 'Player' role.
+ * Equivalent to calling getUsers(role='Player').
+ * @returns {Promise<Array<JSON>>} - an array of JSON-like user objects with role 'Player'.
+ */
 async function getPlayers() {
     return await getUsers(role = 'Player');
 }
 
+/**
+ * Returns an array of all users.
+ * @param {String} role - if specified, only get users with this role.
+ * @returns Array of JSON-like user objects.
+ */
 async function getUsers(role = '') {
     let query = {};
     if (role) {
@@ -59,18 +90,20 @@ async function getUsers(role = '') {
 }
 
 /**
- * 
- * @param {JSON} query 
- * @returns 
+ * Returns the team with the given name.
+ * Returns null if no results are found.
+ * @param {String} name
+ * @returns {Promise<JSON>} JSON-like team object.
  */
-async function getTeam(query) {
-    // const query = { _id: id };
+async function getTeam(name) {
+    const query = { name: name };
     return await teams.findOne(query);
 }
 
 /**
- * 
+ * For each given team id, returns the corresponding team name.
  * @param {Array<String>} ids
+ * @returns {Promise<Array<String>>} an array of team names.
  */
 async function getTeamNames(ids) {
     let names = [];
@@ -82,12 +115,20 @@ async function getTeamNames(ids) {
     return names;
 }
 
+/**
+ * Finds and returns all teams in database.
+ * @returns {Promise<Array<JSON>>} - an array of JSON-like team objects.
+ */
 async function getTeams() {
-    const query = {};
-    const cursor = await teams.find(query);
+    const cursor = await teams.find({});
     return cursor.toArray();
 }
 
+/**
+ * Returns the results of the mock draft in an array.
+ * The results are *in order*, so the i-th element of the array corresponds to the i-th pick.
+ * @returns {Promise<Array<JSON>>} - an array of JSON-like player objects.
+ */
 async function getMockDraft() {
     let mock = await mockDraft.find({}).toArray();
     let players = await users.find({role: 'Player'}).toArray();
@@ -104,21 +145,23 @@ async function getMockDraft() {
 /**
  * Adds the player to the database. Throws an error if the player is already in the database.
  * @param {String} username - the username of the player to be added.
- * @param {JSON} player - the player to be added to the database.
+ * @param {JSON} user - JSON object to be added to the database.
  */
-async function addUser(username, player) {
-    player['_id'] = (new ObjectId()).toString();
-    player['username'] = username;
-    if (!(role in player)) {
-        player['role'] = 'Player';
+async function addUser(username, user) {
+    user['_id'] = (new ObjectId()).toString();
+    user['username'] = username;
+    if (!(role in user)) {
+        user['role'] = 'Player';
     }
 
-    await users.insertOne(player);
+    await users.insertOne(user);
 }
 
 /**
- * Creates a new team, adds it to the database, and modifies the GM object to include the new team.
+ * Creates a new team and adds it to the database.
+ * Modifies the GM object with given `username` to include the new team.
  * @param {String} username
+ * @returns {void}
  */
 async function createTeam(username) {
     const team = {
