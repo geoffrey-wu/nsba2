@@ -25,7 +25,6 @@
                             firstName: document.getElementById('first-name').value,
                             lastName: document.getElementById('last-name').value,
                             email: document.getElementById('email').value,
-                            discord: document.getElementById('discord').value,
                             username: document.getElementById('username').value,
                             grade: document.getElementById('grade').value,
                         })

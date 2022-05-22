@@ -69,10 +69,14 @@ router.post('/edit-profile', async (req, res, next) => {
         if (username != req.body.username) {
             req.session = null;
             let user = await database.getGM(username);
-            if (user) {
+            if (user) { // check if user is GM
                 await database.editTeamAttribute(user.team, 'gm', req.body.username);
             }
         }
+
+        delete req.body.discord;
+        delete req.body.role;
+        delete req.body.password;
 
         await database.editAttributes(username, req.body);
         res.sendStatus(200);
