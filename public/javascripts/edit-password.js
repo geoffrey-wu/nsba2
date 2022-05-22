@@ -25,7 +25,7 @@
                 })
             }).then((response) => {
                 if (response.status === 200) {
-                    window.location.href = '/profile/';
+                    window.location.href = '/profile';
                 } else {
                     alert("Error updating password.");
                 }

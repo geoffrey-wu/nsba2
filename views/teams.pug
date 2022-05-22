@@ -25,7 +25,7 @@ block content
             each team in teams
                 tr
                     td: a(href=`/teams/${team.name}`)= team.name
-                    td: a(href=`/gm/${team.gm}`)= team.gm
+                    td: a(href=`/gms/${team.gm}`)= team.gm
                     td= team.draft_picks[0] + 1 || '-'
                     td= team.draft_picks[1] + 1 || '-'
                     td= team.draft_picks[2] + 1 || '-'

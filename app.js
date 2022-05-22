@@ -52,7 +52,7 @@ app.use('/edit-bio', editBioRouter);
 app.use('/edit-password', editPasswordRouter);
 app.use('/edit-profile', editProfileRouter);
 app.use('/draft', draftRouter);
-app.use('/gm', gmRouter);
+app.use('/gms', gmRouter);
 app.use('/login', loginRouter);
 app.use('/my-team', myTeamRouter);
 app.use('/players', playersRouter);
