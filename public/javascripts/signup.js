@@ -27,6 +27,7 @@
                             email: document.getElementById('email').value,
                             discord: document.getElementById('discord').value,
                             grade: document.getElementById('grade').value,
+                            role: document.getElementById('role').value,
                             username: document.getElementById('username').value,
                             password: document.getElementById('password').value
                         })
