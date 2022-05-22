@@ -11,13 +11,10 @@ router.get('/', async (req, res, next) => {
         let user = await database.getUser(username);
         if (user && user.role == 'GM') {
             let team = await database.getTeam(user.team);
-            let playerIds = team.player_ids;
-            let players = [];
-            for (let id in playerIds) {
-                let player = await database.getUserById(playerIds[id]);
-                players.push(player);
-            }
             if (team) {
+                let players = team.player_ids.map(async (id) => {
+                    return await database.getUserById(id);
+                });
                 res.render('my-team', {
                     title: 'My Team',
                     username: req.session.username,
@@ -27,16 +24,20 @@ router.get('/', async (req, res, next) => {
                     team: team,
                     user: user
                 });
-
-                return;
+            } else {
+                res.render('my-team', {
+                    user: user,
+                    title: 'my-team',
+                    username: req.session.username
+                });
             }
+            return;
         }
     }
 
     res.render('my-team', {
         user: {},
         title: 'my-team',
-        team: {},
         username: req.session.username
     });
 });

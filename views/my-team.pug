@@ -49,28 +49,28 @@ block content
             button.btn.btn-primary.disabled(onclick='editRoster()') Edit Roster
             button.btn.btn-primary.ms-2.disabled(onclick='proposeTrade()') Propose Trade
             button.btn.btn-primary.ms-auto(data-bs-toggle="modal" data-bs-target="#change-team-name-modal") Change Team Name
+
+        #change-team-name-modal.modal.fade(tabindex="-1" aria-labelledby="example-modal-label" aria-hidden="true")
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h5.modal-title Change Team Name
+                        button.btn-close(data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body
+                        form
+                            .mb-3
+                                label.col-form-label(for="old-team-name") Old Team Name
+                                input#old-team-name.form-control(type="text" value=team.name disabled)
+                            .mb-3
+                                label.col-form-label(for="new-team-name") New Team Name
+                                input#new-team-name.form-control(type="text")
+                    .modal-footer
+                        button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Close
+                        button.btn.btn-primary(type="button" data-bs-dismiss="modal" onclick='changeTeamName()') Change Team Name
     else if user.role == 'GM'
         button#createTeam.btn.btn-primary(onclick='createTeam()') Create Team
     else 
         p.lead This page is under construction for players.
-    
-    #change-team-name-modal.modal.fade(tabindex="-1" aria-labelledby="example-modal-label" aria-hidden="true")
-        .modal-dialog
-            .modal-content
-                .modal-header
-                    h5.modal-title Change Team Name
-                    button.btn-close(data-bs-dismiss="modal" aria-label="Close")
-                .modal-body
-                    form
-                        .mb-3
-                            label.col-form-label(for="old-team-name") Old Team Name
-                            input#old-team-name.form-control(type="text" value=team.name disabled)
-                        .mb-3
-                            label.col-form-label(for="new-team-name") New Team Name
-                            input#new-team-name.form-control(type="text")
-                .modal-footer
-                    button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Close
-                    button.btn.btn-primary(type="button" data-bs-dismiss="modal" onclick='changeTeamName()') Change Team Name
 
 block scripts
     script(src='/my-team.js')
