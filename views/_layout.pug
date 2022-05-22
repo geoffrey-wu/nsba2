@@ -20,8 +20,9 @@ html
                                     li: a.dropdown-item(href='/gms') GMs
                                     li: a.dropdown-item(href='/teams') Teams
                             li.nav-item.dropdown
-                                a#tournamentDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Spectator
-                                ul.dropdown-menu(aria-labelledby="tournamentDropdown")
+                                a#spectatorDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Spectator
+                                ul.dropdown-menu(aria-labelledby="spectatorDropdown")
+                                    li: a.dropdown-item(href='/mock-draft') Mock Draft
                                     li: a.dropdown-item(href='/results') Results
                                     li: a.dropdown-item(href='/vods') VODs
                                     li: a.dropdown-item(href='/videos') Videos

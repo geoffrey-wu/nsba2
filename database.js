@@ -11,6 +11,7 @@ client.connect();
 const database = client.db('nsba');
 const users = database.collection('users');
 const teams = database.collection('teams');
+const mockDraft = database.collection('mock-draft');
 
 async function getGM(username) {
     return await getUser(username, role = 'GM');
@@ -85,6 +86,19 @@ async function getTeams() {
     const query = {};
     const cursor = await teams.find(query);
     return cursor.toArray();
+}
+
+async function getMockDraft() {
+    let mock = await mockDraft.find({}).toArray();
+    let players = await users.find({role: 'Player'}).toArray();
+    let results = [];
+
+    for (let index in mock) {
+        let id = mock[index].player_id;
+        results.push(players.filter(player => player._id === id)[0]);
+    }
+
+    return results;
 }
 
 /**
@@ -178,7 +192,7 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames,
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getMockDraft,
     addUser, createTeam, editAttribute, editTeamAttribute, editAttributes, replaceUser
 };
 

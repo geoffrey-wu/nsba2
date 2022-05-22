@@ -1,0 +1,21 @@
+extends _layout
+
+block content
+    p.lead The Mock Draft was hosted on the official NSBA discord server at 9:30 PM CDT on May 21st, 2022.
+    p: h4 Players Selected:
+    table#table.table.table-striped
+        thead
+            th(onclick='sortTable(0, isInt=true)' scope='col') #
+            th(onclick='sortTable(1)' scope='col') Player
+            th(onclick='sortTable(2)' scope='col') Profile
+            th(onclick='sortTable(3)' scope='col') Grade
+        tbody 
+            each player, index in players
+                tr 
+                    td= index + 1
+                    td= player.firstName + ' ' + player.lastName
+                    td: a(href='/players/' + player.username)= player.username
+                    td= player.grade
+
+block scripts
+    script(src="/table.js")
