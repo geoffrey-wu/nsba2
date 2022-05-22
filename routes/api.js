@@ -65,8 +65,14 @@ router.post('/edit-profile', async (req, res, next) => {
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
         // log out if player changed their username
-        if (username != req.body.username)
+        // and change team.gm to new username
+        if (username != req.body.username) {
             req.session = null;
+            let user = await database.getGM(username);
+            if (user) {
+                await database.editTeamAttribute(user.team, 'gm', req.body.username);
+            }
+        }
 
         await database.editAttributes(username, req.body);
         res.sendStatus(200);

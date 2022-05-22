@@ -25,14 +25,12 @@ block content
             each team in teams
                 tr
                     td: a(href=`/teams/${team.name}`)= team.name
-                    td=team.gm
-                    td=team.draft_picks[0] + 1
-                    td=team.draft_picks[1] + 1
-                    td=team.draft_picks[2] + 1
-                    td=team.draft_picks[3] + 1
-                    td=team.draft_picks[4] + 1
-                    //- td=team.picks[4]
-                    //- - console.log(team);
+                    td: a(href=`/gm/${team.gm}`)= team.gm
+                    td= team.draft_picks[0] + 1 || '-'
+                    td= team.draft_picks[1] + 1 || '-'
+                    td= team.draft_picks[2] + 1 || '-'
+                    td= team.draft_picks[3] + 1 || '-'
+                    td= team.draft_picks[4] + 1 || '-'
 
 
 block scripts

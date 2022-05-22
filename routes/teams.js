@@ -10,8 +10,8 @@ router.get(/\/.+/, async (req, res, next) => {
     }
 
     let team = await database.getTeam({name: teamName});
-    let gm = await database.getUserById(team.gm);
-    let playerIds = team.players;
+    let gm = await database.getUser(team.gm);
+    let playerIds = team.player_ids;
     let players = [];
     for (let id in playerIds) {
         let player = await database.getUserById(playerIds[id]);

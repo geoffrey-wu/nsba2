@@ -9,7 +9,7 @@ router.get('/', async function (req, res, next) {
         let user = await database.getUser(username);
         if (user && user.role == 'GM') {
             let team = await database.getTeam({name: user.team});
-            let playerIds = team.players;
+            let playerIds = team.player_ids;
             let players = [];
             for (let id in playerIds) {
                 let player = await database.getUserById(playerIds[id]);
