@@ -27,6 +27,14 @@ router.get('/', async function (req, res, next) {
 
                 return;
             }
+        } else if (user && user.role == 'Player') {
+            res.render('my-team', {
+                user: {},
+                username: req.session.username,
+                team: {}
+            });
+
+            return;
         }
     }
 

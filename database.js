@@ -137,6 +137,20 @@ async function editAttribute(username, key, value) {
 }
 
 /**
+ * 
+ * @param {String} teamName 
+ * @param {String} key 
+ * @param {String} value 
+ */
+async function editTeamAttribute(teamName, key, value) {
+    const filter = { name: teamName };
+    let tempJSON = {};
+    tempJSON[key] = value;
+    const update = { $set: tempJSON };
+    await teams.updateOne(filter, update);
+}
+
+/**
  * Edit multiple attributes of a user at one time.
  * Does nothing if `username` is not found.
  * @param {String} username 
@@ -165,6 +179,6 @@ async function replaceUser(username, newUser) {
 
 module.exports = {
     getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames,
-    addUser, createTeam, editAttribute, editAttributes, replaceUser
+    addUser, createTeam, editAttribute, editTeamAttribute, editAttributes, replaceUser
 };
 
