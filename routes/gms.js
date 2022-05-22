@@ -4,6 +4,7 @@ var router = express.Router();
 
 router.get(/\/.+/, async (req, res, next) => {
     let gmName = req.url.substring(1);
+    gmName = decodeURI(gmName);
     if (gmName.charAt(gmName.length - 1) === '/') {
         gmName = gmName.substring(0, gmName.length - 1);
     }
