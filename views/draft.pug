@@ -37,7 +37,10 @@ block content
                         h6.m-0 Pick #{index++}
                         div=gm.firstName + ' ' + gm.lastName
     else
-        p The draft order has not been released yet.
+        p The draft order can be found
+            | 
+            a(href="/teams") here
+            | .
 
     p: h4 Remaining Players:
     table#table.table.table-striped
