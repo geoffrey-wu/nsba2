@@ -9,12 +9,13 @@ const client = new MongoClient(uri);
 client.connect();
 
 const database = client.db('nsba');
-const users = database.collection('users');
-const teams = database.collection('teams');
+const draft = database.collection('draft-picks');
 const mockDraft = database.collection('mock-draft');
+const teams = database.collection('teams');
+const users = database.collection('users');
 
 /**
- * Equivalent to calling getUser(username, role='GM').
+ * Equivalent to calling `getUser(username, role='GM')`.
  * @param {String} username 
  * @returns {Promise<JSON>}
  */
@@ -23,7 +24,7 @@ async function getGM(username) {
 }
 
 /**
- * Equivalent to calling getUser(username, role='GM').
+ * Equivalent to calling `getUser(username, role='GM')`.
  * @param {String} username 
  * @returns {Promise<JSON>}
  */
@@ -143,6 +144,23 @@ async function getMockDraft() {
 }
 
 /**
+ * Returns the result of the actual draft in an array.
+ * @returns {Promise<Array<JSON>>} - an array of JSON-like draft objects.
+ */
+async function getDraft() {
+    return await draft.find({}).toArray();
+}
+
+/**
+ * 
+ * @param {Number} draftNumber - 0-indexed number that represents which pick of the draft this pick is.
+ * @param {String} playerName - the name of the player that was drafted.
+ */
+async function selectPlayer(draftNumber, playerName) {
+    await draft.updateOne({_id: parseInt(draftNumber)}, {$set: {player: playerName}});
+}
+
+/**
  * Adds the player to the database. Throws an error if the player is already in the database.
  * @param {String} username - the username of the player to be added.
  * @param {JSON} user - JSON object to be added to the database.
@@ -199,6 +217,20 @@ async function editAttribute(username, key, value) {
  * @param {String} key 
  * @param {String} value 
  */
+async function editDraftAttribute(teamName, key, value) {
+    const filter = { team: teamName };
+    let tempJSON = {};
+    tempJSON[key] = value;
+    const update = { $set: tempJSON };
+    await draft.updateMany(filter, update);
+}
+
+/**
+ * 
+ * @param {String} teamName 
+ * @param {String} key 
+ * @param {String} value 
+ */
 async function editTeamAttribute(teamName, key, value) {
     const filter = { name: teamName };
     let tempJSON = {};
@@ -235,7 +267,7 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getMockDraft,
-    addUser, createTeam, editAttribute, editTeamAttribute, editAttributes, replaceUser
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getMockDraft, getDraft,
+    selectPlayer, addUser, createTeam, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser
 };
 
