@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+// var io = require('../bin/www');
+
 var authentication = require('../authentication');
 var database = require('../database');
 
@@ -124,6 +126,28 @@ router.post('/edit-team-name', async (req, res, next) => {
     } else {
         res.sendStatus(401);
     } 
+});
+
+router.post('/draft-player', async (req, res, next) => {
+    let username = req.session.username;
+    let token = req.session.token;
+    if (authentication.checkToken(username, token)) {
+        let user = await database.getGM(username);
+        if (user && 'team' in user) {
+            let team = await database.getTeam(user.team);
+            if (team.draft_picks.includes(await database.getCurrentDraftPick())) {
+                await database.draftPlayer(req.body.player);
+                let nextDraftPick = await database.getNextDraftPick();
+                res.status(200).send({nextGm: nextDraftPick.gm, nextTeam: nextDraftPick.team, player: req.body.player});
+            } else {
+                res.sendStatus(403);
+            }
+        } else {
+            res.sendStatus(403);
+        }
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 module.exports = router;

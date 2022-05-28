@@ -10,6 +10,7 @@ var editBioRouter = require('./routes/edit-bio');
 var editPasswordRouter = require('./routes/edit-password');
 var editProfileRouter = require('./routes/edit-profile');
 var draftRouter = require('./routes/draft');
+var draftOrderRouter = require('./routes/draft-order');
 var gmRouter = require('./routes/gms');
 var loginRouter = require('./routes/login');
 var mockDraftRouter = require('./routes/mock-draft');
@@ -23,6 +24,7 @@ var teamsRouter = require('./routes/teams');
 
 var apiRouter = require('./routes/api');
 
+var cssRouter = require('./routes/css');
 var imageRouter = require('./routes/images');
 var jsRouter = require('./routes/javascript');
 
@@ -53,6 +55,7 @@ app.use('/edit-bio', editBioRouter);
 app.use('/edit-password', editPasswordRouter);
 app.use('/edit-profile', editProfileRouter);
 app.use('/draft', draftRouter);
+app.use('/draft-order', draftOrderRouter);
 app.use('/gms', gmRouter);
 app.use('/login', loginRouter);
 app.use('/mock-draft', mockDraftRouter);
@@ -64,6 +67,7 @@ app.use('/signup', signupRouter);
 app.use('/staff', staffRouter);
 app.use('/teams', teamsRouter);
 
+app.use('/*.css', cssRouter);
 app.use('/*.js', jsRouter);
 app.use('/*.png', imageRouter);
 
@@ -83,6 +87,38 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('error');
+});
+
+/**
+ * Light socket.io to update draft picks real-time.
+ * Note: only used to update *display*.
+ * No socket calls affect who is actually drafted.
+ */
+var { Server } = require('socket.io');
+var URLorigin;
+if (process.env.NODE_ENV === 'production') {
+    URLorigin = "https://nsba.herokuapp.com";
+} else {
+    URLorigin = "http://localhost:3000";
+}
+
+const io = new Server(6700, {
+    cors: {
+        origin: URLorigin,
+        methods: ["GET", "POST"]
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log('user connected to socket at port 6700');
+
+    socket.on('new pick', (data) => {
+        io.emit('new pick', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 });
 
 module.exports = app;

@@ -132,7 +132,7 @@ async function getTeams() {
  */
 async function getMockDraft() {
     let mock = await mockDraft.find({}).toArray();
-    let players = await users.find({role: 'Player'}).toArray();
+    let players = await users.find({ role: 'Player' }).toArray();
     let results = [];
 
     for (let index in mock) {
@@ -145,19 +145,82 @@ async function getMockDraft() {
 
 /**
  * Returns the result of the actual draft in an array.
- * @returns {Promise<Array<JSON>>} - an array of JSON-like draft objects.
+ * @returns {Promise<Array<JSON>>} an array of JSON-like draft objects.
  */
 async function getDraft() {
-    return await draft.find({}).toArray();
+    return await draft.find({ _id: { $gte: 0 } }).toArray();
 }
 
 /**
  * 
- * @param {Number} draftNumber - 0-indexed number that represents which pick of the draft this pick is.
+ * @returns {Promise<Number>} 0-indexed number of the current draft pick.
+ */
+async function getCurrentDraftNumber() {
+    let currentPick = await draft.findOne({_id: -1});
+    return currentPick.currentPick;
+}
+
+/**
+ * 
+ * @param {Number} number 
+ * @returns 
+ */
+async function getDraftPick(number) {
+    return await draft.findOne({ _id: number });
+}
+
+/**
+ * 
+ * @returns {Promise<JSON>} JSON-like draft object.
+ */
+async function getPreviousDraftPick() {
+    let currentPick = await draft.findOne({ _id: -1 });
+    currentPick = currentPick.currentPick;
+    if (currentPick - 1 >= 0) {
+        return await getDraftPick(currentPick - 1);
+    } else {
+        return undefined;
+    }
+}
+
+/**
+ * 
+ * @returns {Promise<JSON>} JSON-like draft object.
+ */
+async function getCurrentDraftPick() {
+    let currentPick = await draft.findOne({ _id: -1 });
+    currentPick = currentPick.currentPick;
+    if (currentPick >= 0) {
+        return await getDraftPick(currentPick);
+    } else {
+        return undefined;
+    }
+}
+
+/**
+ * 
+ * @returns {Promise<JSON>} JSON-like draft object.
+ */
+async function getNextDraftPick() {
+    let currentPick = await draft.findOne({ _id: -1 });
+    currentPick = currentPick.currentPick;
+    if (currentPick + 1 >= 0) {
+        return await getDraftPick(currentPick + 1);
+    } else {
+        return undefined;
+    }
+}
+
+/**
+ * 
  * @param {String} playerName - the name of the player that was drafted.
  */
-async function selectPlayer(draftNumber, playerName) {
-    await draft.updateOne({_id: parseInt(draftNumber)}, {$set: {player: playerName}});
+async function draftPlayer(playerName, teamName) {
+    await users.updateOne({ username: playerName }, { $set: { team: teamName } });
+    let draftNumber = await draft.findOne({ _id: -1 });
+    draftNumber = draftNumber.currentPick;
+    await draft.updateOne({ _id: parseInt(draftNumber) }, { $set: { player: playerName } });
+    await draft.updateOne({ _id: -1 }, { $inc: { currentPick: 1 } });
 }
 
 /**
@@ -267,7 +330,8 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getMockDraft, getDraft,
-    selectPlayer, addUser, createTeam, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames,
+    addUser, createTeam, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser,
+    getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };
 

@@ -1,0 +1,36 @@
+extends _layout
+
+block content
+    //- .text-center
+    //-     img.img-fluid(src='/logo.png' width='30%')
+    //-     p: h1 National Science Bowl Association
+    p Below is the draft order:
+    table#table.table.table-striped
+        thead
+            tr
+                th(onclick='sortTable(0)' scope='col') Team Name
+                th(onclick='sortTable(1)' scope='col') GM
+                th(onclick='sortTable(2, isInt=true)' scope='col') Pick 1
+                th(onclick='sortTable(3, isInt=true)' scope='col') Pick 2
+                th(onclick='sortTable(4, isInt=true)' scope='col') Pick 3
+                th(onclick='sortTable(5, isInt=true)' scope='col') Pick 4
+                th(onclick='sortTable(6, isInt=true)' scope='col') Pick 5
+        tbody
+        if teams
+            each team in teams
+                tr
+                    td: a(href=`/teams/${team.name}`)= team.name
+                    td: a(href=`/gms/${team.gm}`)= team.gm
+                    td= team.draft_picks[0] + 1 || '-'
+                    td= team.draft_picks[1] + 1 || '-'
+                    td= team.draft_picks[2] + 1 || '-'
+                    td= team.draft_picks[3] + 1 || '-'
+                    td= team.draft_picks[4] + 1 || '-'
+
+
+block scripts
+    script(src='/table.js')
+    script.
+        window.onload = () => {
+            sortTable(2, isInt=true);
+        }
