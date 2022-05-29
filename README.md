@@ -26,7 +26,7 @@ The main principle behind the design of the database is that reading is much mor
 - writes only occur when a username or team name changes
 
 ```js
-user {
+user = {
     _id: user_id,
     firstName: first_name,
     lastName: last_name,
@@ -36,7 +36,7 @@ user {
     role: role,         // 'Player', 'GM', or 'Admin'
     username: username,
     password: password, // salted and hashed base-64 number
-    team: team_name
+    team: team_name,
     bio: {
         generalBio: string
         experience: string
@@ -45,7 +45,7 @@ user {
     }
 }
 
-team {
+team = {
 	_id: team_id,
 	gm: gm_name,
 	name: team_name,
@@ -53,17 +53,17 @@ team {
 	draft_picks: [ draft_pick['_id'] ... ]
 }
 
-draft_pick {
-	_id: draft_number
-	gm: gm_name
-	player: player_name
-	team: team_name
+draft_pick = {
+	_id: draft_number,
+	gm: gm_name,
+	player: player_name,
+	team: team_name,
 	trade_history: [trade_id...]
 }
 
-mock_draft {
-	_id: draft_number
-	player: player_name
+mock_draft = {
+	_id: draft_number,
+	player: player_name,
 	player_id: player_id
 }
 ```
