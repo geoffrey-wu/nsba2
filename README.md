@@ -38,9 +38,9 @@ user = {
     password: password, // salted and hashed base-64 number
     team: team_name,
     bio: {
-        generalBio: string
-        experience: string
-        competitions: string
+        generalBio: string,
+        experience: string,
+        competitions: string,
         textbooks: string
     }
 }
