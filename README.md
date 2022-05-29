@@ -46,24 +46,24 @@ user = {
 }
 
 team = {
-	_id: team_id,
-	gm: gm_name,
-	name: team_name,
-	player_ids: [player_id...],
-	draft_picks: [ draft_pick['_id'] ... ]
+    _id: team_id,
+    gm: gm_name,
+    name: team_name,
+    player_ids: [player_id...],
+    draft_picks: [ draft_pick['_id'] ... ]
 }
 
 draft_pick = {
-	_id: draft_number,
-	gm: gm_name,
-	player: player_name,
-	team: team_name,
-	trade_history: [trade_id...]
+    _id: draft_number,
+    gm: gm_name,
+    player: player_name,
+    team: team_name,
+    trade_history: [trade_id...]
 }
 
 mock_draft = {
-	_id: draft_number,
-	player: player_name,
-	player_id: player_id
+    _id: draft_number,
+    player: player_name,
+    player_id: player_id
 }
 ```
