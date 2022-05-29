@@ -35,7 +35,7 @@ async function getPlayer(username) {
 /**
  * 
  * @param {String} username the username of the user you are trying to retrieve.
- * @param {String} role (optional) the role of the user. Must be either 'player', 'GM', or 'Admin'.
+ * @param {String} role the role of the user. Must be either 'player', 'GM', or 'Admin'.
  * @returns {Promise<JSON>} JSON-like user object matching the parameters. Returns undefined if no users match the query.
  */
 async function getUser(username, role = '') {
@@ -126,9 +126,9 @@ async function getTeams() {
 }
 
 /**
- * Returns the results of the mock draft in an array.
+ * Returns the results of the mock draft.
  * The results are *in order*, so the i-th element of the array corresponds to the i-th pick.
- * @returns {Promise<Array<JSON>>} - an array of JSON-like player objects.
+ * @returns {Promise<Array<JSON>>} an array of JSON-like player objects.
  */
 async function getMockDraft() {
     let mock = await mockDraft.find({}).toArray();
@@ -275,7 +275,7 @@ async function editAttribute(username, key, value) {
 }
 
 /**
- * 
+ * Updates all draft picks with the given `teamName` by setting the value of `key` to `value`.
  * @param {String} teamName 
  * @param {String} key 
  * @param {String} value 

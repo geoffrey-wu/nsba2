@@ -67,9 +67,12 @@ router.post('/edit-profile', async (req, res, next) => {
         // and change team.gm to new username
         if (username != req.body.username) {
             req.session = null;
-            let user = await database.getGM(username);
-            if (user) { // check if user is GM
+            let user = await database.getUser(username);
+            if (user && user.role === 'GM') { // check if user is GM
                 await database.editTeamAttribute(user.team, 'gm', req.body.username);
+                await database.editDraftAttribute(user.team, 'gm', req.body.username);
+            } else if (user && 'team' in user) {
+                await database.editDraftAttribute(user.team, 'player', req.body.username);
             }
         }
 
