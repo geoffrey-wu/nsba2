@@ -35,6 +35,7 @@ html
                                     li: a.dropdown-item(href='/draft') Draft
                                     li: a.dropdown-item(href='/draft-order') Draft Order
                                     li: a.dropdown-item(href='/mock-draft') Mock Draft
+                            li.nav-item: a.nav-link(href='/rules') Rules
                             li.nav-item: a.nav-link(href='/staff') Staff
                             if username
                                 li.nav-item: a.nav-link(href='/my-team') My Team
@@ -42,7 +43,7 @@ html
                                 li.nav-item: a.nav-link.disabled(href='/') My Team
                         ul.navbar-nav.ms-auto.me-2.mb-2.mb-lg-0
                             li.nav-item: a.nav-link(href=`/${username ? 'profile' : 'login'}`) #{username ? username : 'Login'}
-        .container-lg.mt-3.mb-5
+        .container-lg.mt-3.pb-5.mb-5
             block content
 
         block scripts
