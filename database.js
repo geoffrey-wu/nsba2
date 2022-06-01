@@ -131,7 +131,7 @@ async function getTeams() {
  * @returns {Promise<Array<JSON>>} an array of JSON-like player objects.
  */
 async function getMockDraft() {
-    let mock = await mockDraft.find({}).toArray();
+    let mock = await mockDraft.find({}, { sort: { _id: 1 } }).toArray();
     let players = await users.find({ role: 'Player' }).toArray();
     let results = [];
 
@@ -156,7 +156,7 @@ async function getDraft() {
  * @returns {Promise<Number>} 0-indexed number of the current draft pick.
  */
 async function getCurrentDraftNumber() {
-    let currentPick = await draft.findOne({_id: -1});
+    let currentPick = await draft.findOne({ _id: -1 });
     return currentPick.currentPick;
 }
 
