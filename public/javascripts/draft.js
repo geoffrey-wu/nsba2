@@ -153,6 +153,15 @@ function resetTimer(seconds=600) {
 }
 
 window.onload = () => {
+    sortTable(5, true);
+    sortTable(5, true);
+    sortTable(4, true);
+    sortTable(4, true);
+
+    for (let i = 0; i < document.getElementsByClassName('projected').length; i++) {
+        document.getElementsByClassName('projected')[i].innerHTML = i + 1;
+    }
+
     resetTimer();
     /**
      * 6/11/2022 @ 8 PM CDT, the start time of the draft

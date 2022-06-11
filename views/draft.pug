@@ -92,7 +92,7 @@ block content
             th(                       scope='col') 
             th(onclick='sortTable(2)' scope='col') Profile
             th(onclick='sortTable(3)' scope='col') Grade
-            th(onclick='sortTable(4)' scope='col') Combine Score
+            th(onclick='sortTable(4, isInt=true)' scope='col') Combine Score
             th(onclick='sortTable(5)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Geoffrey\'s Modified (Combine) Score.') MCS
             th(onclick='sortTable(6)' scope='col') Projected
         tbody 
@@ -105,8 +105,8 @@ block content
                         td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")` disabled) Draft
                     td: a(href='/players/' + player.username)= player.username
                     td= player.grade
-                    td.combine-score= player.combineScore
-                    td.gems= player.gems
+                    td.combine-score= (player.combine) ? player.combine.slice(0, 19).reduce((prev, next) => prev + next) : -100
+                    td.mcs= player.mcs= player.combine ? Math.round(player.combine[20]) : -100
                     td.projected
 
 block scripts
