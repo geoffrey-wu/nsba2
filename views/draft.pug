@@ -9,59 +9,67 @@ block content
         | .
     p.lead The draft begins on June 11th, 2022 at 8:00 PM CDT.
     .row.mb-4
-            #previous.col-3.pt-2.mx-auto.border.border-danger
-                if previousPick
-                    h5 Previous Pick [
-                        span#previous-number= previousPick._id + 1
-                        | ]
-                    .mb-1 GM:
-                        | 
-                        span#previous-gm= previousPick.gm
-                    .mb-1 Team:
-                        | 
-                        span#previous-team= previousPick.team
-                    .mb-3 Player:
-                        | 
-                        span#previous-player= previousPick.player
-                else 
-                    h5 Previous Pick
-                    .mb-1 GM: -
-                    .mb-1 Team: -
-                    .mb-3 Player: -
-            #currentPick.col-3.pt-2.mx-auto.border.border-success
-                if currentPick
-                    h5.mb-3 Current Pick [
-                        span#current-number= currentPick._id + 1
-                        | ]
-                    .mb-1 GM:
-                        | 
-                        span#current-gm= currentPick.gm
-                    .mb-1 Team:
-                        | 
-                        span#current-team= currentPick.team
-                    .mb-3
-                else
-                    h5 Current Pick 
-                    .mb-1 GM: -
-                    .mb-1 Team: -
-                    .mb-3
-            #nextPick.col-3.pt-2.mx-auto.border.border-warning
-                if nextPick
-                    h5 Next Pick [
-                        span#next-number= nextPick._id + 1
-                        | ]
-                    .mb-1 GM:
-                        | 
-                        span#next-gm= nextPick.gm
-                    .mb-1 Team:
-                        | 
-                        span#next-team= nextPick.team
-                    .mb-3
-                else
-                    h5 Next Pick
-                    .mb-1 GM: -
-                    .mb-1 Team: -
-                    .mb-3
+        #previous.col-3.pt-2.mx-auto.border.border-danger
+            if previousPick
+                h5 Previous Pick [
+                    span#previous-number= previousPick._id + 1
+                    | ]
+                .mb-1 GM:
+                    | 
+                    span#previous-gm= previousPick.gm
+                .mb-1 Team:
+                    | 
+                    span#previous-team= previousPick.team
+                .mb-3 Player:
+                    | 
+                    span#previous-player= previousPick.player
+            else 
+                h5 Previous Pick
+                .mb-1 GM: -
+                .mb-1 Team: -
+                .mb-3 Player: -
+        #currentPick.col-3.pt-2.mx-auto.border.border-success
+            if currentPick
+                h5.mb-3 Current Pick [
+                    span#current-number= currentPick._id + 1
+                    | ]
+                .mb-1 GM:
+                    | 
+                    span#current-gm= currentPick.gm
+                .mb-1 Team:
+                    | 
+                    span#current-team= currentPick.team
+                .mb-3 Time remaining:
+                    | 
+                    span#current-minute 10
+                    | :
+                    span#current-second 00
+            else
+                h5 Current Pick 
+                .mb-1 GM: -
+                .mb-1 Team: -
+                .mb-3 Time remaining:
+                    | 
+                    span#current-minute 10
+                    | :
+                    span#current-second 00
+        #nextPick.col-3.pt-2.mx-auto.border.border-warning
+            if nextPick
+                h5 Next Pick [
+                    span#next-number= nextPick._id + 1
+                    | ]
+                .mb-1 GM:
+                    | 
+                    span#next-gm= nextPick.gm
+                .mb-1 Team:
+                    | 
+                    span#next-team= nextPick.team
+                .mb-3
+            else
+                h5 Next Pick
+                .mb-1 GM: -
+                .mb-1 Team: -
+                .mb-3
     
     h4 Draft Order:
     p Use your mouse to drag the draft order left and right.
@@ -84,7 +92,9 @@ block content
             th(                       scope='col') 
             th(onclick='sortTable(2)' scope='col') Profile
             th(onclick='sortTable(3)' scope='col') Grade
-            th(onclick='sortTable(4)' scope='col') Projected
+            th(onclick='sortTable(4)' scope='col') Combine Score
+            th(onclick='sortTable(5)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Geoffrey\'s Modified (Combine) Score.') MCS
+            th(onclick='sortTable(6)' scope='col') Projected
         tbody 
             each player in players
                 tr(player=player.username)
@@ -93,12 +103,11 @@ block content
                         td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")`) Draft
                     else
                         td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")` disabled) Draft
-                    td
-                        a(href='/players/' + player.username)
-                            = player.username
-                    td
-                        = player.grade
-                    td
+                    td: a(href='/players/' + player.username)= player.username
+                    td= player.grade
+                    td.combine-score= player.combineScore
+                    td.gems= player.gems
+                    td.projected
 
 block scripts
     script(src="/table.js")

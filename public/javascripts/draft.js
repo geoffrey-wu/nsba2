@@ -1,3 +1,16 @@
+/**
+ * Time remaining for the current GM to select their next draft pick, in seconds.
+ * @type {Number}
+ */
+var draft_time;
+
+/**
+ * Enable tooltips on this page.
+ */
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+});
 
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
@@ -5,6 +18,8 @@ import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 const socket = io('https://nsba.herokuapp.com:6700');
 
 socket.on('new pick', (data) => {
+    resetTimer();
+
     // move the current pick to the previous pick
     document.getElementById('previous-number').innerHTML = parseInt(document.getElementById('previous-number').innerHTML) + 1;
     document.getElementById('previous-gm').innerHTML = document.getElementById('current-gm').innerHTML;
@@ -61,19 +76,28 @@ async function draftPlayer(username) {
     }
 }
 
+function autoDraft() {
+    let worstPick = 10000;
+    for (let element of document.getElementsByTagName('tr')) {
+    }
+}
+
 window.draftPlayer = draftPlayer;
 
-let ele = document.getElementById('draft-order');
+/**
+ * Implement drag-to-scroll for the draft order:
+ */
+let draftOrder = document.getElementById('draft-order');
 let pos = { top: 0, left: 0, x: 0, y: 0 };
 
 const mouseDownHandler = function (e) {
-    ele.style.cursor = 'grabbing';
-    ele.style.userSelect = 'none';
+    draftOrder.style.cursor = 'grabbing';
+    draftOrder.style.userSelect = 'none';
 
     pos = {
         // The current scroll
-        left: ele.scrollLeft,
-        top: ele.scrollTop,
+        left: draftOrder.scrollLeft,
+        top: draftOrder.scrollTop,
         // Get the current mouse position
         x: e.clientX,
         y: e.clientY,
@@ -89,16 +113,54 @@ const mouseMoveHandler = function (e) {
     const dy = e.clientY - pos.y;
 
     // Scroll the element
-    ele.scrollTop = pos.top - dy;
-    ele.scrollLeft = pos.left - dx;
+    draftOrder.scrollTop = pos.top - dy;
+    draftOrder.scrollLeft = pos.left - dx;
 };
 
 const mouseUpHandler = function () {
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
 
-    ele.style.cursor = 'grab';
-    ele.style.removeProperty('user-select');
+    draftOrder.style.cursor = 'grab';
+    draftOrder.style.removeProperty('user-select');
 };
 
-ele.addEventListener('mousedown', mouseDownHandler);
+draftOrder.addEventListener('mousedown', mouseDownHandler);
+
+/**
+ * Implement timer for the draft:
+ */
+
+function timer() {
+    var timer = setInterval(() => {
+        document.getElementById('current-minute').innerHTML = Math.floor(draft_time / 60);
+        let seconds = draft_time % 60;
+        seconds = seconds.toString();
+        if (seconds.length == 1) {
+            seconds = '0' + seconds;
+        }
+        document.getElementById('current-second').innerHTML = seconds;
+        draft_time--;
+        if (draft_time < 0) {
+            resetTimer();
+            autoDraft();
+        }
+    }, 1000);
+}
+
+function resetTimer(seconds=600) {
+    draft_time = seconds;
+}
+
+window.onload = () => {
+    resetTimer();
+    /**
+     * 6/11/2022 @ 8 PM CDT, the start time of the draft
+     */
+     const startTime = 1654995600000;
+     if ((new Date()).getTime() < startTime) {
+        setTimeout(timer, startTime - (new Date()).getTime());
+    } else {
+        timer();
+    }
+};
