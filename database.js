@@ -224,15 +224,17 @@ async function getNextDraftPick() {
  * @param {String} playerName - the name of the player that was drafted.
  */
 async function draftPlayer(playerName, teamName) {
-    await users.updateOne({ username: playerName }, { $set: { team: teamName } });
+    let player = await users.findOneAndUpdate({ username: playerName }, { $set: { team: teamName } });
     let draftNumber = await draft.findOne({ _id: -1 });
     draftNumber = draftNumber.currentPick;
     await draft.updateOne({ _id: parseInt(draftNumber) }, { $set: { player: playerName } });
     await draft.updateOne({ _id: -1 }, { $inc: { currentPick: 1 } });
+
+    await teams.updateOne({ name: teamName }, { $push: { player_ids: player._id } });
 }
 
 async function getCombine() {
-    let combine = await users.find({ role: 'Player' }, { projection: { username: 1, combine: 1 }}).toArray();
+    let combine = await users.find({ role: 'Player' }, { projection: { username: 1, combine: 1 } }).toArray();
 }
 
 /**
