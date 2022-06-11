@@ -1,0 +1,99 @@
+extends _layout
+
+block content
+    p.lead The combine took place over 2 weeks before the draft.
+
+    p For each question, a player's <b>MCS</b> (Modified Combine Score) is calculated by taking the number of points they got on that question 
+        | and dividing by the number of positive points everyone got on that question.
+        | A player's overall MCS is the sum of their MCS score for each individual question, then multiplied by the number of players. 
+        strong A higher MCS corresponds to getting harder questions correct.
+    .table-responsive-xl: table.table.table-sm.table-hover.text-center
+        thead.position-sticky.top-0.bg-light
+            th.text-start(onclick='sortTable(0)' scope='col') Player
+            th(onclick='sortTable(1, isInt="true")' scope='col') Rank
+            
+            th.border-start(onclick='sortTable(2, isInt="true")' scope='col') B
+            th(onclick='sortTable(3, isInt="true")' scope='col') 1
+            th(onclick='sortTable(4, isInt="true")' scope='col') 2
+            th(onclick='sortTable(5, isInt="true")' scope='col') 3
+            th(onclick='sortTable(6, isInt="true")' scope='col') 4
+
+            th.border-start(onclick='sortTable(7, isInt="true")' scope='col') C
+            th(onclick='sortTable(8, isInt="true")' scope='col') 1
+            th(onclick='sortTable(9, isInt="true")' scope='col') 2
+            th(onclick='sortTable(10, isInt="true")' scope='col') 3
+            th(onclick='sortTable(11, isInt="true")' scope='col') 4
+            
+            th.border-start(onclick='sortTable(12, isInt="true")' scope='col') E
+            th(onclick='sortTable(13, isInt="true")' scope='col') 1
+            th(onclick='sortTable(14, isInt="true")' scope='col') 2
+            th(onclick='sortTable(15, isInt="true")' scope='col') 3
+            th(onclick='sortTable(16, isInt="true")' scope='col') 4
+            
+            th.border-start(onclick='sortTable(17, isInt="true")' scope='col') M
+            th(onclick='sortTable(18, isInt="true")' scope='col') 1
+            th(onclick='sortTable(19, isInt="true")' scope='col') 2
+            th(onclick='sortTable(20, isInt="true")' scope='col') 3
+            th(onclick='sortTable(21, isInt="true")' scope='col') 4
+            
+            th.border-start(onclick='sortTable(22, isInt="true")' scope='col') P
+            th(onclick='sortTable(23, isInt="true")' scope='col') 1
+            th(onclick='sortTable(24, isInt="true")' scope='col') 2
+            th(onclick='sortTable(25, isInt="true")' scope='col') 3
+            th(onclick='sortTable(26, isInt="true")' scope='col') 4
+            
+            th.border-start(onclick='sortTable(27, isInt="true")' scope='col') Overall
+            th.border-start(onclick='sortTable(28, isInt="true")' scope='col') MCS
+
+        - let numPlayers = 0;
+        - let arr = new Array(26).fill(0);
+        - let totalMCS = 0
+
+        tbody#table
+            tr
+            each player, index in players
+                if 'combine' in player
+                    - numPlayers++;
+                    tr
+                        td.text-start: a(href='/players/' + player.username)= player.username
+                        td.rank= index
+                        
+                        each i in [0, 1, 2, 3, 4]
+                            - let total = player.combine.slice(4*i, 4*i + 4).reduce((prev, current) => {return prev + current});
+                            - arr[5*i] += total
+                            td.border-start= total
+                            each score, index in player.combine.slice(4*i, 4*i + 4)
+                                - arr[5*i + index + 1] += score
+                                td= score
+                        
+                        - let total = player.combine.slice(0, 20).reduce((prev, current) => {return prev + current})
+                        - arr[25] += total
+                        td.border-start= total
+                        td.border-start= Math.round(player.combine[20])
+                        - totalMCS += player.combine[20]
+
+        tfoot.position-sticky.bottom-0.bg-light
+            tr
+                th Average
+                th
+                    each val, index in arr
+                        if index%5 == 0
+                            th.border-start= Math.round(10*val/numPlayers) / 10
+                        else
+                            th= Math.round(10*val/numPlayers) / 10
+                
+                th.border-start= Math.round(10*totalMCS/numPlayers) / 10
+            tr
+                th Total
+                th= numPlayers
+                each val, index in arr
+                    if index%5 == 0
+                        th.border-start= val
+                    else
+                        th= val
+                
+                th.border-start= Math.round(totalMCS)
+
+block scripts 
+    script(src="/table.js")
+    script(type="module" src='/combine.js')

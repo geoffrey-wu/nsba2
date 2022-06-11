@@ -18,7 +18,7 @@ client.connect().then(() => {
     mockDraft = database.collection('mock-draft');
     teams = database.collection('teams');
     users = database.collection('users');
-    
+
     console.log('connected to mongodb');
 });
 
@@ -229,6 +229,10 @@ async function draftPlayer(playerName, teamName) {
     draftNumber = draftNumber.currentPick;
     await draft.updateOne({ _id: parseInt(draftNumber) }, { $set: { player: playerName } });
     await draft.updateOne({ _id: -1 }, { $inc: { currentPick: 1 } });
+}
+
+async function getCombine() {
+    let combine = await users.find({ role: 'Player' }, { projection: { username: 1, combine: 1 }}).toArray();
 }
 
 /**
