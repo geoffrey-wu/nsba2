@@ -93,8 +93,8 @@ block content
             th(onclick='sortTable(2)' scope='col') Profile
             th(onclick='sortTable(3)' scope='col') Grade
             th(onclick='sortTable(4, isInt=true)' scope='col') Combine Score
-            th(onclick='sortTable(5)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
-            th(onclick='sortTable(6)' scope='col') Projected
+            th(onclick='sortTable(5, isInt=true)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
+            th(onclick='sortTable(6, isInt=true)' scope='col') Projected
         tbody 
             each player in players
                 tr(player=player.username)
