@@ -103,7 +103,7 @@ router.post('/edit-password', async (req, res, next) => {
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
         if (await authentication.checkPassword(username, req.body.oldPassword)) {
-            await authentication.updatePassword(username, 'password', req.body.newPassword);
+            await authentication.updatePassword(username, req.body.newPassword);
             res.sendStatus(200);
         } else {
             res.sendStatus(403);
