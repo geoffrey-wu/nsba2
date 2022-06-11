@@ -12,7 +12,7 @@ block content
         #previous.col-3.pt-2.mx-auto.border.border-danger
             if previousPick
                 h5 Previous Pick [
-                    span#previous-number= previousPick._id + 1
+                    span#previous-number= previousPick._id
                     | ]
                 .mb-1 GM:
                     | 
@@ -31,7 +31,7 @@ block content
         #currentPick.col-3.pt-2.mx-auto.border.border-success
             if currentPick
                 h5.mb-3 Current Pick [
-                    span#current-number= currentPick._id + 1
+                    span#current-number= currentPick._id
                     | ]
                 .mb-1 GM:
                     | 
@@ -56,7 +56,7 @@ block content
         #nextPick.col-3.pt-2.mx-auto.border.border-warning
             if nextPick
                 h5 Next Pick [
-                    span#next-number= nextPick._id + 1
+                    span#next-number= nextPick._id
                     | ]
                 .mb-1 GM:
                     | 
@@ -81,7 +81,7 @@ block content
     #draft-order.d-flex.flex-nowrap.overflow-auto
         each pick in picks
             .me-2.p-3.border.text-nowrap
-                h6.m-0 Pick #{pick._id + 1}
+                h6.m-0 Pick #{pick._id}
                 div=pick.gm
 
 
@@ -93,7 +93,7 @@ block content
             th(onclick='sortTable(2)' scope='col') Profile
             th(onclick='sortTable(3)' scope='col') Grade
             th(onclick='sortTable(4, isInt=true)' scope='col') Combine Score
-            th(onclick='sortTable(5)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Geoffrey\'s Modified (Combine) Score.') MCS
+            th(onclick='sortTable(5)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
             th(onclick='sortTable(6)' scope='col') Projected
         tbody 
             each player in players
