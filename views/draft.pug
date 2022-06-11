@@ -105,7 +105,7 @@ block content
                         td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")` disabled) Draft
                     td: a(href='/players/' + player.username)= player.username
                     td= player.grade
-                    td.combine-score= (player.combine) ? player.combine.slice(0, 19).reduce((prev, next) => prev + next) : -100
+                    td.combine-score= (player.combine) ? player.combine.slice(0, 20).reduce((prev, next) => prev + next) : -100
                     td.mcs= player.mcs= player.combine ? Math.round(player.combine[20]) : -100
                     td.projected
 
