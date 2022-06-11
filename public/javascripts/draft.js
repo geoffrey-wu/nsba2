@@ -3,6 +3,7 @@
  * @type {Number}
  */
 var draft_time;
+const seconds_per_pick = 180;
 
 /**
  * Enable tooltips on this page.
@@ -148,7 +149,7 @@ function timer() {
     }, 1000);
 }
 
-function resetTimer(seconds=600) {
+function resetTimer(seconds=seconds_per_pick) {
     draft_time = seconds;
 }
 
