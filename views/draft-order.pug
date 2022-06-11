@@ -15,6 +15,7 @@ block content
                 th(onclick='sortTable(4, isInt=true)' scope='col') Pick 3
                 th(onclick='sortTable(5, isInt=true)' scope='col') Pick 4
                 th(onclick='sortTable(6, isInt=true)' scope='col') Pick 5
+                th(onclick='sortTable(7, isInt=true)' scope='col') Pick 6
         tbody
         if teams
             each team in teams
@@ -26,6 +27,7 @@ block content
                     td= team.draft_picks[2] || '-'
                     td= team.draft_picks[3] || '-'
                     td= team.draft_picks[4] || '-'
+                    td= team.draft_picks[5] || '-'
 
 
 block scripts
