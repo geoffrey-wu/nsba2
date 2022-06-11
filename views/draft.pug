@@ -97,6 +97,8 @@ block content
             th(onclick='sortTable(6, isInt=true)' scope='col') Projected
         tbody 
             each player in players
+                unless player.eligible
+                    - continue
                 tr(player=player.username)
                     td= player.firstName + ' ' + player.lastName
                     if currentPick && (username === currentPick.gm)

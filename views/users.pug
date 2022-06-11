@@ -5,8 +5,11 @@ block content
     //-     img.img-fluid(src='/logo.png' width='30%')
     //-     p: h1 National Science Bowl Association
     p.lead #{description}
-    p There are currently #{Object.keys(users).length} #{role}s registered. Below is a list of all #{role}s:
-    table#table.table.table-striped
+    p There are currently #{Object.keys(users).length} #{role}s registered 
+        if role === 'player'
+            | and #{users.reduce((prev, current) => prev + (current.eligible ? 1 : 0), 0)} players eligible to play. 
+        | Below is a list of all #{role}s:
+    table#table.table.table-hover
         thead
             tr
                 th(onclick='sortTable(0)' scope='col') Username
@@ -17,15 +20,26 @@ block content
         tbody
         if users
             each user in users
-                tr
-                    td: a(href=`/${role.toLowerCase()}s/${user.username}`)= user.username
-                    td= user.discord
-                    td= user.firstName + ' ' + user.lastName
-                    td= user.grade
-                    if user.team
-                        td: a(href=`/teams/${user.team}`)= user.team
-                    else
-                        td= '-'
+                if role === 'player' && !user.eligible
+                    tr.table-danger
+                        td: a(href=`/${role.toLowerCase()}s/${user.username}`)= user.username
+                        td= user.discord
+                        td= user.firstName + ' ' + user.lastName
+                        td= user.grade
+                        if user.team
+                            td: a(href=`/teams/${user.team}`)= user.team
+                        else
+                            td= '-'
+                else
+                    tr
+                        td: a(href=`/${role.toLowerCase()}s/${user.username}`)= user.username
+                        td= user.discord
+                        td= user.firstName + ' ' + user.lastName
+                        td= user.grade
+                        if user.team
+                            td: a(href=`/teams/${user.team}`)= user.team
+                        else
+                            td= '-'
 
 block scripts
     script(src='/table.js')
