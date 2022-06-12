@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var createError = require('http-errors');
 
 var authentication = require('../authentication');
 var database = require('../database');
@@ -18,13 +19,7 @@ router.get('/', async (req, res, next) => {
                 user: player
             });
         } else {
-            res.status(404).render('error', {
-                message: 'Player not found',
-                error: {
-                    status: 404,
-                    stack: req.url
-                }
-            });
+            next(createError(404));
         }
     } else {
         res.redirect('/');

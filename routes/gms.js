@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var createError = require('http-errors');
 
 var database = require('../database');
 
@@ -17,26 +18,18 @@ router.get(/\/.+/, async (req, res, next) => {
             user: gm
         });
     } else {
-        res.status(404).render('error', {
-            message: 'GM not found',
-            error: {
-                status: 404,
-                stack: req.url
-            }
-        });
+        next(createError(404));
     }
 });
 
 router.get('/', async (req, res, next) => {
-    res.render('users',
-        {
-            description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
-            title: 'GMs',
-            role: 'GM',
-            users: await database.getGMs(),
-            username: req.session.username
-        }
-    );
+    res.render('users', {
+        description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
+        title: 'GMs',
+        role: 'GM',
+        users: await database.getGMs(),
+        username: req.session.username
+    });
 });
 
 module.exports = router;

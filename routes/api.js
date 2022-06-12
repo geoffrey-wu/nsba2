@@ -15,9 +15,9 @@ router.post('/login', async (req, res, next) => {
         req.session.token = authentication.generateToken(username);
         res.sendStatus(200);
         return;
+    } else {
+        res.sendStatus(401);
     }
-
-    res.sendStatus(401);
 });
 
 router.post('/logout', (req, res, next) => {
@@ -32,16 +32,15 @@ router.post('/signup', async (req, res, next) => {
     let results = await database.getPlayer(username);
     if (results) {
         res.sendStatus(409);
-        return;
+    } else {
+        // log the user in when they sign up
+        req.session.username = username;
+        req.session.token = authentication.generateToken(username);
+    
+        req.body.password = authentication.saltAndHashPassword(req.body.password);
+        await database.addUser(username, req.body);
+        res.sendStatus(200);
     }
-
-    // log the user in when they sign up
-    req.session.username = username;
-    req.session.token = authentication.generateToken(username);
-
-    req.body.password = authentication.saltAndHashPassword(req.body.password);
-    await database.addUser(username, req.body);
-    res.sendStatus(200);
 });
 
 router.post('/create-team', async (req, res, next) => {
@@ -52,11 +51,12 @@ router.post('/create-team', async (req, res, next) => {
         if (user.role == 'GM') {
             database.createTeam(username);
             res.sendStatus(200);
-            return;
+        } else {
+            res.sendStatus(403);
         }
+    } else {
+        res.sendStatus(401);
     }
-
-    res.sendStatus(401);
 });
 
 router.post('/edit-profile', async (req, res, next) => {
@@ -124,7 +124,7 @@ router.post('/edit-team-name', async (req, res, next) => {
             await database.editDraftAttribute(user.team, 'team', req.body.newName);
             res.sendStatus(200);
         } else {
-            res.sendStatus(401);
+            res.sendStatus(403);
         }
     } else {
         res.sendStatus(401);

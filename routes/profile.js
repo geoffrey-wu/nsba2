@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
             });
         } else {
             res.status(404).render('error', {
-                message: 'Player not found',
+                message: 'Player not found. Try clearing cookies and logging in again.',
                 error: {
                     status: 404,
                     stack: req.url

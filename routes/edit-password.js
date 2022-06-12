@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var createError = require('http-errors');
 
 var authentication = require('../authentication');
 var database = require('../database');
@@ -17,7 +18,7 @@ router.get('/', async (req, res, next) => {
             });
         } else {
             res.status(404).render('error', {
-                message: 'Player not found',
+                message: 'Player not found. Try clearing cookies and logging in again.',
                 error: {
                     status: 404,
                     stack: req.url
@@ -25,7 +26,7 @@ router.get('/', async (req, res, next) => {
             });
         }
     } else {
-        res.redirect('/');
+        next(createError(401));
     }
 });
 
