@@ -8,10 +8,6 @@ router.get('/', async (req, res, next) => {
         title: 'Draft',
         username: req.session.username,
 
-        previousPick: await database.getPreviousDraftPick(),
-        currentPick: await database.getCurrentDraftPick(),
-        nextPick: await database.getNextDraftPick(),
-
         picks: await database.getDraft(),
         players: await database.getPlayers(),
     });

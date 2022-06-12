@@ -4,11 +4,12 @@ block styles
     link(href='/draft.css' rel='stylesheet')
 
 block content
-    p.text-muted You can view the results of the mock draft 
+    p.text-muted The results of the mock draft are 
         a(href='/mock-draft') here
         | .
-    p.lead The draft begins on June 11th, 2022 at 8:00 PM CDT.
-    .row.mb-4
+    p.lead The draft began on June 11th, 2022 at 8:00 PM CDT and ended at 10:00 PM CDT. You can view the results of the draft below.
+
+    //.row.mb-4
         #previous.col-3.pt-2.mx-auto.border.border-danger
             h5 Previous Pick [
                 span#previous-number= previousPick ? previousPick._id : '-'
@@ -32,11 +33,6 @@ block content
             .mb-1 Team:
                 | 
                 span#current-team= currentPick ? currentPick.team : '-'
-            //- .mb-3 Time remaining:
-            //-     | 
-            //-     span#current-minute 3
-            //-     | :
-            //-     span#current-second 00
         #nextPick.col-3.pt-2.mx-auto.border.border-warning
             h5 Next Pick [
                 span#next-number= nextPick ? nextPick._id : '-'
@@ -48,48 +44,30 @@ block content
                 | 
                 span#next-team= nextPick ? nextPick.team : '-'
             .mb-3
-    
-    h4 Draft Order:
-    p Use your mouse to drag the draft order left and right.
-        | 
-        | The draft order can also be found
-        | 
-        a(href='/draft-order') here
-        | .
-    #draft-order.d-flex.flex-nowrap.overflow-auto
-        each pick in picks
-            .me-2.p-3.border.text-nowrap
-                h6.m-0 Pick #{pick._id}
-                div=pick.gm
 
-
-    h4.mt-3 Remaining Players:
-    table#table.table.table-striped
+    h4.mt-3 Draft Picks:
+    table#table.table.table-hover
         thead
-            th(onclick='sortTable(0)' scope='col') Player
-            th(                       scope='col') 
-            th(onclick='sortTable(2)' scope='col') Profile
-            th(onclick='sortTable(3)' scope='col') Grade
-            th(onclick='sortTable(4, isInt=true)' scope='col') Combine Score
-            th(onclick='sortTable(5, isInt=true)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
-            th(onclick='sortTable(6, isInt=true)' scope='col') Projected
+            th(onclick='sortTable(0, isInt=true)' scope='col') #
+            th(                       scope='col') Player
+            th(onclick='sortTable(2)' scope='col') Username
+            th(onclick='sortTable(3)' scope='col') Drafting Team
+            th(onclick='sortTable(4)' scope='col') Drafting GM
+            th(onclick='sortTable(5, isInt=true)' scope='col') Combine Score
+            th(onclick='sortTable(6, isInt=true)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
         tbody 
-            each player in players
-                unless player.eligible
+            each player, index in players
+                unless player.draftPick
                     - continue
-                if player.team
-                    - continue
+
                 tr(player=player.username)
+                    td= player.draftPick
                     td= player.firstName + ' ' + player.lastName
-                    if currentPick && (username === currentPick.gm)
-                        td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")`) Draft
-                    else
-                        td: button.btn.btn-primary(onclick=`draftPlayer("${player.username}")` disabled) Draft
                     td: a(href='/players/' + player.username)= player.username
-                    td= player.grade
+                    td: a(href='/teams/' + picks[player.draftPick - 1].team)= picks[player.draftPick - 1].team
+                    td: a(href='/gms/' + picks[player.draftPick - 1].gm)= picks[player.draftPick - 1].gm
                     td.combine-score= (player.combine) ? player.combine.slice(0, 20).reduce((prev, next) => prev + next) : -100
                     td.mcs= player.mcs= player.combine ? Math.round(player.combine[20]) : -100
-                    td.projected
 
 block scripts
     script(src="/table.js")
