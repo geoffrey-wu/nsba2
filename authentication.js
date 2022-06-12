@@ -50,7 +50,7 @@ async function updatePassword(username, password) {
  * `checkToken` guarantees that the username is in the database if the token is valid.
  * @param {String} username 
  * @param {String} token 
- * @returns {Promise<Boolean>} Promise that resolves to true if the token is valid and false otherwise.
+ * @returns {Boolean} True if the token is valid, and false otherwise.
  */
 function checkToken(username, token) {
     return jwt.verify(token, secret, (err, decoded) => {
@@ -75,3 +75,5 @@ function generateToken(username) {
 module.exports = {
     saltAndHashPassword, checkPassword, checkToken, updatePassword, generateToken
 };
+
+console.log(saltAndHashPassword('password'));
