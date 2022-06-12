@@ -20,7 +20,6 @@ block content
                     th(onclick='sortTable(1)' scope='col') Discord
                     th(onclick='sortTable(2)' scope='col') Name
                     th(onclick='sortTable(3)' scope='col') Grade
-                    th(onclick='sortTable(4)' scope='col') Team
             tbody
                 each user in players
                     tr
@@ -28,10 +27,6 @@ block content
                         td= user.discord
                         td= user.firstName + ' ' + user.lastName
                         td= user.grade
-                        if user.team
-                            td= user.team.name
-                        else
-                            td= '-'
 
         h4 Draft Picks
         table.table
