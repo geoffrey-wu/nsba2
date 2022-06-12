@@ -8,6 +8,7 @@ const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process
 var database;
 var draft;
 var mockDraft;
+var schedule;
 var teams;
 var users;
 
@@ -16,6 +17,7 @@ client.connect().then(() => {
     database = client.db('nsba');
     draft = database.collection('draft-picks');
     mockDraft = database.collection('mock-draft');
+    schedule = database.collection('schedule');
     teams = database.collection('teams');
     users = database.collection('users');
 
@@ -131,6 +133,10 @@ async function getTeamNames(ids) {
 async function getTeams() {
     const cursor = await teams.find({});
     return cursor.toArray();
+}
+
+async function getSchedule() {
+    return await schedule.find({}, { sort: { week: 1 } }).toArray();
 }
 
 /**
@@ -345,7 +351,7 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames,
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule,
     addUser, createTeam, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };

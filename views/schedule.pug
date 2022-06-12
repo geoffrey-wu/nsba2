@@ -1,0 +1,19 @@
+extends _layout
+
+block content
+    each week in schedule
+        h4 Week #{week.week}: #{week.dates[0]} to #{week.dates[1]}
+        table.table.w-100.text-center
+            thead
+                tr
+                    .row
+                        th.col-5 Home
+                        th.col-2 vs.
+                        th.col-5 Away
+            tbody
+                each matchup in week.matchups
+                    tr
+                        .row
+                            td.col-5= matchup[0]
+                            td.col-2 vs.
+                            td.col-5= matchup[1]
