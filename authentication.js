@@ -75,5 +75,3 @@ function generateToken(username) {
 module.exports = {
     saltAndHashPassword, checkPassword, checkToken, updatePassword, generateToken
 };
-
-console.log(saltAndHashPassword('password'));
