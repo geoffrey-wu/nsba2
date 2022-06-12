@@ -21,12 +21,12 @@ block content
                     th(onclick='sortTable(2)' scope='col') Name
                     th(onclick='sortTable(3)' scope='col') Grade
             tbody
-                each user in players
+                each player in players
                     tr
-                        td: a(href='/players/' + user.username)=user.username
-                        td= user.discord
-                        td= user.firstName + ' ' + user.lastName
-                        td= user.grade
+                        td: a(href='/players/' + player.username)=player.username
+                        td= player.discord
+                        td= player.firstName + ' ' + player.lastName
+                        td= player.grade
 
         h4 Draft Picks
         table.table
