@@ -11,21 +11,19 @@ router.get(/\/.+/, async (req, res, next) => {
 
     if (team) {
         let gm = await database.getUser(team.gm);
-        let players = team.player_ids.map(async (id) => {
-            return await database.getUserById(id);
+        Promise.all(team.players.map(async (username) => {
+            return await database.getUser(username);
+        })).then((players) => {
+            res.render('team', {
+                title: 'My Team',
+                username: req.session.username,
+    
+                gm: gm,
+                picks: team.draft_picks,
+                players: players,
+                team: team
+            });
         });
-
-        res.render('team', {
-            title: 'My Team',
-            username: req.session.username,
-
-            gm: gm,
-            picks: team.draft_picks,
-            players: players,
-            team: team
-        });
-
-        return;
     }
 });
 

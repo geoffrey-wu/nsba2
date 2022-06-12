@@ -49,7 +49,7 @@ team = {
     _id: team_id,
     gm: gm_name,
     name: team_name,
-    player_ids: [player_id...],
+    players: [usernames...],
     draft_picks: [ draft_pick['_id'] ... ]
 }
 
