@@ -225,6 +225,7 @@ async function getNextDraftPick() {
  */
 async function draftPlayer(playerName, teamName) {
     let player = await users.findOneAndUpdate({ username: playerName }, { $set: { team: teamName } });
+    player = player.value;
     let draftNumber = await draft.findOne({ _id: -1 });
     draftNumber = draftNumber.currentPick;
     await draft.updateOne({ _id: parseInt(draftNumber) }, { $set: { player: playerName } });

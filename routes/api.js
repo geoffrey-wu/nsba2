@@ -138,8 +138,8 @@ router.post('/draft-player', async (req, res, next) => {
         let user = await database.getGM(username);
         if (user && 'team' in user) {
             let team = await database.getTeam(user.team);
-            if (team.draft_picks.includes(await database.getCurrentDraftPick())) {
-                await database.draftPlayer(req.body.player);
+            if (team.draft_picks.includes(await database.getCurrentDraftNumber())) {
+                await database.draftPlayer(req.body.player, team.name);
                 let nextDraftPick = await database.getNextDraftPick();
                 res.status(200).send({nextGm: nextDraftPick.gm, nextTeam: nextDraftPick.team, player: req.body.player});
             } else {

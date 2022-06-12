@@ -10,66 +10,44 @@ block content
     p.lead The draft begins on June 11th, 2022 at 8:00 PM CDT.
     .row.mb-4
         #previous.col-3.pt-2.mx-auto.border.border-danger
-            if previousPick
-                h5 Previous Pick [
-                    span#previous-number= previousPick._id
-                    | ]
-                .mb-1 GM:
-                    | 
-                    span#previous-gm= previousPick.gm
-                .mb-1 Team:
-                    | 
-                    span#previous-team= previousPick.team
-                .mb-3 Player:
-                    | 
-                    span#previous-player= previousPick.player
-            else 
-                h5 Previous Pick
-                .mb-1 GM: -
-                .mb-1 Team: -
-                .mb-3 Player: -
+            h5 Previous Pick [
+                span#previous-number= previousPick ? previousPick._id : '-'
+                | ]
+            .mb-1 GM:
+                | 
+                span#previous-gm= previousPick ? previousPick.gm : '-'
+            .mb-1 Team:
+                | 
+                span#previous-team= previousPick ? previousPick.team : '-'
+            .mb-3 Player:
+                | 
+                span#previous-player= previousPick ? previousPick.player : '-'
         #currentPick.col-3.pt-2.mx-auto.border.border-success
-            if currentPick
-                h5.mb-3 Current Pick [
-                    span#current-number= currentPick._id
-                    | ]
-                .mb-1 GM:
-                    | 
-                    span#current-gm= currentPick.gm
-                .mb-1 Team:
-                    | 
-                    span#current-team= currentPick.team
-                .mb-3 Time remaining:
-                    | 
-                    span#current-minute 10
-                    | :
-                    span#current-second 00
-            else
-                h5 Current Pick 
-                .mb-1 GM: -
-                .mb-1 Team: -
-                .mb-3 Time remaining:
-                    | 
-                    span#current-minute 3
-                    | :
-                    span#current-second 00
+            h5.mb-3 Current Pick [
+                span#current-number= currentPick ? currentPick._id : '-'
+                | ]
+            .mb-1 GM:
+                | 
+                span#current-gm= currentPick ? currentPick.gm : '-'
+            .mb-1 Team:
+                | 
+                span#current-team= currentPick ? currentPick.team : '-'
+            .mb-3 Time remaining:
+                | 
+                span#current-minute 3
+                | :
+                span#current-second 00
         #nextPick.col-3.pt-2.mx-auto.border.border-warning
-            if nextPick
-                h5 Next Pick [
-                    span#next-number= nextPick._id
-                    | ]
-                .mb-1 GM:
-                    | 
-                    span#next-gm= nextPick.gm
-                .mb-1 Team:
-                    | 
-                    span#next-team= nextPick.team
-                .mb-3
-            else
-                h5 Next Pick
-                .mb-1 GM: -
-                .mb-1 Team: -
-                .mb-3
+            h5 Next Pick [
+                span#next-number= nextPick ? nextPick._id : '-'
+                | ]
+            .mb-1 GM:
+                | 
+                span#next-gm= nextPick ? nextPick.gm : '-'
+            .mb-1 Team:
+                | 
+                span#next-team= nextPick ? nextPick.team : '-'
+            .mb-3
     
     h4 Draft Order:
     p Use your mouse to drag the draft order left and right.
@@ -98,6 +76,8 @@ block content
         tbody 
             each player in players
                 unless player.eligible
+                    - continue
+                if player.team
                     - continue
                 tr(player=player.username)
                     td= player.firstName + ' ' + player.lastName

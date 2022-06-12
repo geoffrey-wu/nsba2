@@ -78,9 +78,16 @@ async function draftPlayer(username) {
 }
 
 function autoDraft() {
-    let worstPick = 10000;
+    let worstPick = -1;
+    let worstButton;
     for (let element of document.getElementsByTagName('tr')) {
+        if (parseInt(element.children[6].innerHTML) > worstPick) {
+            worstPick = element.children[6].innerHTML;
+            worstButton = element.children[1].children[0];
+        }
     }
+
+    worstButton.click();
 }
 
 window.draftPlayer = draftPlayer;
@@ -143,8 +150,9 @@ function timer() {
         document.getElementById('current-second').innerHTML = seconds;
         draft_time--;
         if (draft_time < 0) {
-            resetTimer();
+            // resetTimer();
             autoDraft();
+            clearInterval(timer);
         }
     }, 1000);
 }
