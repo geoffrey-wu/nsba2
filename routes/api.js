@@ -47,7 +47,7 @@ router.post('/signup', async (req, res, next) => {
 router.post('/create-team', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
-    if (await authentication.checkToken(username, token)) {
+    if (authentication.checkToken(username, token)) {
         let user = await database.getUser(username);
         if (user.role == 'GM') {
             database.createTeam(username);
