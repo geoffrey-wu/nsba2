@@ -32,11 +32,11 @@ block content
             .mb-1 Team:
                 | 
                 span#current-team= currentPick ? currentPick.team : '-'
-            .mb-3 Time remaining:
-                | 
-                span#current-minute 3
-                | :
-                span#current-second 00
+            //- .mb-3 Time remaining:
+            //-     | 
+            //-     span#current-minute 3
+            //-     | :
+            //-     span#current-second 00
         #nextPick.col-3.pt-2.mx-auto.border.border-warning
             h5 Next Pick [
                 span#next-number= nextPick ? nextPick._id : '-'

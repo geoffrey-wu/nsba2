@@ -77,18 +77,18 @@ async function draftPlayer(username) {
     }
 }
 
-function autoDraft() {
-    let worstPick = -1;
-    let worstButton;
-    for (let element of document.getElementsByTagName('tr')) {
-        if (parseInt(element.children[6].innerHTML) > worstPick) {
-            worstPick = element.children[6].innerHTML;
-            worstButton = element.children[1].children[0];
-        }
-    }
+// function autoDraft() {
+//     let worstPick = -1;
+//     let worstButton;
+//     for (let element of document.getElementsByTagName('tr')) {
+//         if (parseInt(element.children[6].innerHTML) > worstPick) {
+//             worstPick = element.children[6].innerHTML;
+//             worstButton = element.children[1].children[0];
+//         }
+//     }
 
-    worstButton.click();
-}
+//     worstButton.click();
+// }
 
 window.draftPlayer = draftPlayer;
 
@@ -139,27 +139,27 @@ draftOrder.addEventListener('mousedown', mouseDownHandler);
  * Implement timer for the draft:
  */
 
-function timer() {
-    var timer = setInterval(() => {
-        document.getElementById('current-minute').innerHTML = Math.floor(draft_time / 60);
-        let seconds = draft_time % 60;
-        seconds = seconds.toString();
-        if (seconds.length == 1) {
-            seconds = '0' + seconds;
-        }
-        document.getElementById('current-second').innerHTML = seconds;
-        draft_time--;
-        if (draft_time < 0) {
-            // resetTimer();
-            autoDraft();
-            clearInterval(timer);
-        }
-    }, 1000);
-}
+// function timer() {
+//     var timer = setInterval(() => {
+//         document.getElementById('current-minute').innerHTML = Math.floor(draft_time / 60);
+//         let seconds = draft_time % 60;
+//         seconds = seconds.toString();
+//         if (seconds.length == 1) {
+//             seconds = '0' + seconds;
+//         }
+//         document.getElementById('current-second').innerHTML = seconds;
+//         draft_time--;
+//         if (draft_time < 0) {
+//             // resetTimer();
+//             autoDraft();
+//             clearInterval(timer);
+//         }
+//     }, 1000);
+// }
 
-function resetTimer(seconds=seconds_per_pick) {
-    draft_time = seconds;
-}
+// function resetTimer(seconds=seconds_per_pick) {
+//     draft_time = seconds;
+// }
 
 window.onload = () => {
     sortTable(5, true);
@@ -171,14 +171,14 @@ window.onload = () => {
         document.getElementsByClassName('projected')[i].innerHTML = i + 1;
     }
 
-    resetTimer();
+    // resetTimer();
     /**
      * 6/11/2022 @ 8 PM CDT, the start time of the draft
      */
-     const startTime = 1654997400000;
-     if ((new Date()).getTime() < startTime) {
-        setTimeout(timer, startTime - (new Date()).getTime());
-    } else {
-        timer();
-    }
+    //  const startTime = 1654997400000;
+    //  if ((new Date()).getTime() < startTime) {
+    //     setTimeout(timer, startTime - (new Date()).getTime());
+    // } else {
+    //     timer();
+    // }
 };
