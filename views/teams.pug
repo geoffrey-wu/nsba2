@@ -11,11 +11,12 @@ block content
             tr
                 th(onclick='sortTable(0)' scope='col') Team Name
                 th(onclick='sortTable(1)' scope='col') GM
-                th(onclick='sortTable(2, isInt=true)' scope='col') Pick 1
-                th(onclick='sortTable(3, isInt=true)' scope='col') Pick 2
-                th(onclick='sortTable(4, isInt=true)' scope='col') Pick 3
-                th(onclick='sortTable(5, isInt=true)' scope='col') Pick 4
-                th(onclick='sortTable(6, isInt=true)' scope='col') Pick 5
+                th(onclick='sortTable(2, isInt=true)' scope='col') Player 1
+                th(onclick='sortTable(3, isInt=true)' scope='col') Player 2
+                th(onclick='sortTable(4, isInt=true)' scope='col') Player 3
+                th(onclick='sortTable(5, isInt=true)' scope='col') Player 4
+                th(onclick='sortTable(6, isInt=true)' scope='col') Player 5
+                th(onclick='sortTable(7, isInt=true)' scope='col') Player 6
                 //- th(onclick='sortTable(2)' scope='col') Player 1
                 //- th(onclick='sortTable(3)' scope='col') Player 2
                 //- th(onclick='sortTable(4)' scope='col') Player 3
@@ -26,11 +27,12 @@ block content
                 tr
                     td: a(href=`/teams/${team.name}`)= team.name
                     td: a(href=`/gms/${team.gm}`)= team.gm
-                    td= team.draft_picks[0] || '-'
-                    td= team.draft_picks[1] || '-'
-                    td= team.draft_picks[2] || '-'
-                    td= team.draft_picks[3] || '-'
-                    td= team.draft_picks[4] || '-'
+                    td= team.players[0] || '-'
+                    td= team.players[1] || '-'
+                    td= team.players[2] || '-'
+                    td= team.players[3] || '-'
+                    td= team.players[4] || '-'
+                    td= team.players[5] || '-'
 
 
 block scripts
