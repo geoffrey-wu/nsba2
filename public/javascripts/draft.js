@@ -175,7 +175,7 @@ window.onload = () => {
     /**
      * 6/11/2022 @ 8 PM CDT, the start time of the draft
      */
-     const startTime = 1654995600000;
+     const startTime = 1654997400000;
      if ((new Date()).getTime() < startTime) {
         setTimeout(timer, startTime - (new Date()).getTime());
     } else {
