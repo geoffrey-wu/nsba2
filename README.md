@@ -32,7 +32,7 @@ user = {
     lastName: last_name,
     email: email,
     discord: discord,
-    grade: grade,       // 'Freshman', 'Sophomore', 'Junior', 'Senior', or 'College'
+    grade: grade,       // A string. Common values include 'Freshman', 'Sophomore', 'Junior', 'Senior', or 'College'
     role: role,         // 'Player', 'GM', or 'Admin'
     username: username,
     password: password, // salted and hashed base-64 number
@@ -42,7 +42,9 @@ user = {
         experience: string,
         competitions: string,
         textbooks: string
-    }
+    },
+    eligible: true/false,
+    draftPick: draft_pick # what number draft pick the player was drafted at
 }
 
 team = {
@@ -66,4 +68,42 @@ mock_draft = {
     player: player_name,
     player_id: player_id
 }
+
+result = {
+    _id: game_number, // calculated from `week_number*matchups.length + matchups.indexOf(this_game)`, but not guaranteed
+    week: week_number,
+    home: {
+        name: home_team_name,
+        score: points_scored,
+        players: {
+            player_1: {
+                username: username,
+                tuh: tossups_heard,
+                points: num_points,
+                statline: [4s, 0s, -4s]
+            }, ...
+        },
+    }, 
+    away: {
+       name: home_team_name,
+        score: points_scored,
+        players: {
+            player_1: {
+                username: username,
+                tuh: tossups_heard,
+                points: num_points,
+                statline: [4s, 0s, -4s]
+            }, ...
+        },
+    },
+}
+
+schedule = {
+    _id: week_number,
+    week: week_number,
+    matchups: [
+        [home_team_name, away_team_name],
+        ...
+    ],
+    dates: [start_date, end_date] // [string, string]
 ```
