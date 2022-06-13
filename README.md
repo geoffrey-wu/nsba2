@@ -85,7 +85,7 @@ result = {
         },
     }, 
     away: {
-       name: home_team_name,
+        name: home_team_name,
         score: points_scored,
         players: {
             player_1: {
