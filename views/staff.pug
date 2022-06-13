@@ -1,20 +1,26 @@
 extends _layout
 
 block content
-    .text-center
-        img.img-fluid(src='/logo.png' width='30%')
-        h1.my-3 National Science Bowl Association
+    include _logo.pug
 
-    hr
-
-    h1.display-6 Staff Members
-    b
-        ul
-            li David Jiang - (Commissioner/Writer)
-            li Sanjay Suresh - (President of Operations/Writer)
-            li Bill Zhao - (Managing Director/Writer)
-            li Geoffrey Wu - (Chief Technology Officer/Writer)
-            li Rohan Shelke - (Chief Security Officer/Writer)
+    h3 Staff Members:
+    ul
+        li 
+            b David Jiang: 
+            | Commissioner
+        li 
+            b Sanjay Suresh: 
+            | President of Operations
+        li 
+            b Bill Zhao: 
+            | Managing Director
+        li 
+            b Geoffrey Wu: 
+            | Chief Technology Officer
+        li 
+            b Rohan Shelke: 
+            | Chief Security Officer
+    p In addition, all staff members are also writers.
     p
         | NSBA is run by a group of college students from across North America who have each gone through 4+ years of Science Bowl.
         | The team includes several national olympiad campers and nationals qualifiers.

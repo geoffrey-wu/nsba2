@@ -1,15 +1,8 @@
 extends _layout
 
 block content
-    .text-center
-        img.img-fluid(src='/logo.png' width='30%')
-        h1.my-3 National Science Bowl Association
+    include _logo.pug
     
-    .text-center
-        p.lead Join the official discord
-            | 
-            a(href="https://discord.gg/wJReFxPSnR" target="_blank") here
-            | !
     blockquote.blockquote.text-center
         p Announcement (6/11/2022): The schedule has been released 
             a(href="/schedule") here
@@ -26,6 +19,11 @@ block content
         p Announcement (5/31/2022): Please read the new rules 
             a(href="/rules") here
             | .
+    .text-center
+        p.lead Join the official discord
+            | 
+            a(href="https://discord.gg/wJReFxPSnR" target="_blank") here
+            | !
     p
         | The 
         strong.text-primary National Science Bowl Association

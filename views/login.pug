@@ -1,9 +1,8 @@
 extends _layout
 
 block content
-    .text-center
-        img.img-fluid(src='/logo.png' width='30%')
-        p: h1 National Science Bowl Association
+    include _logo.pug
+
     form#login.needs-validation(novalidate='')
         .col-12.mb-3
             label.form-label(for='username') Username

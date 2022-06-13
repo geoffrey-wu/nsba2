@@ -1,9 +1,6 @@
 extends _layout
 
 block content
-    //- .text-center
-    //-     img.img-fluid(src='/logo.png' width='30%')
-    //-     p: h1 National Science Bowl Association
     p.lead #{description}
     p There are currently #{Object.keys(users).length} #{role}s registered 
         if role === 'player'
