@@ -106,4 +106,5 @@ schedule = {
         ...
     ],
     dates: [start_date, end_date] // [string, string]
+}
 ```
