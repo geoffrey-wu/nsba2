@@ -7,23 +7,29 @@ block content
         #add-result.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
             .modal-dialog.modal-xl: .modal-content
                 .modal-header
-                    h5#exampleModalLabel.modal-title Add Result
+                    h5#modal-title.modal-title Add Result
                     button#close.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                 .modal-body
                     form#form
                         .row.mb-3: .col-12: input#week.form-control(type='number' placeholder='Enter Week Number')
-                        .row.mb-3: .col-12: input#matchup.form-select(type='text' placeholder='Select a matchup')
+                        .row.mb-3: .col-12: select#matchup.form-select
+                            option(selected) Select a matchup
 
                         each location in ['home', 'away']
                             div(id=`${location}-team`)
-                                span.h6: u #{location === 'home' ? 'Home' : 'Away'} Team: 
-                                span(id=`${location}-team-name`) Doges
-
+                                .row.mb-2
+                                    .col-auto
+                                        span.h6: u #{location === 'home' ? 'Home' : 'Away'} Team:
+                                        |  
+                                        span(id=`${location}-team-name`) 
+                                    .col-auto
+                                        span(id=`${location}-team-score`) 0
+                                        |  points
                                 each index in [1, 2, 3, 4, 5, 6, 7]
                                     div Player #{index}: 
                                         span(id=`player-${index}-${location}-name`)
                                     .row.mb-3.align-items-center(id=`player-${index}-${location}`)
-                                        .col-2: input.form-control(id=`player-${index}-${location}-tuh` type='number' placeholder='4s')
+                                        .col-2: input.form-control(id=`player-${index}-${location}-tuh` type='number' placeholder='TUH')
                                         .col-2: input.form-control(id=`player-${index}-${location}-4s` type='number' placeholder='4s')
                                         .col-2: input.form-control(id=`player-${index}-${location}-0s` type='number' placeholder='0s')
                                         .col-2: input.form-control(id=`player-${index}-${location}-negs` type='number' placeholder='-4s')
@@ -38,4 +44,11 @@ block content
     // for each game, insert table here
 
 block scripts 
+    script.
+        var schedule;
+        var teams;
+        window.onload = () => {
+            schedule = !{JSON.stringify(schedule)};
+            teams = !{JSON.stringify(teams)};
+        }
     script(src='/results.js')
