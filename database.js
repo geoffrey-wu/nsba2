@@ -11,6 +11,7 @@ var mockDraft;
 var schedule;
 var teams;
 var users;
+var results;
 
 const client = new MongoClient(uri);
 client.connect().then(() => {
@@ -20,6 +21,7 @@ client.connect().then(() => {
     schedule = database.collection('schedule');
     teams = database.collection('teams');
     users = database.collection('users');
+    results = database.collection('results');
 
     console.log('connected to mongodb');
 });
@@ -137,6 +139,10 @@ async function getTeams() {
 
 async function getSchedule() {
     return await schedule.find({}, { sort: { week: 1 } }).toArray();
+}
+
+async function getResults() {
+    return await results.find({}).toArray();
 }
 
 /**
@@ -280,6 +286,10 @@ async function createTeam(username) {
     await users.updateOne(filter, update);
 }
 
+async function addResult(result) {
+    await results.insertOne(result);
+}
+
 /**
  * Sets field `key` to value `value` of user with username `username`.
  * Does nothing if `username` is not found.
@@ -351,8 +361,8 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule,
-    addUser, createTeam, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser,
+    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule, getResults,
+    addUser, createTeam, addResult, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };
 

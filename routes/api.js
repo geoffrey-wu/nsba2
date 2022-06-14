@@ -153,4 +153,20 @@ router.post('/draft-player', async (req, res, next) => {
     }
 });
 
+router.post('/add-result', async (req, res, next) => {
+    let username = req.session.username;
+    let token = req.session.token;
+    if (authentication.checkToken(username, token)) {
+        let user = await database.getUser(username);
+        if (user.role === 'Admin') {
+            await database.addResult(req.body.result);
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(403);
+        }
+    } else {
+        res.sendStatus(401);
+    }
+})
+
 module.exports = router;

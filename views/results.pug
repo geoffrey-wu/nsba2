@@ -1,4 +1,41 @@
 extends _layout
 
 block content
-    p.lead The NSBA has not begun yet.
+    if user && user.role === 'Admin'
+        button.btn.btn-primary(type='button' data-bs-toggle='modal' data-bs-target='#add-result') Add Result
+
+        #add-result.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+            .modal-dialog.modal-xl: .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Add Result
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    form#form
+                        .row.mb-3: .col-12: input#week.form-control(type='number' placeholder='Enter Week Number')
+                        .row.mb-3: .col-12: input#matchup.form-select(type='text' placeholder='Select a matchup')
+
+                        each location in ['home', 'away']
+                            div(id=`${location}-team`)
+                                span.h6: u #{location === 'home' ? 'Home' : 'Away'} Team: 
+                                span(id=`${location}-team-name`) Doges
+
+                                each index in [1, 2, 3, 4, 5, 6, 7]
+                                    div Player #{index}: 
+                                        span(id=`player-${index}-${location}-name`)
+                                    .row.mb-3.align-items-center(id=`player-${index}-${location}`)
+                                        .col-2: input.form-control(id=`player-${index}-${location}-tuh` type='number' placeholder='4s')
+                                        .col-2: input.form-control(id=`player-${index}-${location}-4s` type='number' placeholder='4s')
+                                        .col-2: input.form-control(id=`player-${index}-${location}-0s` type='number' placeholder='0s')
+                                        .col-2: input.form-control(id=`player-${index}-${location}-negs` type='number' placeholder='-4s')
+                                        .col-4
+                                            span(id=`player-${index}-${location}-points`) 0
+                                            |  points
+
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+                    button#submit.btn.btn-primary(type='button') Add Result
+
+    // for each game, insert table here
+
+block scripts 
+    script(src='/results.js')
