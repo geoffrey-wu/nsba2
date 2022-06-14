@@ -2,7 +2,7 @@ extends _layout
 
 block content
     if user && user.role === 'Admin'
-        button.btn.btn-primary(type='button' data-bs-toggle='modal' data-bs-target='#add-result') Add Result
+        button.btn.btn-primary.mb-3(type='button' data-bs-toggle='modal' data-bs-target='#add-result') Add Result
 
         #add-result.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
             .modal-dialog.modal-xl: .modal-content
@@ -42,6 +42,31 @@ block content
                     button#submit.btn.btn-primary(type='button') Add Result
 
     // for each game, insert table here
+    each result in results
+        .text-center
+            h4 Week #{result.week}: #{result.home.name} vs #{result.away.name}
+        .row.text-center
+            each location in ['home', 'away']
+                .col-6: table.table
+                    thead: tr
+                        th Username
+                        td TUH
+                        td 4s
+                        td 0s
+                        td -4s
+                        th Points
+                        th Points/22
+                    tbody
+                        each player, name in result[location]['players']
+                            - if (!player) continue
+                            tr
+                                td: a(href=`/player/${name}`)= name
+                                td= player.tuh
+                                td= player.statline[0]
+                                td= player.statline[1]
+                                td= player.statline[2]
+                                td= player.points
+                                td= (player.tuh === 0) ? '-' : Math.round(10 * player.points / player.tuh * 22) / 10
 
 block scripts 
     script.

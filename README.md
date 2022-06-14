@@ -73,7 +73,7 @@ result = {
     _id: game_number, // calculated from `week_number*matchups.length + matchups.indexOf(this_game)`, but not guaranteed
     week: week_number,
     home: {
-        username: home_team_name,
+        name: home_team_name,
         score: points_scored,
         players: {
             player_1 (username): {
@@ -84,7 +84,7 @@ result = {
         },
     }, 
     away: {
-        username: home_team_name,
+        name: home_team_name,
         score: points_scored,
         players: {
             player_1 (username): {
