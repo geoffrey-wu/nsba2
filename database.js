@@ -137,6 +137,11 @@ async function getTeams() {
     return cursor.toArray();
 }
 
+/**
+ * Returns an array of week objects.
+ * Guaranteed to be sorted by week, starting from week 1.
+ * @returns {Promise<JSON>}
+ */
 async function getSchedule() {
     return await schedule.find({}, { sort: { week: 1 } }).toArray();
 }
@@ -333,6 +338,14 @@ async function editTeamAttribute(teamName, key, value) {
     await teams.updateOne(filter, update);
 }
 
+async function editTeamNameInSchedule(teamName, newName) {
+    schedule.updateMany(
+        {},
+        {$set: {"matchups.$[].$[changeName]": newName}},
+        {arrayFilters: [{changeName: teamName}]}
+    )
+}
+
 /**
  * Edit multiple attributes of a user at one time.
  * Does nothing if `username` is not found.
@@ -362,7 +375,7 @@ async function replaceUser(username, newUser) {
 
 module.exports = {
     getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule, getResults,
-    addUser, createTeam, addResult, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, replaceUser,
+    addUser, createTeam, addResult, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, editTeamNameInSchedule, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };
 

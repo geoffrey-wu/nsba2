@@ -122,6 +122,7 @@ router.post('/edit-team-name', async (req, res, next) => {
             await database.editAttribute(username, 'team', req.body.newName);
             await database.editTeamAttribute(user.team, 'name', req.body.newName);
             await database.editDraftAttribute(user.team, 'team', req.body.newName);
+            await database.editScheduleTeamName(user.team, req.body.newName);
             res.sendStatus(200);
         } else {
             res.sendStatus(403);
