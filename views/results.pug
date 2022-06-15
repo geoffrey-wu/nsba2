@@ -58,10 +58,10 @@ block content
                     table.table.table-sm
                         thead: tr
                             th= result[location].name
-                            td TUH
-                            td 4s
-                            td 0s
-                            td -4s
+                            th TUH
+                            th 4s
+                            th 0s
+                            th -4s
                             th Points
                         tbody
                         each player, name in result[location]['players']
@@ -79,7 +79,7 @@ block content
                                 td= player.points
                                 - totals[location][4] += player.points
                         
-                        tr
+                        tfoot: tr
                             th Total
                             th= Math.round(totals[location][0] / 4)
                             th= totals[location][1]
