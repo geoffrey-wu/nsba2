@@ -1,6 +1,7 @@
 const matchup = document.getElementById('matchup');
 const week = document.getElementById('week');
 const MATCHUPS_PER_WEEK = 6;
+const PLAYERS_PER_TEAM = 7;
 
 var homeTeamPoints = 0;
 var awayTeamPoints = 0;
@@ -11,7 +12,7 @@ document.getElementById('submit').addEventListener('click', () => {
     let home_players = {};
     let away_players = {};
 
-    for (let index = 1; index <= 7; index++) {
+    for (let index = 1; index <= PLAYERS_PER_TEAM; index++) {
         if (document.getElementById(`player-${index}-home-name`).innerHTML) {
             home_players[document.getElementById(`player-${index}-home-name`).innerHTML] = {
                 tuh: parseInt(document.getElementById(`player-${index}-home-tuh`).value || 0),
@@ -93,20 +94,20 @@ week.addEventListener('input', () => {
 });
 
 matchup.addEventListener('input', () => {
-    let homeTeamName = schedule[week.value - 1]['matchups'][matchup.value][0];
-    let awayTeamName = schedule[week.value - 1]['matchups'][matchup.value][1];
-    document.getElementById('home-team-name').innerHTML = homeTeamName;
-    document.getElementById('away-team-name').innerHTML = awayTeamName;
+    for (let location of ['away', 'home']) {
+        var teamName = schedule[week.value - 1]['matchups'][matchup.value][location === 'home' ? 0 : 1];
 
-    let homeTeam = teams.filter(team => team.name === homeTeamName)[0];
-    let awayTeam = teams.filter(team => team.name === awayTeamName)[0];
-
-    for (let i = 0; i < homeTeam['players'].length; i++) {
-        document.getElementById(`player-${i+1}-home-name`).innerHTML = homeTeam['players'][i];
-    }
-
-    for (let i = 0; i < awayTeam['players'].length; i++) {
-        document.getElementById(`player-${i+1}-away-name`).innerHTML = awayTeam['players'][i];
+        document.getElementById(`${location}-team-name`).innerHTML = teamName;
+    
+        let team = teams.filter(team => team.name === teamName)[0];
+    
+        for (let i = 0; i < PLAYERS_PER_TEAM; i++) {
+            document.getElementById(`player-${i+1}-${location}-name`).innerHTML = '';
+        }
+    
+        for (let i = 0; i < team['players'].length; i++) {
+            document.getElementById(`player-${i+1}-${location}-name`).innerHTML = team['players'][i];
+        }
     }
 })
 
