@@ -34,7 +34,6 @@ block content
                                     .row.mb-3.align-items-center(id=`player-${index}-${location}`)
                                         .col-2
                                             span(id=`player-${index}-${location}-name`) Player #{index}
-                                            | :
                                         .col-2: input.form-control(id=`player-${index}-${location}-tuh` type='number' placeholder='TUH')
                                         .col-2: input.form-control(id=`player-${index}-${location}-4s` type='number' placeholder='4s')
                                         .col-2: input.form-control(id=`player-${index}-${location}-0s` type='number' placeholder='0s')
@@ -64,7 +63,6 @@ block content
                             td 0s
                             td -4s
                             th Points
-                            th Points/22
                         tbody
                         each player, name in result[location]['players']
                             - if (!player) continue
@@ -80,7 +78,6 @@ block content
                                 - totals[location][3] += player.statline[2]
                                 td= player.points
                                 - totals[location][4] += player.points
-                                td= (player.tuh === 0) ? '-' : Math.round(10 * player.points / player.tuh * 22) / 10
                         
                         tr
                             th Total
@@ -89,7 +86,6 @@ block content
                             th= totals[location][2]
                             th= totals[location][3]
                             th= totals[location][4]
-                            th= Math.round(10 * totals[location][4] / (totals[location][0]/4) * 22) / 10
 
         .row.text-center
             .col-6: p <b>Bonuses:</b> #{totals.home[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.home.bonus / totals.home[1]) / 10} points per bonus
