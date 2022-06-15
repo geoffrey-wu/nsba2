@@ -54,7 +54,7 @@ block content
         .row.text-center
             each location in ['home', 'away']
                 .col-6
-                    h5 #{result[location].name} - #{result[location].score} points
+                    h5 #{result[location].name}: #{result[location].score} points
                     table.table.table-sm
                         thead: tr
                             th= result[location].name
@@ -86,10 +86,8 @@ block content
                             th= totals[location][2]
                             th= totals[location][3]
                             th= totals[location][4]
-
-        .row.text-center
-            .col-6: p <b>Bonuses:</b> #{totals.home[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.home.bonus / totals.home[1]) / 10} points per bonus
-            .col-6: p <b>Bonuses:</b> #{totals.away[1]} bonuses heard and #{result.away.bonus} points for #{Math.round(10*result.away.bonus / totals.away[1]) / 10} points per bonus
+                
+                    p <b>Bonuses:</b> #{result[location].bonus} points on #{totals[location][1]} bonuses heard for #{Math.round(10*result[location].bonus / totals[location][1]) / 10} points per bonus
 
 block scripts 
     script.
