@@ -48,12 +48,14 @@ document.getElementById('submit').addEventListener('click', () => {
                 week: parseInt(week.value),
                 home: {
                     name: document.getElementById('home-team-name').innerHTML,
-                    score: 0,
+                    score: parseInt(document.getElementById('home-team-score').innerHTML),
+                    bonus: parseInt(document.getElementById('home-team-bonus').value || 0),
                     players: home_players
                 }, 
                 away: {
                     name: document.getElementById('away-team-name').innerHTML,
-                    score: 0,
+                    score: parseInt(document.getElementById('away-team-score').innerHTML),
+                    bonus: parseInt(document.getElementById('away-team-bonus').value || 0),
                     players: away_players
                 },
             }
@@ -109,9 +111,8 @@ matchup.addEventListener('input', () => {
 })
 
 /**
- * Dynamically update modal to display the correct number of points
+ * Dynamically update modal to display the correct number of points when a player's stats are changed.
  */
-
 function updatePoints(location, index) {
     if (location === 'home') {
         homeTeamPoints -= parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
@@ -125,10 +126,10 @@ function updatePoints(location, index) {
     
     if (location === 'home') {
         homeTeamPoints += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-        document.getElementById(`${location}-team-score`).innerHTML = homeTeamPoints;
+        document.getElementById(`${location}-team-score`).innerHTML = homeTeamPoints + parseInt(document.getElementById('home-team-bonus').value || 0);
     } else {
         awayTeamPoints += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-        document.getElementById(`${location}-team-score`).innerHTML = awayTeamPoints;
+        document.getElementById(`${location}-team-score`).innerHTML = awayTeamPoints + parseInt(document.getElementById('away-team-bonus').value || 0);
     }
 }
 
@@ -137,4 +138,10 @@ for (let location of ['home', 'away']) {
         document.getElementById(`player-${index}-${location}-4s`).addEventListener('input', () => {updatePoints(location=location, index=index)});
         document.getElementById(`player-${index}-${location}-negs`).addEventListener('input', () => {updatePoints(location=location, index=index)});
     }
+}
+
+for (let location of ['home', 'away']) {
+    document.getElementById(`${location}-team-bonus`).addEventListener('input', () => {
+        document.getElementById(`${location}-team-score`).innerHTML = homeTeamPoints + parseInt(document.getElementById(`${location}-team-bonus`).value || 0);
+    })
 }

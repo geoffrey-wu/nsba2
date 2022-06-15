@@ -22,18 +22,24 @@ block content
                                         span.h6: u #{location === 'home' ? 'Home' : 'Away'} Team:
                                         |  
                                         span(id=`${location}-team-name`) 
+                                .row.mb-2.align-items-center
+                                    .col-2: b Team:
+                                    .col-2: input.form-control(id=`${location}-team-bonus` type='number' placeholder='Bonus Points')
                                     .col-auto
+                                        | Total Points: 
                                         span(id=`${location}-team-score`) 0
                                         |  points
+
                                 each index in [1, 2, 3, 4, 5, 6, 7]
-                                    div Player #{index}: 
-                                        span(id=`player-${index}-${location}-name`)
                                     .row.mb-3.align-items-center(id=`player-${index}-${location}`)
+                                        .col-2
+                                            span(id=`player-${index}-${location}-name`) Player #{index}
+                                            | :
                                         .col-2: input.form-control(id=`player-${index}-${location}-tuh` type='number' placeholder='TUH')
                                         .col-2: input.form-control(id=`player-${index}-${location}-4s` type='number' placeholder='4s')
                                         .col-2: input.form-control(id=`player-${index}-${location}-0s` type='number' placeholder='0s')
                                         .col-2: input.form-control(id=`player-${index}-${location}-negs` type='number' placeholder='-4s')
-                                        .col-4
+                                        .col-2
                                             span(id=`player-${index}-${location}-points`) 0
                                             |  points
 
@@ -83,7 +89,7 @@ block content
                             th= totals[location][2]
                             th= totals[location][3]
                             th= totals[location][4]
-                            th= Math.round(10 * totals[location][4] / totals[location][0] * 22) / 10
+                            th= Math.round(10 * totals[location][4] / (totals[location][0]/4) * 22) / 10
 
         .row.text-center
             .col-6: p <b>Bonuses:</b> #{totals.home[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.home.bonus / totals.home[1]) / 10} points per bonus
@@ -91,10 +97,6 @@ block content
 
 block scripts 
     script.
-        var schedule;
-        var teams;
-        window.onload = () => {
-            schedule = !{JSON.stringify(schedule)};
-            teams = !{JSON.stringify(teams)};
-        }
+        var schedule = !{JSON.stringify(schedule)};
+        var teams = !{JSON.stringify(teams)};
     script(src='/results.js')

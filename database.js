@@ -147,7 +147,7 @@ async function getSchedule() {
 }
 
 async function getResults() {
-    return await results.find({}).toArray();
+    return await results.find({}, { sort: { week: -1, _id: 1 } }).toArray();
 }
 
 /**
@@ -341,8 +341,8 @@ async function editTeamAttribute(teamName, key, value) {
 async function editTeamNameInSchedule(teamName, newName) {
     schedule.updateMany(
         {},
-        {$set: {"matchups.$[].$[changeName]": newName}},
-        {arrayFilters: [{changeName: teamName}]}
+        { $set: { "matchups.$[].$[changeName]": newName } },
+        { arrayFilters: [{ changeName: teamName }] }
     )
 }
 
