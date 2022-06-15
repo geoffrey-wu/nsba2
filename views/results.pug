@@ -41,32 +41,53 @@ block content
                     button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
                     button#submit.btn.btn-primary(type='button') Add Result
 
-    // for each game, insert table here
+
+    h4 Week 1:
     each result in results
-        .text-center
-            h4 Week #{result.week}: #{result.home.name} vs #{result.away.name}
+        - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
+
         .row.text-center
             each location in ['home', 'away']
-                .col-6: table.table
-                    thead: tr
-                        th Username
-                        td TUH
-                        td 4s
-                        td 0s
-                        td -4s
-                        th Points
-                        th Points/22
-                    tbody
+                .col-6
+                    h5 #{result[location].name} - #{result[location].score} points
+                    table.table.table-sm
+                        thead: tr
+                            th= result[location].name
+                            td TUH
+                            td 4s
+                            td 0s
+                            td -4s
+                            th Points
+                            th Points/22
+                        tbody
                         each player, name in result[location]['players']
                             - if (!player) continue
                             tr
                                 td: a(href=`/player/${name}`)= name
                                 td= player.tuh
+                                - totals[location][0] = (player.tuh > totals[location][0]) ? player.tuh : totals[location][0]
                                 td= player.statline[0]
+                                - totals[location][1] += player.statline[0]
                                 td= player.statline[1]
+                                - totals[location][2] += player.statline[1]
                                 td= player.statline[2]
+                                - totals[location][3] += player.statline[2]
                                 td= player.points
+                                - totals[location][4] += player.points
                                 td= (player.tuh === 0) ? '-' : Math.round(10 * player.points / player.tuh * 22) / 10
+                        
+                        tr
+                            th Total
+                            th= totals[location][0]
+                            th= totals[location][1]
+                            th= totals[location][2]
+                            th= totals[location][3]
+                            th= totals[location][4]
+                            th= Math.round(10 * totals[location][4] / totals[location][0] * 22) / 10
+
+        .row.text-center
+            .col-6: p <b>Bonuses:</b> #{totals.home[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.home.bonus / totals.home[1]) / 10} points per bonus
+            .col-6: p <b>Bonuses:</b> #{totals.away[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.away.bonus / totals.away[1]) / 10} points per bonus
 
 block scripts 
     script.
