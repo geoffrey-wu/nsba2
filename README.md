@@ -75,6 +75,7 @@ result = {
     home: {
         name: home_team_name,
         score: points_scored,
+        bonus: bonus_points,
         players: {
             player_1 (username): {
                 tuh: tossups_heard,
@@ -86,6 +87,7 @@ result = {
     away: {
         name: home_team_name,
         score: points_scored,
+        bonus: bonus_points,
         players: {
             player_1 (username): {
                 tuh: tossups_heard,
