@@ -65,7 +65,7 @@ block content
                             tr
                                 td: a(href=`/player/${name}`)= name
                                 td= player.tuh
-                                - totals[location][0] = (player.tuh > totals[location][0]) ? player.tuh : totals[location][0]
+                                - totals[location][0] += player.tuh
                                 td= player.statline[0]
                                 - totals[location][1] += player.statline[0]
                                 td= player.statline[1]
@@ -78,7 +78,7 @@ block content
                         
                         tr
                             th Total
-                            th= totals[location][0]
+                            th= Math.round(totals[location][0] / 4)
                             th= totals[location][1]
                             th= totals[location][2]
                             th= totals[location][3]
@@ -87,7 +87,7 @@ block content
 
         .row.text-center
             .col-6: p <b>Bonuses:</b> #{totals.home[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.home.bonus / totals.home[1]) / 10} points per bonus
-            .col-6: p <b>Bonuses:</b> #{totals.away[1]} bonuses heard and #{result.home.bonus} points for #{Math.round(10*result.away.bonus / totals.away[1]) / 10} points per bonus
+            .col-6: p <b>Bonuses:</b> #{totals.away[1]} bonuses heard and #{result.away.bonus} points for #{Math.round(10*result.away.bonus / totals.away[1]) / 10} points per bonus
 
 block scripts 
     script.
