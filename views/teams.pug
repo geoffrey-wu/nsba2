@@ -3,7 +3,7 @@ extends _layout
 block content
     p.lead Teams consist of a GM and between 4-8 players.
     p There are currently #{Object.keys(teams).length} teams registered. Below is a list of all teams:
-    table#table.table.table-striped
+    table#table.table.table-hover
         thead
             tr
                 th(onclick='sortTable(0)' scope='col') Team Name

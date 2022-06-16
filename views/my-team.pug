@@ -10,7 +10,7 @@ block content
 
         h4 Players:
 
-        table.table
+        table.table.table-striped
             thead
                 tr
                     th(onclick='sortTable(0)' scope='col') Username
@@ -32,7 +32,7 @@ block content
                 button.btn.btn-primary.ms-auto(data-bs-toggle="modal" data-bs-target="#change-team-name-modal") Change Team Name
 
         h4 Draft Picks
-        table.table
+        table.table.table-striped
             thead
                 tr
                     th(onclick='sortTable(0)' scope='col') #
@@ -46,7 +46,7 @@ block content
                             td= pick + 1
                             td: a Trade History
 
-        #change-team-name-modal.modal.fade(tabindex="-1" aria-labelledby="example-modal-label" aria-hidden="true")
+        #change-team-name-modal.modal.fade(tabindex="-1" aria-labelledby="change-team-name-modal" aria-hidden="true")
             .modal-dialog
                 .modal-content
                     .modal-header
