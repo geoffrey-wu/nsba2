@@ -24,6 +24,7 @@ var scheduleRouter = require('./routes/schedule');
 var signupRouter = require('./routes/signup');
 var staffRouter = require('./routes/staff');
 var teamsRouter = require('./routes/teams');
+var vodsRouter = require('./routes/vods');
 
 var apiRouter = require('./routes/api');
 
@@ -72,6 +73,7 @@ app.use('/schedule', scheduleRouter);
 app.use('/signup', signupRouter);
 app.use('/staff', staffRouter);
 app.use('/teams', teamsRouter);
+app.use('/vods', vodsRouter);
 
 app.use('/*.css', cssRouter);
 app.use('/*.js', jsRouter);
