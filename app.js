@@ -27,9 +27,9 @@ var teamsRouter = require('./routes/teams');
 
 var apiRouter = require('./routes/api');
 
-var cssRouter = require('./routes/css');
-var imageRouter = require('./routes/images');
-var jsRouter = require('./routes/javascript');
+var cssRouter = require('./routes/_css');
+var imageRouter = require('./routes/_images');
+var jsRouter = require('./routes/_scripts');
 
 var app = express();
 
