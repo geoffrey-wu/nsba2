@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
         username: req.session.username,
 
         picks: await database.getDraft(),
-        players: await database.getPlayers(),
+        players: await database.getUsers(role = 'Player'),
     });
 });
 

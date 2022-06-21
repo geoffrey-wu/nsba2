@@ -9,7 +9,7 @@ router.get(/\/.+/, async (req, res, next) => {
     if (gmName.charAt(gmName.length - 1) === '/')
         gmName = gmName.substring(0, gmName.length - 1);
     
-    let gm = await database.getGM(gmName);
+    let gm = await database.getUser(gmName, role = 'GM');
     if (gm) {
         res.render('user', {
             title: gmName,
@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
         description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
         title: 'GMs',
         role: 'GM',
-        users: await database.getGMs(),
+        users: await database.getUsers(role = 'GM'),
         username: req.session.username
     });
 });

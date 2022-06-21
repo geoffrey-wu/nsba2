@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
         title: 'Combine',
         username: req.session.username,
 
-        players: await database.getPlayers()
+        players: await database.getUsers(role = 'Player')
     });
 });
 

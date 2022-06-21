@@ -27,24 +27,6 @@ client.connect().then(() => {
 });
 
 /**
- * Equivalent to calling `getUser(username, role='GM')`.
- * @param {String} username 
- * @returns {Promise<JSON>}
- */
-async function getGM(username) {
-    return await getUser(username, role = 'GM');
-}
-
-/**
- * Equivalent to calling `getUser(username, role='GM')`.
- * @param {String} username 
- * @returns {Promise<JSON>}
- */
-async function getPlayer(username) {
-    return await getUser(username, role = 'Player');
-}
-
-/**
  * 
  * @param {String} username the username of the user you are trying to retrieve.
  * @param {String} role the role of the user. Must be either 'player', 'GM', or 'Admin'.
@@ -68,24 +50,6 @@ async function getUser(username, role = '') {
 async function getUserById(id) {
     const query = { _id: id };
     return await users.findOne(query);
-}
-
-/**
- * Returns an array of all users in database with 'GM' role.
- * Equivalent to calling getUsers(role='GM').
- * @returns {Promise<Array<JSON>>} - an array of JSON-like user objects with role 'GM'.
- */
-async function getGMs() {
-    return await getUsers(role = 'GM');
-}
-
-/**
- * Returns an array of all users in database with 'Player' role.
- * Equivalent to calling getUsers(role='Player').
- * @returns {Promise<Array<JSON>>} - an array of JSON-like user objects with role 'Player'.
- */
-async function getPlayers() {
-    return await getUsers(role = 'Player');
 }
 
 /**
@@ -114,7 +78,7 @@ async function getTeam(name) {
 }
 
 /**
- * For each given team id, returns the corresponding team name.
+ * For each given team id in the array `ids`, returns the corresponding team name.
  * @param {Array<String>} ids
  * @returns {Promise<Array<String>>} an array of team names.
  */
@@ -374,7 +338,7 @@ async function replaceUser(username, newUser) {
 }
 
 module.exports = {
-    getGM, getGMs, getPlayer, getPlayers, getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule, getResults,
+    getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule, getResults, getCombine,
     addUser, createTeam, addResult, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, editTeamNameInSchedule, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };

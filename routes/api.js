@@ -29,7 +29,7 @@ router.post('/signup', async (req, res, next) => {
     let username = req.body.username;
 
     // return error if username already exists
-    let results = await database.getPlayer(username);
+    let results = await database.getUser(username);
     if (results) {
         res.sendStatus(409);
     } else {
@@ -136,7 +136,7 @@ router.post('/draft-player', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        let user = await database.getGM(username);
+        let user = await database.getUser(username, role = 'GM');
         if (user && 'team' in user) {
             let team = await database.getTeam(user.team);
             if (team.draft_picks.includes(await database.getCurrentDraftNumber())) {

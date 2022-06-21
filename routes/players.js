@@ -9,7 +9,7 @@ router.get(/\/.+/, async (req, res, next) => {
     if (playerName.charAt(playerName.length - 1) === '/')
         playerName = playerName.substring(0, playerName.length - 1);
 
-    let player = await database.getPlayer(playerName);
+    let player = await database.getUser(playerName, role = 'Player');
     if (player) {
         res.render('user', {
             title: playerName,
@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
         description: 'Players compete in science bowl games. They can be traded and drafted.',
         title: 'players',
         role: 'player',
-        users: await database.getPlayers(),
+        users: await database.getUsers(role = 'Player'),
         username: req.session.username
     });
 });
