@@ -36,9 +36,9 @@ router.post('/signup', async (req, res, next) => {
         // log the user in when they sign up
         req.session.username = username;
         req.session.token = authentication.generateToken(username);
-    
+
         req.body.password = authentication.saltAndHashPassword(req.body.password);
-        await database.addUser(username, req.body);
+        await database.createUser(username, req.body);
         res.sendStatus(200);
     }
 });
@@ -65,22 +65,14 @@ router.post('/edit-profile', async (req, res, next) => {
     if (authentication.checkToken(username, token)) {
         // log out if player changed their username
         // and change team.gm to new username
-        if (username != req.body.username) {
-            req.session = null;
-            let user = await database.getUser(username);
-            if (user && user.role === 'GM') { // check if user is GM
-                await database.editTeamAttribute(user.team, 'gm', req.body.username);
-                await database.editDraftAttribute(user.team, 'gm', req.body.username);
-            } else if (user && 'team' in user) {
-                await database.editDraftAttribute(user.team, 'player', req.body.username);
-            }
-        }
+        if (username != req.body.username) req.session = null;
 
+        // User cannot change these fields
         delete req.body.discord;
         delete req.body.role;
         delete req.body.password;
 
-        await database.editAttributes(username, req.body);
+        await database.updateUser(username, req.body);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
@@ -91,7 +83,7 @@ router.post('/edit-bio', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        await database.editAttribute(username, 'bio', req.body.bio);
+        await database.updateUser(username, 'bio', req.body.bio);
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
@@ -119,17 +111,14 @@ router.post('/edit-team-name', async (req, res, next) => {
     if (authentication.checkToken(username, token)) {
         let user = await database.getUser(username);
         if (user.role == 'GM') {
-            await database.editAttribute(username, 'team', req.body.newName);
-            await database.editTeamAttribute(user.team, 'name', req.body.newName);
-            await database.editDraftAttribute(user.team, 'team', req.body.newName);
-            await database.editScheduleTeamName(user.team, req.body.newName);
+            await database.updateTeam(user.team, {'name': req.body.newName});
             res.sendStatus(200);
         } else {
             res.sendStatus(403);
         }
     } else {
         res.sendStatus(401);
-    } 
+    }
 });
 
 router.post('/draft-player', async (req, res, next) => {
@@ -142,7 +131,7 @@ router.post('/draft-player', async (req, res, next) => {
             if (team.draft_picks.includes(await database.getCurrentDraftNumber())) {
                 await database.draftPlayer(req.body.player, team.name);
                 let nextDraftPick = await database.getNextDraftPick();
-                res.status(200).send({nextGm: nextDraftPick.gm, nextTeam: nextDraftPick.team, player: req.body.player});
+                res.status(200).send({ nextGm: nextDraftPick.gm, nextTeam: nextDraftPick.team, player: req.body.player });
             } else {
                 res.sendStatus(403);
             }

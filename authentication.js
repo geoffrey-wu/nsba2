@@ -42,7 +42,7 @@ async function checkPassword(username, password) {
  * @returns {Void}
  */
 async function updatePassword(username, password) {
-    await database.editAttribute(username, 'password', saltAndHashPassword(password));
+    await database.updateUser(username, 'password', saltAndHashPassword(password));
 }
 
 /**

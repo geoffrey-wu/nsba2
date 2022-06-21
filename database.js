@@ -224,7 +224,7 @@ async function getCombine() {
  * @param {String} username - the username of the player to be added.
  * @param {JSON} user - JSON object to be added to the database.
  */
-async function addUser(username, user) {
+async function createUser(username, user) {
     user['_id'] = (new ObjectId()).toString();
     user['username'] = username;
     if (!(role in user)) {
@@ -263,71 +263,57 @@ async function addResult(result) {
  * Sets field `key` to value `value` of user with username `username`.
  * Does nothing if `username` is not found.
  * @param {String} username
- * @param {String} key 
- * @param {String} value 
+ * @param {JSON} newValues
  */
-async function editAttribute(username, key, value) {
+async function updateUser(username, newValues) {
     const filter = { username: username };
-    let tempJSON = {};
-    tempJSON[key] = value;
-    const update = { $set: tempJSON };
-    await users.updateOne(filter, update);
+    await users.updateOne(filter, { $set: newValues });
+
+    if ('username' in newValues && newValues['username'] !== username) {
+        let user = await getUser(newValues['username']);
+        if (user.role === 'GM') {
+            await updateTeam(user.team, { gm: newValues['username'] });
+            await draft.updateMany({ gm: username }, { $set: { gm: newValues['username'] } });
+        } else if ('team' in user) {
+            await draft.updateOne({ player: username }, { $set: { player: newValues['username'] } });
+            await teams.updateMany({}, { $set: { 'players.$[oldName]': newValues['username'] } }, { arrayFilters: [{ oldName: username }] });
+            let tempOldHome = 'home.players.' + username;
+            let tempOldAway = 'away.players.' + username;
+            let tempNewHome = 'home.players.' + newValues['username'];
+            let tempNewAway = 'away.players.' + newValues['username'];
+            let renameObject = {};
+            renameObject[tempOldHome] = tempNewHome;
+            renameObject[tempOldAway] = tempNewAway;
+            await results.updateMany({}, {
+                $rename: renameObject
+            })
+        }
+    }
 }
 
 /**
- * Updates all draft picks with the given `teamName` by setting the value of `key` to `value`.
+ * Updates team with the given `teamName` by setting the value of `key` to `value`.
+ * This method guarantees consistency throughout the database if the team name changes.
  * @param {String} teamName 
- * @param {String} key 
- * @param {String} value 
+ * @param {JSON} newValues
  */
-async function editDraftAttribute(teamName, key, value) {
-    const filter = { team: teamName };
-    let tempJSON = {};
-    tempJSON[key] = value;
-    const update = { $set: tempJSON };
-    await draft.updateMany(filter, update);
-}
-
-/**
- * 
- * @param {String} teamName 
- * @param {String} key 
- * @param {String} value 
- */
-async function editTeamAttribute(teamName, key, value) {
+async function updateTeam(teamName, newValues) {
     const filter = { name: teamName };
-    let tempJSON = {};
-    tempJSON[key] = value;
-    const update = { $set: tempJSON };
-    await teams.updateOne(filter, update);
-}
+    await teams.updateOne(filter, { $set: newValues });
 
-async function editTeamNameInSchedule(teamName, newName) {
-    schedule.updateMany(
-        {},
-        { $set: { "matchups.$[].$[changeName]": newName } },
-        { arrayFilters: [{ changeName: teamName }] }
-    )
+    if ('name' in newValues && teamName !== newValues.name) {
+        schedule.updateMany({}, { $set: { "matchups.$[].$[oldName]": newValues['name'] } }, { arrayFilters: [{ oldName: teamName }] })
+        await
+            Many({ team: teamName }, { team: newValues['name'] });
+        await users.updateMany({ team: teamName }, { $set: { team: newValues['name'] } });
+    }
 }
-
-/**
- * Edit multiple attributes of a user at one time.
- * Does nothing if `username` is not found.
- * @param {String} username 
- * @param {JSON} newAttributes - the attributes to be added or modified to the user in {field, value} pairs.
- */
-async function editAttributes(username, newAttributes) {
-    const filter = { username: username };
-    const update = { $set: newAttributes };
-    await users.updateOne(filter, update);
-}
-
 
 /**
  * Finds and replaces user with given `username` with `newUser`.
  * If `username` does not exist, adds `newUser` to database.
  * 
- * If you want to edit attributes, use `editAttribute` or `editAttributes` instead.
+ * If you want to edit attributes, use `updateUser` or `updateUsers` instead.
  * This function will delete all existing fields, even if there is no corresponding field to replace it with.
  * @param {String} username 
  * @param {JSON} newUser 
@@ -339,7 +325,7 @@ async function replaceUser(username, newUser) {
 
 module.exports = {
     getUser, getUserById, getUsers, getTeam, getTeams, getTeamNames, getSchedule, getResults, getCombine,
-    addUser, createTeam, addResult, editAttribute, editDraftAttribute, editTeamAttribute, editAttributes, editTeamNameInSchedule, replaceUser,
+    createUser, createTeam, addResult, updateUser, updateTeam, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };
 
