@@ -14,9 +14,11 @@ block content
                 th(onclick='sortTable(5, isInt=true)' scope='col') 4s
                 th(onclick='sortTable(6, isInt=true)' scope='col') 0s
                 th(onclick='sortTable(7, isInt=true)' scope='col') -4s
-                th(onclick='sortTable(8, isInt=true)' scope='col') Points
-                th(onclick='sortTable(9, isInt=true)' scope='col') PPG
-                th(onclick='sortTable(10, isInt=true)' scope='col') Pts/22
+                th(onclick='sortTable(8, isInt=true)' scope='col') Bonus
+                th(onclick='sortTable(9, isInt=true)' scope='col') PPB
+                th(onclick='sortTable(10, isInt=true)' scope='col') Points
+                th(onclick='sortTable(11, isInt=true)' scope='col') PPG
+                th(onclick='sortTable(12, isInt=true)' scope='col') Pts/22
         tbody
             each team, index in teams
                 tr
@@ -28,6 +30,8 @@ block content
                     td= team.stats.statline[0]
                     td= team.stats.statline[1]
                     td= team.stats.statline[2]
+                    td= team.stats.bonuses.points
+                    td= Math.round(team.stats.bonuses.points / team.stats.bonuses.num_heard * 10) / 10
                     td= team.stats.points
                     td= team.stats.points / team.stats.gp
                     td= Math.round(team.stats.points / team.stats.tuh * 22 * 10) / 10
