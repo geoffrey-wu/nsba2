@@ -47,14 +47,15 @@ async function getUserById(id) {
 /**
  * Returns an array of all users.
  * @param {String} role - if specified, only get users with this role.
+ * @param {JSON} sort - JSON-like object that describes how the results should be sorted.
  * @returns Array of JSON-like user objects.
  */
-async function getUsers(role = '') {
+async function getUsers(role = '', sort = { 'username': 1 }) {
     let query = {};
     if (role) {
         query['role'] = role;
     }
-    const cursor = await users.find(query);
+    const cursor = await users.find(query, { sort: sort, collation: { locale: 'en' } });
     return cursor.toArray();
 }
 
@@ -86,10 +87,11 @@ async function getTeamNames(ids) {
 
 /**
  * Finds and returns all teams in database.
+ * @param {JSON} sort - JSON-like object that describes how the results should be sorted.
  * @returns {Promise<Array<JSON>>} - an array of JSON-like team objects.
  */
-async function getTeams() {
-    const cursor = await teams.find({});
+async function getTeams(sort = { 'name': 1 }) {
+    const cursor = await teams.find({}, { sort: sort, collation: { locale: 'en' } });
     return cursor.toArray();
 }
 
