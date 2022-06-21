@@ -3,11 +3,11 @@ extends _layout
 block content
     p.lead Standings after Round 1:
 
-    table#table.table.table-hover
+    table#table.table.table-hover.text-center
         thead
             tr
                 th(onclick='sortTable(0, isInt=true)' scope='col') #
-                th(onclick='sortTable(1)' scope='col') Team Name
+                th.text-start(onclick='sortTable(1)' scope='col') Team Name
                 th(onclick='sortTable(2, isInt=true)' scope='col') Record
                 th(onclick='sortTable(3, isInt=true)' scope='col') GP
                 th(onclick='sortTable(4, isInt=true)' scope='col') TUH
@@ -23,7 +23,7 @@ block content
             each team, index in teams
                 tr
                     td= index + 1
-                    td: a(href=`/teams/${team.name}`)= team.name
+                    td.text-start: a(href=`/teams/${team.name}`)= team.name
                     td #{team.stats.record[0]}-#{team.stats.record[1]}
                     td= team.stats.gp
                     td= team.stats.tuh
