@@ -11,7 +11,7 @@ client.connect().then(() => {
 });
 
 const database = client.db('nsba');
-const draft = database.collection('draft-picks');
+const draft = database.collection('draft');
 const mockDraft = database.collection('mock-draft');
 const schedule = database.collection('schedule');
 const teams = database.collection('teams');
