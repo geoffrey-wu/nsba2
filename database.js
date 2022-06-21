@@ -5,26 +5,18 @@ if (process.env.NODE_ENV !== 'production') {
 const { MongoClient, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba.ujpbt.mongodb.net/?retryWrites=true&w=majority`;
 
-var database;
-var draft;
-var mockDraft;
-var schedule;
-var teams;
-var users;
-var results;
-
 const client = new MongoClient(uri);
 client.connect().then(() => {
-    database = client.db('nsba');
-    draft = database.collection('draft-picks');
-    mockDraft = database.collection('mock-draft');
-    schedule = database.collection('schedule');
-    teams = database.collection('teams');
-    users = database.collection('users');
-    results = database.collection('results');
-
     console.log('connected to mongodb');
 });
+
+const database = client.db('nsba');
+const draft = database.collection('draft-picks');
+const mockDraft = database.collection('mock-draft');
+const schedule = database.collection('schedule');
+const teams = database.collection('teams');
+const users = database.collection('users');
+const results = database.collection('results');
 
 /**
  * 
