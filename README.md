@@ -59,8 +59,7 @@ draft_pick = {
     _id: draft_number,
     gm: gm_name,
     player: player_name,
-    team: team_name,
-    trade_history: [trade_id...]
+    team: team_name
 }
 
 mock_draft = {
@@ -85,7 +84,7 @@ result = {
         },
     }, 
     away: {
-        name: home_team_name,
+        name: away_team_name,
         score: points_scored,
         bonus: bonus_points,
         players: {
