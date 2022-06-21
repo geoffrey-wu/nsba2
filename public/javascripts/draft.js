@@ -7,8 +7,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 });
 
 window.onload = () => {
-    sortTable(0, true);
-
     for (let i = 0; i < document.getElementsByClassName('projected').length; i++) {
         document.getElementsByClassName('projected')[i].innerHTML = i + 1;
     }

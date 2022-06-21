@@ -56,9 +56,9 @@ block content
             th(onclick='sortTable(5, isInt=true)' scope='col') Combine Score
             th(onclick='sortTable(6, isInt=true)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
         tbody 
-            each player, index in players
-                unless player.draftPick
-                    - continue
+            each pick, index in picks
+                - let username = pick.player
+                - let player = players.filter(element => element.username === username)[0]
 
                 tr(player=player.username)
                     td= player.draftPick

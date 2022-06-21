@@ -129,7 +129,7 @@ async function getMockDraft() {
  * @returns {Promise<Array<JSON>>} an array of JSON-like draft objects.
  */
 async function getDraft() {
-    return await draft.find({ _id: { $gte: 0 } }).toArray();
+    return await draft.find({ _id: { $gte: 0 } }, { sort: { _id: 1 } }).toArray();
 }
 
 /**
