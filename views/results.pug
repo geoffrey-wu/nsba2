@@ -46,50 +46,50 @@ block content
                     button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
                     button#submit.btn.btn-primary(type='button') Add Result
 
+    each round in [2, 1]
+        h4 Week #{round}:
+        each result in results.filter(element => element.week === round)
+            - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
 
-    h4 Week 1:
-    each result in results
-        - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
+            .row.text-center
+                each location in ['home', 'away']
+                    .col-12.col-md-6
+                        h5 #{result[location].name}: #{result[location].score} points
+                        table.table.table-hover.table-sm.mb-2
+                            thead: tr
+                                th Player
+                                th TUH
+                                th 4s
+                                th 0s
+                                th -4s
+                                th Points
+                            tbody
+                            each player, name in result[location]['players']
+                                - if (!player) continue
+                                tr
+                                    td: a(href=`/players/${name}`)= name
+                                    td= player.tuh
+                                    - totals[location][0] += player.tuh
+                                    td= player.statline[0]
+                                    - totals[location][1] += player.statline[0]
+                                    td= player.statline[1]
+                                    - totals[location][2] += player.statline[1]
+                                    td= player.statline[2]
+                                    - totals[location][3] += player.statline[2]
+                                    td= player.points
+                                    - totals[location][4] += player.points
+                            
+                            tfoot: tr
+                                th Total
+                                th= Math.round(totals[location][0] / 4)
+                                th= totals[location][1]
+                                th= totals[location][2]
+                                th= totals[location][3]
+                                th= totals[location][4]
+                    
+                        p <b>Bonuses:</b> #{result[location].bonus} pts / #{totals[location][1]} bonuses heard for #{Math.round(10*result[location].bonus / totals[location][1]) / 10} PPB
 
-        .row.text-center
-            each location in ['home', 'away']
-                .col-12.col-md-6
-                    h5 #{result[location].name}: #{result[location].score} points
-                    table.table.table-hover.table-sm.mb-2
-                        thead: tr
-                            th Player
-                            th TUH
-                            th 4s
-                            th 0s
-                            th -4s
-                            th Points
-                        tbody
-                        each player, name in result[location]['players']
-                            - if (!player) continue
-                            tr
-                                td: a(href=`/players/${name}`)= name
-                                td= player.tuh
-                                - totals[location][0] += player.tuh
-                                td= player.statline[0]
-                                - totals[location][1] += player.statline[0]
-                                td= player.statline[1]
-                                - totals[location][2] += player.statline[1]
-                                td= player.statline[2]
-                                - totals[location][3] += player.statline[2]
-                                td= player.points
-                                - totals[location][4] += player.points
-                        
-                        tfoot: tr
-                            th Total
-                            th= Math.round(totals[location][0] / 4)
-                            th= totals[location][1]
-                            th= totals[location][2]
-                            th= totals[location][3]
-                            th= totals[location][4]
-                
-                    p <b>Bonuses:</b> #{result[location].bonus} pts / #{totals[location][1]} bonuses heard for #{Math.round(10*result[location].bonus / totals[location][1]) / 10} PPB
-
-        hr.mt-0
+            hr.mt-0
 
 block scripts 
     script.
