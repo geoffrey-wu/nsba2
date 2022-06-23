@@ -63,9 +63,9 @@ block content
                 tr(player=player.username)
                     td= player.draftPick
                     td= player.firstName + ' ' + player.lastName
-                    td: a(href='/players/' + player.username)= player.username
-                    td: a(href='/teams/' + picks[player.draftPick - 1].team)= picks[player.draftPick - 1].team
-                    td: a(href='/gms/' + picks[player.draftPick - 1].gm)= picks[player.draftPick - 1].gm
+                    td: a(href=encodeURI('/players/' + player.username))= player.username
+                    td: a(href=encodeURI('/teams/' + picks[player.draftPick - 1].team))= picks[player.draftPick - 1].team
+                    td: a(href=encodeURI('/gms/' + picks[player.draftPick - 1].gm))= picks[player.draftPick - 1].gm
                     td.combine-score= (player.combine) ? player.combine.slice(0, 20).reduce((prev, next) => prev + next) : -100
                     td.mcs= player.mcs= player.combine ? Math.round(player.combine[20]) : -100
 

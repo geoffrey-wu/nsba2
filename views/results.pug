@@ -67,7 +67,7 @@ block content
                             each player, name in result[location]['players']
                                 - if (!player) continue
                                 tr
-                                    td: a(href=`/players/${name}`)= name
+                                    td: a(href=encodeURI(`/players/${name}`))= name
                                     td= player.tuh
                                     - totals[location][0] += player.tuh
                                     td= player.statline[0]

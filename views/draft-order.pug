@@ -18,8 +18,8 @@ block content
         if teams
             each team in teams
                 tr
-                    td: a(href=`/teams/${team.name}`)= team.name
-                    td: a(href=`/gms/${team.gm}`)= team.gm
+                    td: a(href=encodeURI(`/teams/${team.name}`))= team.name
+                    td: a(href=encodeURI(`/gms/${team.gm}`))= team.gm
                     td= team.draft_picks[0] || '-'
                     td= team.draft_picks[1] || '-'
                     td= team.draft_picks[2] || '-'

@@ -20,7 +20,7 @@ block content
             tbody
                 each player in players
                     tr
-                        td: a(href='/players/' + player.username)=player.username
+                        td: a(href=encodeURI('/players/' + player.username))=player.username
                         td= player.discord
                         td= player.firstName + ' ' + player.lastName
                         td= player.grade
