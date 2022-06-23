@@ -250,7 +250,11 @@ async function createTeam(username) {
 }
 
 async function addResult(result) {
-    await results.insertOne(result);
+    try {
+        await results.insertOne(result);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 /**
