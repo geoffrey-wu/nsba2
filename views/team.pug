@@ -60,9 +60,9 @@ block content
                 tr
                 for result in results.sort((a, b) => a._id - b._id)
                     for location in ['home', 'away']
-                        if result[location].team == team.name
+                        - let totals = Array(5).fill(0)
+                        if result[location].name == team.name
                             -
-                                let totals = Array(5).fill(0)
                                 for (let [player, value] of result[location].players) {
                                     totals[0] += 1
                                     totals[1] += value.tuh
