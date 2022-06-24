@@ -27,7 +27,51 @@ block content
         include _bio.pug
     else
         p N/A
-    h4 Stats:
-    p There are no stats to display.
-    h4 Transaction History:
-    p There is no transaction history to display.
+    
+    if user.role === 'Player' && user.eligible
+        h4 Stats:
+        table.table
+            thead: tr
+                th(onclick='sortTable(0, isInt="true")' scope='col') Round
+                th Matchup
+                th TUH
+                th(onclick='sortTable(3, isInt="true")' scope='col') 4s
+                th(onclick='sortTable(4, isInt="true")' scope='col') 0s
+                th(onclick='sortTable(5, isInt="true")' scope='col') -4s
+                th(onclick='sortTable(6, isInt="true")' scope='col') Points
+
+            tbody#table
+                tr
+                - let totals = Array(6).fill(0)
+                for result in results.sort((a, b) => a._id - b._id)
+                    for location in ['home', 'away']
+                        if result[location].players[user.username]
+                            - let playerResult = result[location].players[user.username]
+                            - totals[0] += 1
+                            - totals[1] += playerResult.tuh
+                            - totals[2] += playerResult.statline[0]
+                            - totals[3] += playerResult.statline[1]
+                            - totals[4] += playerResult.statline[2]
+                            - totals[5] += playerResult.points
+                            tr 
+                                td= result.week
+                                td= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
+                                td= playerResult.tuh
+                                td= playerResult.statline[0]
+                                td= playerResult.statline[1]
+                                td= playerResult.statline[2]
+                                td= playerResult.points
+            tfoot
+                tr
+                    th
+                    th Averages:
+                    for i in [1, 2, 3, 4, 5]
+                        th= totals[i]/totals[0]
+                tr
+                    th
+                    th Totals:
+                    for i in [1, 2, 3, 4, 5]
+                        th= totals[i]
+
+block scripts
+    script(src="/table.js")

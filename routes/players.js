@@ -15,6 +15,7 @@ router.get(/\/.+/, async (req, res, next) => {
             title: playerName,
             username: req.session.username,
 
+            results: await database.getResults(),
             user: player
         });
     } else {
