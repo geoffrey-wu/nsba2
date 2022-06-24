@@ -43,8 +43,65 @@ block content
                             td= pick + 1
                             td: a Trade History
 
-        //- button.btn.btn-primary(onclick='editRoster()') Edit Roster
-        //- button.btn.btn-primary(onclick='proposeTrade()') Propose Trade
+        h4 Stats:
+        table.table
+            thead: tr
+                th(onclick='sortTable(0, isInt="true")' scope='col') Round
+                th Matchup
+                th TUH
+                th(onclick='sortTable(3, isInt="true")' scope='col') 4s
+                th(onclick='sortTable(4, isInt="true")' scope='col') 0s
+                th(onclick='sortTable(5, isInt="true")' scope='col') -4s
+                th(onclick='sortTable(6, isInt=true)' scope='col') Bonus
+                th(onclick='sortTable(7, isInt=true)' scope='col') PPB
+                th(onclick='sortTable(8, isInt="true")' scope='col') Points
+
+            tbody#table
+                tr
+                for result in results.sort((a, b) => a._id - b._id)
+                    for location in ['home', 'away']
+                        if result[location].team == team.name
+                            -
+                                let totals = Array(5).fill(0)
+                                for (let [player, value] of result[location].players) {
+                                    totals[0] += 1
+                                    totals[1] += value.tuh
+                                    totals[2] += value.statline[0]
+                                    totals[3] += value.statline[1]
+                                    totals[4] += value.statline[2]
+                                }
+                            tr 
+                                td= result.week
+                                td= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
+                                td= totals[1]
+                                td= totals[2]
+                                td= totals[3]
+                                td= totals[4]
+                                td= result[location].bonus
+                                td= Math.round(10 * result[location].bonus / totals[2]) / 10
+                                td= result[location].score
+            tfoot
+                tr
+                    th
+                    th Averages:
+                    th= Math.round(team.stats.tuh / team.stats.gp)
+                    th= Math.round(10 * team.stats.statline[0] / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.statline[1] / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.statline[2] / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.bonuses.points / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.tuh / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.points / team.stats.gp) / 10
+
+                tr
+                    th
+                    th Totals:
+                    th= team.stats.tuh
+                    th= team.stats.statline[0]
+                    th= team.stats.statline[1]
+                    th= team.stats.statline[2]
+                    th= team.stats.bonuses.points
+                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.tuh) / 10
+                    th= team.stats.points
     else
         button#createTeam.btn.btn-primary(type='button') Create Team
 
