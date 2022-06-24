@@ -14,7 +14,7 @@ router.get(/\/.+/, async (req, res, next) => {
         let gm = await database.getUser(team.gm);
         Promise.all(team.players.map(async (username) => {
             return await database.getUser(username);
-        })).then((players) => {
+        })).then(async (players) => {
             res.render('team', {
                 title: 'My Team',
                 username: req.session.username,
