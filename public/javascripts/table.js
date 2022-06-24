@@ -23,7 +23,7 @@ function sortTable(n, isInt=false, tableId="table") {
             based on the direction, asc or desc: */
             if (dir == "asc") {
                 if (isInt) {
-                    if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                    if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
                         break;
@@ -37,7 +37,7 @@ function sortTable(n, isInt=false, tableId="table") {
                 }
             } else if (dir == "desc") {
                 if (isInt) {
-                    if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+                    if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
                         break;
