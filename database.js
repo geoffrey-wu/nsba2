@@ -303,6 +303,8 @@ async function updateTeam(teamName, newValues) {
 
     if ('name' in newValues && teamName !== newValues.name) {
         schedule.updateMany({}, { $set: { "matchups.$[].$[oldName]": newValues['name'] } }, { arrayFilters: [{ oldName: teamName }] })
+        results.updateMany({'home.name': teamName}, {$set: {'home.name': newValues['name']}});
+        results.updateMany({'away.name': teamName}, {$set: {'away.name': newValues['name']}});
         await users.updateMany({ team: teamName }, { $set: { team: newValues['name'] } });
     }
 }
