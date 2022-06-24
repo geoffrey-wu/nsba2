@@ -89,7 +89,7 @@ block content
                     th= Math.round(10 * team.stats.statline[1] / team.stats.gp) / 10
                     th= Math.round(10 * team.stats.statline[2] / team.stats.gp) / 10
                     th= Math.round(10 * team.stats.bonuses.points / team.stats.gp) / 10
-                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.tuh / team.stats.gp) / 10
+                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.num_heard) / 10
                     th= Math.round(10 * team.stats.points / team.stats.gp) / 10
 
                 tr
@@ -100,7 +100,7 @@ block content
                     th= team.stats.statline[1]
                     th= team.stats.statline[2]
                     th= team.stats.bonuses.points
-                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.tuh) / 10
+                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.num_heard) / 10
                     th= team.stats.points
     else
         button#createTeam.btn.btn-primary(type='button') Create Team
