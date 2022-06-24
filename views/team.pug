@@ -47,14 +47,15 @@ block content
         table.table
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
+                th Result
                 th Matchup
                 th TUH
-                th(onclick='sortTable(3, isInt="true")' scope='col') 4s
-                th(onclick='sortTable(4, isInt="true")' scope='col') 0s
-                th(onclick='sortTable(5, isInt="true")' scope='col') -4s
-                th(onclick='sortTable(6, isInt=true)' scope='col') Bonus
-                th(onclick='sortTable(7, isInt=true)' scope='col') PPB
-                th(onclick='sortTable(8, isInt="true")' scope='col') Points
+                th(onclick='sortTable(4, isInt="true")' scope='col') 4s
+                th(onclick='sortTable(5, isInt="true")' scope='col') 0s
+                th(onclick='sortTable(6, isInt="true")' scope='col') -4s
+                th(onclick='sortTable(7, isInt="true")' scope='col') Bonus
+                th(onclick='sortTable(8, isInt="true")' scope='col') PPB
+                th(onclick='sortTable(9, isInt="true")' scope='col') Points
 
             tbody#table
                 tr
@@ -72,8 +73,9 @@ block content
                                 })
                             tr 
                                 td= result.week
+                                td= ((location === 'home' && result.home.score > result.away.score) || (location === 'away' && result.away.score > result.home.score)) ? 'W' : 'L'
                                 td= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
-                                td= totals[1]
+                                td= Math.round(totals[1] / 4)
                                 td= totals[2]
                                 td= totals[3]
                                 td= totals[4]
