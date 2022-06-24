@@ -13,7 +13,7 @@ block content
 
         h4 Players:
 
-        table.table.table-striped.text-center
+        table.table.table-striped
             thead
                 tr
                     th(onclick='sortTable(0)' scope='col') Username
@@ -44,7 +44,7 @@ block content
                             td: a Trade History
 
         h4 Stats:
-        table.table
+        table.table.text-center
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
                 th Result
