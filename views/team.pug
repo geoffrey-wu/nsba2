@@ -63,13 +63,13 @@ block content
                         - let totals = Array(5).fill(0)
                         if result[location].name == team.name
                             -
-                                for (let [player, value] of result[location].players) {
-                                    totals[0] += 1
-                                    totals[1] += value.tuh
-                                    totals[2] += value.statline[0]
-                                    totals[3] += value.statline[1]
-                                    totals[4] += value.statline[2]
-                                }
+                                Object.values(result[location].players).forEach(value => {
+                                    totals[0] += 1;
+                                    totals[1] += value.tuh;
+                                    totals[2] += value.statline[0];
+                                    totals[3] += value.statline[1];
+                                    totals[4] += value.statline[2];
+                                })
                             tr 
                                 td= result.week
                                 td= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
