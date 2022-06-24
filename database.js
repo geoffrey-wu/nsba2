@@ -26,11 +26,13 @@ const results = database.collection('results');
  */
 async function getUser(username, role = '') {
     let query = { username: username };
-    if (role) {
-        query['role'] = role;
-    }
+    if (role) query['role'] = role;
 
-    return await users.findOne(query);
+    try {
+        return await users.findOne(query);
+    } catch (error) {
+        console.log(`error in getUser with username ${username}: ${error}`);
+    }
 }
 
 /**
