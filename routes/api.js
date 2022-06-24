@@ -83,7 +83,7 @@ router.post('/edit-bio', async (req, res, next) => {
     let username = req.session.username;
     let token = req.session.token;
     if (authentication.checkToken(username, token)) {
-        await database.updateUser(username, 'bio', req.body.bio);
+        await database.updateUser(username, { 'bio': req.body.bio });
         res.sendStatus(200);
     } else {
         res.sendStatus(401);
@@ -111,7 +111,7 @@ router.post('/edit-team-name', async (req, res, next) => {
     if (authentication.checkToken(username, token)) {
         let user = await database.getUser(username);
         if (user.role == 'GM') {
-            await database.updateTeam(user.team, {'name': req.body.newName});
+            await database.updateTeam(user.team, { 'name': req.body.newName });
             res.sendStatus(200);
         } else {
             res.sendStatus(403);
