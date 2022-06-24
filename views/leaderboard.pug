@@ -9,20 +9,22 @@ block content
                 th(onclick='sortTable(0, isInt=true)' scope='col') #
                 th.text-start(onclick='sortTable(1)' scope='col') Username
                 th.text-start(onclick='sortTable(2)' scope='col') Name
-                th(onclick='sortTable(3, isInt=true)' scope='col') GP
-                th(onclick='sortTable(4, isInt=true)' scope='col') TUH
-                th(onclick='sortTable(5, isInt=true)' scope='col') 4s
-                th(onclick='sortTable(6, isInt=true)' scope='col') 0s
-                th(onclick='sortTable(7, isInt=true)' scope='col') -4s
-                th(onclick='sortTable(8, isInt=true)' scope='col') Points
-                th(onclick='sortTable(9, isInt=true)' scope='col') PPG
-                th(onclick='sortTable(10, isInt=true)' scope='col') Pts/22
+                th.text-start(onclick='sortTable(3)' scope='col') Team
+                th(onclick='sortTable(4, isInt=true)' scope='col') GP
+                th(onclick='sortTable(5, isInt=true)' scope='col') TUH
+                th(onclick='sortTable(6, isInt=true)' scope='col') 4s
+                th(onclick='sortTable(7, isInt=true)' scope='col') 0s
+                th(onclick='sortTable(8, isInt=true)' scope='col') -4s
+                th(onclick='sortTable(9, isInt=true)' scope='col') Points
+                th(onclick='sortTable(10, isInt=true)' scope='col') PPG
+                th(onclick='sortTable(11, isInt=true)' scope='col') Pts/22
         tbody
-            each player, index in players
+            each player, index in players.filter(player => player.eligible)
                 tr
                     td= index + 1
                     td.text-start: a(href=encodeURI(`/players/${player.username}`))= player.username
                     td.text-start= player.firstName + ' ' + player.lastName
+                    td.text-start: a(href=`/teams/${player.team}`)= player.team
                     td= player.stats.gp
                     td= player.stats.tuh
                     td= player.stats.statline[0]
