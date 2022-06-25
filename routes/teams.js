@@ -1,6 +1,7 @@
 var express = require('express');
-var database = require('../database');
 var router = express.Router();
+
+var database = require('../database');
 
 router.get(/\/.+/, async (req, res, next) => {
     let teamName = decodeURI(req.url.substring(1));
@@ -13,7 +14,7 @@ router.get(/\/.+/, async (req, res, next) => {
         let gm = await database.getUser(team.gm);
         Promise.all(team.players.map(async (username) => {
             return await database.getUser(username);
-        })).then((players) => {
+        })).then(async (players) => {
             res.render('team', {
                 title: 'My Team',
                 username: req.session.username,
@@ -21,6 +22,7 @@ router.get(/\/.+/, async (req, res, next) => {
                 gm: gm,
                 picks: team.draft_picks,
                 players: players,
+                results: await database.getResults(),
                 team: team
             });
         });

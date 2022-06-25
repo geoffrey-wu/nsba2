@@ -30,10 +30,10 @@ block content
     
     if user.role === 'Player' && user.eligible
         h4 Stats:
-        table.table
+        table.table.text-center
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
-                th Matchup
+                th.text-start Matchup
                 th TUH
                 th(onclick='sortTable(3, isInt="true")' scope='col') 4s
                 th(onclick='sortTable(4, isInt="true")' scope='col') 0s
@@ -55,7 +55,7 @@ block content
                             - totals[5] += playerResult.points
                             tr 
                                 td= result.week
-                                td= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
+                                td.text-start= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
                                 td= playerResult.tuh
                                 td= playerResult.statline[0]
                                 td= playerResult.statline[1]
@@ -64,12 +64,12 @@ block content
             tfoot
                 tr
                     th
-                    th Averages:
+                    th.text-start Averages:
                     for i in [1, 2, 3, 4, 5]
                         th= totals[i]/totals[0]
                 tr
                     th
-                    th Totals:
+                    th.text-start Totals:
                     for i in [1, 2, 3, 4, 5]
                         th= totals[i]
 
