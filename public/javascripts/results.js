@@ -47,6 +47,7 @@ document.getElementById('submit').addEventListener('click', () => {
             result: {
                 _id: parseInt(week.value) * parseInt(MATCHUPS_PER_WEEK) + parseInt(matchup.value), // calculated from `week_number*matchups.length + matchups.indexOf(this_game)`, but not guaranteed
                 week: parseInt(week.value),
+                tuh: 22,
                 home: {
                     name: document.getElementById('home-team-name').innerHTML,
                     score: parseInt(document.getElementById('home-team-score').innerHTML),

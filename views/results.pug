@@ -69,7 +69,7 @@ block content
                                 tr
                                     td: a(href=encodeURI(`/players/${name}`))= name
                                     td= player.tuh
-                                    - totals[location][0] += player.tuh
+                                    //- - totals[location][0] += player.tuh
                                     td= player.statline[0]
                                     - totals[location][1] += player.statline[0]
                                     td= player.statline[1]
@@ -78,15 +78,15 @@ block content
                                     - totals[location][3] += player.statline[2]
                                     td= player.points
                                     - totals[location][4] += player.points
-                            
+
                             tfoot: tr
                                 th Total
-                                th= Math.round(totals[location][0] / 4)
+                                th= result.tuh
                                 th= totals[location][1]
                                 th= totals[location][2]
                                 th= totals[location][3]
                                 th= totals[location][4]
-                    
+
                         p <b>Bonuses:</b> #{result[location].bonus} pts / #{totals[location][1]} bonuses heard for #{Math.round(10*result[location].bonus / totals[location][1]) / 10} PPB
 
             hr.mt-0

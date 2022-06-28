@@ -76,14 +76,11 @@ client.connect().then(async () => {
         }
 
         for (let location of ['home', 'away']) {
-            let totalTUH = 0;
             Object.keys(doc[location].players).forEach(async username => {
                 if (doc[location].players[username].tuh === 0) return;
 
-                totalTUH += doc[location].players[username].tuh;
-
-                await users.findOneAndUpdate({ username: username }, {
-                    $inc: {
+                await users.updateOne({ username: username }, {
+                $inc: {
                         'stats.gp': 1,
                         'stats.tuh': doc[location].players[username].tuh,
                         'stats.points': doc[location].players[username].points,
@@ -106,7 +103,7 @@ client.connect().then(async () => {
             await teams.updateOne({ name: doc[location].name }, {
                 $inc: {
                     'stats.gp': 1,
-                    'stats.tuh': Math.round(totalTUH / 4),
+                    'stats.tuh': doc.tuh,
                     'stats.points': doc[location].score,
                     'stats.bonuses.points': doc[location].bonus,
                 },

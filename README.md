@@ -71,6 +71,7 @@ mock_draft = {
 result = {
     _id: game_number, // calculated from `week_number*matchups.length + matchups.indexOf(this_game)`, but not guaranteed
     week: week_number,
+    tuh: tossups_heard,
     home: {
         name: home_team_name,
         score: points_scored,

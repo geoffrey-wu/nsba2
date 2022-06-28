@@ -75,7 +75,7 @@ block content
                                 td= result.week
                                 td= ((location === 'home' && result.home.score > result.away.score) || (location === 'away' && result.away.score > result.home.score)) ? 'W' : 'L'
                                 td.text-start= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
-                                td= Math.round(totals[1] / 4)
+                                td= result.tuh
                                 td= totals[2]
                                 td= totals[3]
                                 td= totals[4]
