@@ -9,7 +9,7 @@ block content
 
         p
             strong General Manager: 
-            a(href=encodeURI('/gms/' + gm.username))= gm.username
+            a(href=encodeURI('/gms/' + team.gm))= team.gm
 
         h4 Players:
 
@@ -32,19 +32,21 @@ block content
         table.table.table-striped
             thead
                 tr
-                    th(onclick='sortTable(0)' scope='col') #
-                    th(onclick='sortTable(1)' scope='col') Player
-                    th(onclick='sortTable(2)' scope='col') Trade History
+                    th(scope='col') #
+                    th(scope='col') Pick
+                    th(scope='col') Player
+                    th(scope='col') Trade History
             tbody
-                if picks
-                    each pick, index in picks
+                if team.picks
+                    each pick, index in team.picks
                         tr
                             td= index + 1
                             td= pick + 1
+                            td= picks[pick].player
                             td: a Trade History
 
         h4 Stats:
-        table.table.table-hover.text-center
+        table#table.table.table-hover.text-center
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
                 th Result

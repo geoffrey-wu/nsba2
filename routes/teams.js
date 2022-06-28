@@ -20,7 +20,7 @@ router.get(/\/.+/, async (req, res, next) => {
                 username: req.session.username,
     
                 gm: gm,
-                picks: team.draft_picks,
+                picks: await database.getDraft(),
                 players: players,
                 results: await database.getResults(),
                 team: team
