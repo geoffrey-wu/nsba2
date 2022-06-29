@@ -32,8 +32,9 @@ router.get(/\/.+/, async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     res.render('teams', { 
         title: 'Teams',
+        username: req.session.username,
+
         teams: await database.getTeams(),
-        username: req.session.username
     });
 });
 
