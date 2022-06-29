@@ -36,15 +36,15 @@ block content
             thead
                 tr
                     th(onclick='sortTable(0)' scope='col') #
-                    th(onclick='sortTable(1)' scope='col') Player
-                    th(onclick='sortTable(2)' scope='col') Trade History
+                    th(onclick='sortTable(1)' scope='col') Pick
+                    th(onclick='sortTable(2)' scope='col') Player
             tbody
-                if picks
-                    each pick, index in picks
+                if team.draft_picks
+                    each pick, index in picks.filter(pick => team.draft_picks.includes(pick._id))
                         tr
                             td= index + 1
-                            td= pick + 1
-                            td: a Trade History
+                            td= pick._id
+                            td: a(href=`/players/${encodeURIComponent(pick.player)}`)= pick.player
 
         #change-team-name-modal.modal.fade(tabindex="-1" aria-labelledby="change-team-name-modal" aria-hidden="true")
             .modal-dialog

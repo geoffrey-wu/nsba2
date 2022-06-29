@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
                     title: 'My Team',
                     username: req.session.username,
                     
-                    picks: team.draft_picks,
+                    picks: await database.getDraft(),
                     players: players,
                     team: team,
                     user: user
