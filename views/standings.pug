@@ -33,7 +33,7 @@ block content
                     td= team.stats.bonuses.points
                     td= Math.round(team.stats.bonuses.points / team.stats.bonuses.num_heard * 10) / 10
                     td= team.stats.points
-                    td= team.stats.points / team.stats.gp
+                    td= Math.round(10 * team.stats.points / team.stats.gp) / 10
                     td= Math.round(team.stats.points / team.stats.tuh * 22 * 10) / 10
 
 block scripts

@@ -31,7 +31,7 @@ block content
                     td= player.stats.statline[1]
                     td= player.stats.statline[2]
                     td= player.stats.points
-                    td= player.stats.points / player.stats.gp || 0
+                    td= Math.round(10 * player.stats.points / player.stats.gp) / 10 || 0
                     td= Math.round(player.stats.points / player.stats.tuh * 22 * 10) / 10 || 0
 
 block scripts
