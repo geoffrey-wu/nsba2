@@ -22,9 +22,9 @@ block content
             each player, index in players.filter(player => player.eligible)
                 tr
                     td= index + 1
-                    td.text-start: a(href=encodeURI(`/players/${player.username}`))= player.username
+                    td.text-start: a(href=`/players/${encodeURIComponent(player.username)}`)= player.username
                     td.text-start= player.firstName + ' ' + player.lastName
-                    td.text-start: a(href=`/teams/${player.team}`)= player.team
+                    td.text-start: a(href=`/teams/${encodeURIComponent(player.team)}`)= player.team
                     td= player.stats.gp
                     td= player.stats.tuh
                     td= player.stats.statline[0]

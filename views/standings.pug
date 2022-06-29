@@ -23,7 +23,7 @@ block content
             each team, index in teams
                 tr
                     td= index + 1
-                    td.text-start: a(href=encodeURI(`/teams/${team.name}`))= team.name
+                    td.text-start: a(href=`/teams/${encodeURIComponent(team.name)}`)= team.name
                     td #{team.stats.record[0]}-#{team.stats.record[1]}
                     td= team.stats.gp
                     td= team.stats.tuh

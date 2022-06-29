@@ -9,7 +9,7 @@ block content
 
         p
             strong General Manager: 
-            a(href=encodeURI('/gms/' + team.gm))= team.gm
+            a(href=`/gms/${encodeURIComponent(team.gm)}`)= team.gm
 
         h4 Players:
 
@@ -23,7 +23,7 @@ block content
             tbody
                 each player in players
                     tr
-                        td: a(href=encodeURI('/players/' + player.username))=player.username
+                        td: a(href=`/players/${encodeURIComponent(player.username)}`)= player.username
                         td= player.discord
                         td= player.firstName + ' ' + player.lastName
                         td= player.grade

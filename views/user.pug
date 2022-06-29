@@ -14,7 +14,7 @@ block content
     p
         strong Team: 
         if user.team
-            a(href=`/teams/${encodeURI(user.team)}`)= user.team
+            a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
         else
             = ' N/A'
     p

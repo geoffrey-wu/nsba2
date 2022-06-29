@@ -19,22 +19,22 @@ block content
             each user in users
                 if role === 'player' && !user.eligible
                     tr.table-danger
-                        td: a(href=encodeURI(`/${role.toLowerCase()}s/${user.username}`))= user.username
+                        td: a(href=`/${role.toLowerCase()}s/${encodeURIComponent(user.username)}`)= user.username
                         td= user.discord
                         td= user.firstName + ' ' + user.lastName
                         td= user.grade
                         if user.team
-                            td: a(href=encodeURI(`/teams/${user.team}`))= user.team
+                            td: a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
                         else
                             td= '-'
                 else
                     tr
-                        td: a(href=encodeURI(`/${role.toLowerCase()}s/${user.username}`))= user.username
+                        td: a(href=`/${role.toLowerCase()}s/${encodeURIComponent(user.username)}`)= user.username
                         td= user.discord
                         td= user.firstName + ' ' + user.lastName
                         td= user.grade
                         if user.team
-                            td: a(href=encodeURI(`/teams/${user.team}`))= user.team
+                            td: a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
                         else
                             td= '-'
 

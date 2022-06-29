@@ -55,7 +55,7 @@ block content
                 if 'combine' in player
                     - numPlayers++;
                     tr
-                        td.text-start: a(href=encodeURI('/players/' + player.username))= player.username
+                        td.text-start: a(href=`/players/${encodeURIComponent(player.username)}`)= player.username
                         td.rank= index
                         
                         each i in [0, 1, 2, 3, 4]
