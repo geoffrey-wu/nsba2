@@ -25,11 +25,12 @@ router.get(/\/.+/, async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     res.render('users', {
+        title: 'Players',
+        username: req.session.username,
+
         description: 'Players compete in science bowl games. They can be traded and drafted.',
-        title: 'players',
         role: 'player',
         users: await database.getUsers(role = 'Player'),
-        username: req.session.username
     });
 });
 

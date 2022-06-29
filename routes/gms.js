@@ -8,7 +8,7 @@ router.get(/\/.+/, async (req, res, next) => {
     let gmName = decodeURI(req.url.substring(1));
     if (gmName.charAt(gmName.length - 1) === '/')
         gmName = gmName.substring(0, gmName.length - 1);
-    
+
     let gm = await database.getUser(gmName, role = 'GM');
     if (gm) {
         res.render('user', {
@@ -24,11 +24,12 @@ router.get(/\/.+/, async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     res.render('users', {
-        description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
         title: 'GMs',
+        username: req.session.username,
+
+        description: 'A General Manager (GM) is responsible for managing a team, performing trades, and drafting a player. They do not play in games.',
         role: 'GM',
         users: await database.getUsers(role = 'GM'),
-        username: req.session.username
     });
 });
 
