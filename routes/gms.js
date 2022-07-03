@@ -9,7 +9,7 @@ router.get(/\/.+/, async (req, res, next) => {
     if (gmName.charAt(gmName.length - 1) === '/')
         gmName = gmName.substring(0, gmName.length - 1);
 
-    let gm = await database.getUser(gmName, role = 'GM');
+    let gm = await database.getUser(gmName, role = 'GM', project = {});
     if (gm) {
         res.render('user', {
             title: gmName,

@@ -2,18 +2,22 @@ extends _layout
 
 block content
     .row.mb-3
-        .col-12.col-md-5
-            img.img-fluid(src='/logo.png')
+        .col-12.col-md-4
             .text-center
-                button.mt-1.btn.btn-secondary.disabled Upload profile picture
-        .col-12.col-md-7
-            p: h1
-                | Welcome,
-                span= ' ' + user.username + '!'
-            p
-                strong Name:
-                = ' ' + user.firstName + ' ' + user.lastName
-            
+                h4.mt-4 Profile Picture
+                if user.picture
+                    div: img.mw-100(src=user.picture width=auto height="256px")
+                else
+                    div: img.img-fluid(src='/logo.png')
+                button#upload-profile-picture.mt-1.me-3.btn.btn-secondary Upload
+                button#remove-profile-picture.mt-1.btn.btn-secondary Remove
+                <input type="file" id="input" class="d-none">
+        .col-12.col-md-8
+            p: h1 Welcome, 
+                span#username #{user.username}
+                | !
+            p <strong>Name:</strong> #{user.firstName} #{user.lastName}
+
             p
                 strong Grade: 
                 = ' ' + user.grade
@@ -49,4 +53,5 @@ block content
     p: a.btn.btn-primary.me-2(href=`/edit-bio`) Edit bio
 
 block scripts
+    script(src='/profile.js')
     script(src='/logout.js')
