@@ -39,7 +39,7 @@ block content
     
     if user.role === 'Player' && user.eligible
         h4 Stats:
-        table.table.table-hover.text-center
+        .table-responsive: table.table.table-hover.text-center
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
                 th.text-start Matchup

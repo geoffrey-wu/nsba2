@@ -6,7 +6,7 @@ block content
         if role === 'player'
             | and #{users.reduce((prev, current) => prev + (current.eligible ? 1 : 0), 0)} players eligible to play. 
         | Below is a list of all #{role}s:
-    table#table.table.table-hover
+    .table-responsive: table#table.table.table-hover
         thead
             tr
                 th(onclick='sortTable(0)' scope='col') Username

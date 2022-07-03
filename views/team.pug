@@ -13,7 +13,7 @@ block content
 
         h4 Players:
 
-        table.table.table-striped
+        .table-responsive: table.table.table-striped
             thead
                 tr
                     th(onclick='sortTable(0)' scope='col') Username
@@ -29,7 +29,7 @@ block content
                         td= player.grade
 
         h4 Draft Picks
-        table.table.table-striped
+        .table-responsive: table.table.table-striped
             thead
                 tr
                     th(scope='col') #
@@ -46,7 +46,7 @@ block content
                             //- td: a Trade History
 
         h4 Stats:
-        table#table.table.table-hover.text-center
+        .table-responsive: table#table.table.table-hover.text-center
             thead: tr
                 th(onclick='sortTable(0, isInt="true")' scope='col') Round
                 th Result

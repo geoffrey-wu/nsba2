@@ -3,7 +3,7 @@ extends _layout
 block content
     each week in schedule
         h4 Round #{week.week}: #{week.dates[0]} to #{week.dates[1]}
-        table.table.table-striped.w-100.text-center
+        .table-responsive: table.table.table-striped.w-100.text-center
             thead
                 tr
                     .row

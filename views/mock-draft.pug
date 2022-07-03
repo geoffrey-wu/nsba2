@@ -5,7 +5,7 @@ block content
     p: h3 Players Selected:
     each i in [0, 1, 2]
         h5 Round #{i + 1}:
-        table.table.table-striped(id='table-' + i)
+        .table-responsive: table.table.table-striped(id='table-' + i)
             thead
                 th(onclick=`sortTable(0, isInt=true, tableId="table-${i}")` scope='col') Pick
                 th(onclick=`sortTable(1, isInt=false, tableId="table-${i}")` scope='col') Player
