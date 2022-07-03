@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     let token = req.session.token;
     
     if (authentication.checkToken(username, token)) {
-        let user = await database.getUser(username);
+        let user = await database.getUser(username, role = '', project = {});
         if (user) {
             res.render('profile', {
                 title: username,

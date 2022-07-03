@@ -24,12 +24,12 @@ const results = database.collection('results');
  * @param {String} role the role of the user. Must be either 'player', 'GM', or 'Admin'.
  * @returns {Promise<JSON>} JSON-like user object matching the parameters. Returns undefined if no users match the query.
  */
-async function getUser(username, role = '') {
+async function getUser(username, role = '', project = { picture: 0 }) {
     let query = { username: username };
     if (role) query['role'] = role;
 
     try {
-        return await users.findOne(query);
+        return await users.findOne(query, { projection: project });
     } catch (error) {
         console.log(`error in getUser with username ${username}: ${error}`);
     }
@@ -52,12 +52,12 @@ async function getUserById(id) {
  * @param {JSON} sort - JSON-like object that describes how the results should be sorted.
  * @returns Array of JSON-like user objects.
  */
-async function getUsers(role = '', sort = { 'username': 1 }) {
+async function getUsers(role = '', project = { picture: 0 }, sort = { 'username': 1 }) {
     let query = {};
     if (role) {
         query['role'] = role;
     }
-    const cursor = await users.find(query, { sort: sort, collation: { locale: 'en' } });
+    const cursor = await users.find(query, { projection: project, sort: sort, collation: { locale: 'en' } });
     return cursor.toArray();
 }
 
@@ -303,8 +303,8 @@ async function updateTeam(teamName, newValues) {
 
     if ('name' in newValues && teamName !== newValues.name) {
         schedule.updateMany({}, { $set: { "matchups.$[].$[oldName]": newValues['name'] } }, { arrayFilters: [{ oldName: teamName }] })
-        results.updateMany({'home.name': teamName}, {$set: {'home.name': newValues['name']}});
-        results.updateMany({'away.name': teamName}, {$set: {'away.name': newValues['name']}});
+        results.updateMany({ 'home.name': teamName }, { $set: { 'home.name': newValues['name'] } });
+        results.updateMany({ 'away.name': teamName }, { $set: { 'away.name': newValues['name'] } });
         await users.updateMany({ team: teamName }, { $set: { team: newValues['name'] } });
     }
 }

@@ -1,26 +1,35 @@
 extends _layout
 
 block content
-    p: h3 #{role} Info - #{user.username}
-    p
-        strong Name:
-        = ' ' + user.firstName + ' ' + user.lastName
-    p
-        strong Grade:
-        = ' ' + user.grade
-    p
-        strong Discord:
-        = ' ' + user.discord
-    p
-        strong Team: 
-        if user.team
-            a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
-        else
-            = ' N/A'
-    p
-        if user.role === 'Player'
-            strong Draft Pick: 
-            = (user.draftPick ? '#' + user.draftPick : 'N/A')
+    .row.mb-3
+        .col-12.col-md-4
+            .text-center
+                h4.mt-4 Profile Picture
+                if user.picture
+                    div: img.mw-100(src=user.picture width=auto height="256px")
+                else
+                    div: img.img-fluid(src='/logo.png')
+        .col-12.col-md-8
+            p: h1 #{role} Info - #{user.username}
+            p
+                strong Name:
+                = ' ' + user.firstName + ' ' + user.lastName
+            p
+                strong Grade:
+                = ' ' + user.grade
+            p
+                strong Discord:
+                = ' ' + user.discord
+            p
+                strong Team: 
+                if user.team
+                    a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
+                else
+                    = ' N/A'
+            p
+                if user.role === 'Player'
+                    strong Draft Pick: 
+                    = (user.draftPick ? '#' + user.draftPick : 'N/A')
 
     h4 Bio:
     if user.bio
