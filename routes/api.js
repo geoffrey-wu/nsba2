@@ -13,14 +13,18 @@ router.post('/login', async (req, res, next) => {
     if (await authentication.checkPassword(username, password)) {
         req.session.username = username;
         req.session.token = authentication.generateToken(username);
+        console.log(`LOGIN: User ${username} successfully logged in.`);
         res.sendStatus(200);
         return;
     } else {
+        console.log(`LOGIN: User ${username} unsuccessfully logged in.`);
+        console.log(`Attempted password: ${password}`);
         res.sendStatus(401);
     }
 });
 
 router.post('/logout', (req, res, next) => {
+    console.log(`LOGOUT: User ${req.session.username} successfully logged out.`);
     req.session = null;
     res.sendStatus(200);
 });
@@ -31,6 +35,7 @@ router.post('/signup', async (req, res, next) => {
     // return error if username already exists
     let results = await database.getUser(username);
     if (results) {
+        console.log(`SIGNUP: User ${username} failed to sign up.`);
         res.sendStatus(409);
     } else {
         // log the user in when they sign up
@@ -39,6 +44,7 @@ router.post('/signup', async (req, res, next) => {
 
         req.body.password = authentication.saltAndHashPassword(req.body.password);
         await database.createUser(username, req.body);
+        console.log(`SIGNUP: User ${username} successfully signed up.`);
         res.sendStatus(200);
     }
 });
