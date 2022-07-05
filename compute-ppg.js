@@ -23,5 +23,7 @@ client.connect().then(async () => {
                 'stats.pp22': doc.stats.points / doc.stats.tuh * 22,
             }
         });
+    }).then(() => {
+        console.log('success');
     });
 });
