@@ -251,9 +251,68 @@ async function createTeam(username) {
     await users.updateOne(filter, update);
 }
 
+/**
+ * Adds the result to the database and updates corresponding team stats.
+ * @param {JSON} result 
+ */
 async function addResult(result) {
     try {
         await results.insertOne(result);
+
+        if (result.home.score > result.away.score) { // Home team wins
+            await teams.updateOne({ name: result.home.name }, { $inc: { 'stats.record.0': 1 } });
+            await teams.updateOne({ name: result.away.name }, { $inc: { 'stats.record.1': 1 } });
+        } else if (result.home.score < result.away.score) { // Away team wins
+            await teams.updateOne({ name: result.home.name }, { $inc: { 'stats.record.1': 1 } });
+            await teams.updateOne({ name: result.away.name }, { $inc: { 'stats.record.0': 1 } });
+        } else { // Tie
+            await teams.updateOne({ name: result.home.name }, { $inc: { 'stats.record.0': 0.5 } });
+            await teams.updateOne({ name: result.away.name }, { $inc: { 'stats.record.0': 0.5 } });
+        }
+
+        for (let location of ['home', 'away']) {
+            Object.keys(result[location].players).forEach(async username => {
+                if (result[location].players[username].tuh === 0) return;
+
+                let player = await users.findOneAndUpdate({ username: username }, {
+                    $inc: {
+                        'stats.gp': 1,
+                        'stats.tuh': result[location].players[username].tuh,
+                        'stats.points': result[location].players[username].points,
+                        'stats.statline.0': result[location].players[username].statline[0],
+                        'stats.statline.1': result[location].players[username].statline[1],
+                        'stats.statline.2': result[location].players[username].statline[2]
+                    },
+                }, { returnNewDocument: true });
+
+                player = player.value;
+
+                await users.updateOne({ username: player.username }, {
+                    $set: {
+                        'stats.ppg': player.stats.points / player.stats.gp,
+                        'stats.pp22': player.stats.points / player.stats.tuh * 22,
+                    }
+                });
+
+                await teams.updateOne({ name: result[location].name }, {
+                    $inc: {
+                        'stats.statline.0': result[location].players[username].statline[0],
+                        'stats.statline.1': result[location].players[username].statline[1],
+                        'stats.statline.2': result[location].players[username].statline[2],
+                        'stats.bonuses.num_heard': result[location].players[username].statline[0],
+                    },
+                })
+            });
+
+            await teams.updateOne({ name: result[location].name }, {
+                $inc: {
+                    'stats.gp': 1,
+                    'stats.tuh': result.tuh,
+                    'stats.points': result[location].score,
+                    'stats.bonuses.points': result[location].bonus,
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
     }
