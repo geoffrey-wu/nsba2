@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
         title: 'Leaderboard',
         username: req.session.username,
 
-        players: await database.getUsers(role = 'Player', {picture: 0}, {'stats.points': -1, 'stats.gp': -1, 'stats.tuh': 1})
+        players: await database.getUsers(role = 'Player', {picture: 0}, {'stats.ppg': -1, 'stats.gp': -1, 'stats.tuh': 1})
     });
 });
 

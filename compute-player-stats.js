@@ -109,7 +109,7 @@ client.connect().then(async () => {
                 },
             });
         }
-    })
-}).then(() => {
-    console.log('success');
+    }).then(() => {
+        console.log('success');
+    });
 });
