@@ -274,7 +274,7 @@ async function addResult(result) {
             Object.keys(result[location].players).forEach(async username => {
                 if (result[location].players[username].tuh === 0) return;
 
-                let player = await users.findOneAndUpdate({ username: username }, {
+                await users.findOneAndUpdate({ username: username }, {
                     $inc: {
                         'stats.gp': 1,
                         'stats.tuh': result[location].players[username].tuh,
@@ -283,15 +283,17 @@ async function addResult(result) {
                         'stats.statline.1': result[location].players[username].statline[1],
                         'stats.statline.2': result[location].players[username].statline[2]
                     },
-                }, { returnNewDocument: true });
-
-                player = player.value;
-
-                await users.updateOne({ username: player.username }, {
-                    $set: {
-                        'stats.ppg': player.stats.points / player.stats.gp,
-                        'stats.pp22': player.stats.points / player.stats.tuh * 22,
-                    }
+                }, { returnDocument: 'after' }).then(async (res) => {
+                    let player = res.value;
+                    console.log(player);
+                    await users.updateOne({ username: player.username }, {
+                        $set: {
+                            'stats.ppg': player.stats.points / player.stats.gp,
+                            'stats.pp22': player.stats.points / player.stats.tuh * 22,
+                        }
+                    });
+                }).catch((err) => {
+                    console.log(err);
                 });
 
                 await teams.updateOne({ name: result[location].name }, {
