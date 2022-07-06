@@ -2,9 +2,9 @@ const matchup = document.getElementById('matchup');
 const week = document.getElementById('week');
 const MATCHUPS_PER_WEEK = 6;
 const PLAYERS_PER_TEAM = 7;
+const LOCATIONS = ['away', 'home'];
 
-var homeTeamPoints = 0;
-var awayTeamPoints = 0;
+var teamPoints = { 'home': 0, 'away': 0 };
 
 document.getElementById('submit').addEventListener('click', () => {
     document.getElementById('submit').innerHTML = 'Adding Result...'
@@ -53,7 +53,7 @@ document.getElementById('submit').addEventListener('click', () => {
                     score: parseInt(document.getElementById('home-team-score').innerHTML),
                     bonus: parseInt(document.getElementById('home-team-bonus').value || 0),
                     players: home_players
-                }, 
+                },
                 away: {
                     name: document.getElementById('away-team-name').innerHTML,
                     score: parseInt(document.getElementById('away-team-score').innerHTML),
@@ -95,19 +95,19 @@ week.addEventListener('input', () => {
 });
 
 matchup.addEventListener('input', () => {
-    for (let location of ['away', 'home']) {
+    for (let location of LOCATIONS) {
         var teamName = schedule[week.value - 1]['matchups'][matchup.value][location === 'home' ? 0 : 1];
 
         document.getElementById(`${location}-team-name`).innerHTML = teamName;
-    
+
         let team = teams.filter(team => team.name === teamName)[0];
-    
+
         for (let i = 0; i < PLAYERS_PER_TEAM; i++) {
-            document.getElementById(`player-${i+1}-${location}-name`).innerHTML = '';
+            document.getElementById(`player-${i + 1}-${location}-name`).innerHTML = '';
         }
-    
+
         for (let i = 0; i < team['players'].length; i++) {
-            document.getElementById(`player-${i+1}-${location}-name`).innerHTML = team['players'][i];
+            document.getElementById(`player-${i + 1}-${location}-name`).innerHTML = team['players'][i];
         }
     }
 })
@@ -116,34 +116,25 @@ matchup.addEventListener('input', () => {
  * Dynamically update modal to display the correct number of points when a player's stats are changed.
  */
 function updatePoints(location, index) {
-    if (location === 'home') {
-        homeTeamPoints -= parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-    } else {
-        awayTeamPoints -= parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-    }
+    teamPoints[location] -= parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
 
     document.getElementById(`player-${index}-${location}-points`).innerHTML
-        = 4*parseInt(document.getElementById(`player-${index}-${location}-4s`).value || 0)
-        - 4*parseInt(document.getElementById(`player-${index}-${location}-negs`).value || 0);
-    
-    if (location === 'home') {
-        homeTeamPoints += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-        document.getElementById(`${location}-team-score`).innerHTML = homeTeamPoints + parseInt(document.getElementById('home-team-bonus').value || 0);
-    } else {
-        awayTeamPoints += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-        document.getElementById(`${location}-team-score`).innerHTML = awayTeamPoints + parseInt(document.getElementById('away-team-bonus').value || 0);
-    }
+        = 4 * parseInt(document.getElementById(`player-${index}-${location}-4s`).value || 0)
+        - 4 * parseInt(document.getElementById(`player-${index}-${location}-negs`).value || 0);
+
+    teamPoints[location] += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
+    document.getElementById(`${location}-team-score`).innerHTML = teamPoints[location] + parseInt(document.getElementById('home-team-bonus').value || 0);
 }
 
-for (let location of ['home', 'away']) {
+for (let location of LOCATIONS) {
     for (let index = 1; index <= 7; index++) {
-        document.getElementById(`player-${index}-${location}-4s`).addEventListener('input', () => {updatePoints(location=location, index=index)});
-        document.getElementById(`player-${index}-${location}-negs`).addEventListener('input', () => {updatePoints(location=location, index=index)});
+        document.getElementById(`player-${index}-${location}-4s`).addEventListener('input', () => { updatePoints(location, index) });
+        document.getElementById(`player-${index}-${location}-negs`).addEventListener('input', () => { updatePoints(location, index) });
     }
 }
 
-for (let location of ['home', 'away']) {
+for (let location of LOCATIONS) {
     document.getElementById(`${location}-team-bonus`).addEventListener('input', () => {
-        document.getElementById(`${location}-team-score`).innerHTML = homeTeamPoints + parseInt(document.getElementById(`${location}-team-bonus`).value || 0);
-    })
+        document.getElementById(`${location}-team-score`).innerHTML = teamPoints[location] + parseInt(document.getElementById(`${location}-team-bonus`).value || 0);
+    });
 }
