@@ -123,7 +123,7 @@ function updatePoints(location, index) {
         - 4 * parseInt(document.getElementById(`player-${index}-${location}-negs`).value || 0);
 
     teamPoints[location] += parseInt(document.getElementById(`player-${index}-${location}-points`).innerHTML);
-    document.getElementById(`${location}-team-score`).innerHTML = teamPoints[location] + parseInt(document.getElementById('home-team-bonus').value || 0);
+    document.getElementById(`${location}-team-score`).innerHTML = teamPoints[location] + parseInt(document.getElementById(`${location}-team-bonus`).value || 0);
 }
 
 for (let location of LOCATIONS) {
