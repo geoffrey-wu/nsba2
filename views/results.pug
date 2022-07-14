@@ -46,7 +46,7 @@ block content
                     button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
                     button#submit.btn.btn-primary(type='button') Add Result
 
-    each round in [5, 4, 3, 2, 1]
+    each round in [6, 5, 4, 3, 2, 1]
         h4 Round #{round}:
         each result in results.filter(element => element.week === round)
             - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
