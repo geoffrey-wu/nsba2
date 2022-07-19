@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
         title: 'Standings',
         username: req.session.username,
 
-        teams: await database.getTeams(sort = {'stats.record.0': -1, 'stats.points': -1})
+        teams: await database.getTeams(sort = {'stats.record.0': -1, 'stats.record.1': 1, 'stats.points': -1})
     });
 });
 
