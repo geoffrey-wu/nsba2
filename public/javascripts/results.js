@@ -84,7 +84,7 @@ week.addEventListener('input', () => {
     }
 
     for (let i = 0; i < schedule[numWeek]['matchups'].length; i++) {
-        let string = schedule[numWeek]['matchups'][i][0] + ' vs. ' + schedule[numWeek]['matchups'][i][1];
+        let string = schedule[numWeek]['matchups'][i].away + ' vs. ' + schedule[numWeek]['matchups'][i].home;
 
         let option = document.createElement('option');
         let textNode = document.createTextNode(string);
@@ -96,7 +96,7 @@ week.addEventListener('input', () => {
 
 matchup.addEventListener('input', () => {
     for (let location of LOCATIONS) {
-        var teamName = schedule[week.value - 1]['matchups'][matchup.value][location === 'home' ? 0 : 1];
+        var teamName = schedule[week.value - 1]['matchups'][matchup.value].location;
 
         document.getElementById(`${location}-team-name`).innerHTML = teamName;
 

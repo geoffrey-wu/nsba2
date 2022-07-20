@@ -15,7 +15,7 @@ block content
                         .row.mb-3: .col-12: select#matchup.form-select
                             option(selected) Select a matchup
 
-                        each location in ['home', 'away']
+                        each location in ['away', 'home']
                             div(id=`${location}-team`)
                                 .row.mb-2
                                     .col-auto
@@ -52,7 +52,7 @@ block content
             - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
 
             .row.text-center
-                each location in ['home', 'away']
+                each location in ['away', 'home']
                     .col-12.col-md-6
                         h5 #{result[location].name}: #{result[location].score} points
                         .table-responsive: table.table.table-hover.table-sm.mb-2
