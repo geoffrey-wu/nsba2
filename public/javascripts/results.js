@@ -96,7 +96,7 @@ week.addEventListener('input', () => {
 
 matchup.addEventListener('input', () => {
     for (let location of LOCATIONS) {
-        var teamName = schedule[week.value - 1]['matchups'][matchup.value].location;
+        var teamName = schedule[week.value - 1]['matchups'][matchup.value][location];
 
         document.getElementById(`${location}-team-name`).innerHTML = teamName;
 
