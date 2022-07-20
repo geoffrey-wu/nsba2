@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const database = require('../database');
+
 router.get(/\/.+/, async (req, res, next) => {
     let staffName = decodeURI(req.url.substring(1));
     if (staffName.charAt(staffName.length - 1) === '/')
