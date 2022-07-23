@@ -82,7 +82,7 @@ block content
                                 td= totals[3]
                                 td= totals[4]
                                 td= result[location].bonus
-                                td= Math.round(10 * result[location].bonus / totals[2]) / 10
+                                td= Math.round(result[location].bonus / totals[2] * 100) / 100
                                 td= result[location].score
             tfoot
                 tr
@@ -90,12 +90,12 @@ block content
                     th
                     th.text-start Averages:
                     th= Math.round(team.stats.tuh / team.stats.gp)
-                    th= Math.round(10 * team.stats.statline[0] / team.stats.gp) / 10
-                    th= Math.round(10 * team.stats.statline[1] / team.stats.gp) / 10
-                    th= Math.round(10 * team.stats.statline[2] / team.stats.gp) / 10
-                    th= Math.round(10 * team.stats.bonuses.points / team.stats.gp) / 10
-                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.num_heard) / 10
-                    th= Math.round(10 * team.stats.points / team.stats.gp) / 10
+                    th= Math.round(team.stats.statline[0] / team.stats.gp * 100) / 100
+                    th= Math.round(team.stats.statline[1] / team.stats.gp * 100) / 100
+                    th= Math.round(team.stats.statline[2] / team.stats.gp * 100) / 100
+                    th= Math.round(team.stats.bonuses.points / team.stats.gp * 100) / 100
+                    th= Math.round(team.stats.bonuses.points / team.stats.bonuses.num_heard * 100) / 100
+                    th= Math.round(team.stats.points / team.stats.gp * 100) / 100
 
                 tr
                     th
@@ -106,7 +106,7 @@ block content
                     th= team.stats.statline[1]
                     th= team.stats.statline[2]
                     th= team.stats.bonuses.points
-                    th= Math.round(10 * team.stats.bonuses.points / team.stats.bonuses.num_heard) / 10
+                    th= Math.round(team.stats.bonuses.points / team.stats.bonuses.num_heard * 100) / 100
                     th= team.stats.points
     else
         button#createTeam.btn.btn-primary(type='button') Create Team

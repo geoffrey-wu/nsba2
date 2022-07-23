@@ -75,7 +75,7 @@ block content
                     th
                     th.text-start Averages:
                     for i in [1, 2, 3, 4, 5]
-                        th= Math.round(10 * totals[i] / totals[0]) / 10
+                        th= Math.round(totals[i] / totals[0] * 100) / 100
                 tr
                     th
                     th.text-start Totals:

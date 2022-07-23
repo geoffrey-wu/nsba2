@@ -87,7 +87,7 @@ block content
                                 th= totals[location][3]
                                 th= totals[location][4]
 
-                        p <b>Bonuses:</b> #{result[location].bonus} pts / #{totals[location][1]} bonuses heard for #{Math.round(10*result[location].bonus / totals[location][1]) / 10} PPB
+                        p <b>Bonuses:</b> #{result[location].bonus} pts / #{totals[location][1]} bonuses heard for #{Math.round(result[location].bonus / totals[location][1] * 100) / 100} PPB
 
             hr.mt-0
 
