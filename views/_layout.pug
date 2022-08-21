@@ -21,16 +21,21 @@ html
                                     li: a.dropdown-item(href='/players') Players
                                     li: a.dropdown-item(href='/gms') GMs
                                     li: a.dropdown-item(href='/teams') Teams
-                                    li: a.dropdown-item(href='/schedule') Schedule
                             li.nav-item.dropdown
-                                a#spectatorDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Spectator
-                                ul.dropdown-menu(aria-labelledby="spectatorDropdown")
-                                    li: a.dropdown-item(href='/standings') Standings
-                                    li: a.dropdown-item(href='/leaderboard') Leaderboard
-                                    li: a.dropdown-item(href='/results') Results
-                                    li: a.dropdown-item(href='/vods') VODs
-                                    //- li: a.dropdown-item(href='/videos') Videos
-                                    li: a.dropdown-item(href='/pickem') Pick'em
+                                a#round-robinDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Round Robin
+                                ul.dropdown-menu(aria-labelledby="round-robinDropdown")
+                                    li: a.dropdown-item(href='/rr/leaderboard') Leaderboard
+                                    li: a.dropdown-item(href='/rr/results') Results
+                                    li: a.dropdown-item(href='/rr/schedule') Schedule
+                                    li: a.dropdown-item(href='/rr/standings') Standings
+                                    li: a.dropdown-item(href='/rr/vods') VODs
+                                    li: a.dropdown-item(href='/rr/pickem') Pick'em
+                            li.nav-item.dropdown
+                                a#playoffsDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Playoffs
+                                ul.dropdown-menu(aria-labelledby="playoffsDropdown")
+                                    li: a.dropdown-item(href='/playoffs/results') Results
+                                    li: a.dropdown-item(href='/playoffs/schedule') Schedule
+                                    li: a.dropdown-item(href='/playoffs/vods') VODs
                             li.nav-item.dropdown
                                 a#draftDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Draft
                                 ul.dropdown-menu(aria-labelledby="draftDropdown")
