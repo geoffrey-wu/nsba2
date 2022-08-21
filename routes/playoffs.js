@@ -3,24 +3,10 @@ var router = express.Router();
 
 var database = require('../database');
 
-router.get('/results', async (req, res, next) => {
-    res.render('playoffs/results', {
+router.get('/bracket', async (req, res, next) => {
+    res.render('playoffs/bracket', {
         title: 'NSBA',
         username: req.session.username,
-
-        results: await database.getResults(),
-        schedule: await database.getSchedule(),
-        teams: await database.getTeams(),
-        user: await database.getUser(req.session.username)
-    });
-});
-
-router.get('/schedule', async (req, res, next) => {
-    res.render('playoffs/schedule', {
-        title: 'NSBA',
-        username: req.session.username,
-
-        schedule: await database.getSchedule()
     });
 });
 
