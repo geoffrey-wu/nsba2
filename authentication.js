@@ -11,8 +11,8 @@ const secret = process.env.SECRET ? process.env.SECRET : 'secret';
 
 
 /**
- * 
- * @param {String} password 
+ *
+ * @param {String} password
  * @returns Base64 encoded hashed password.
  */
 function saltAndHashPassword(password) {
@@ -37,8 +37,8 @@ async function checkPassword(username, password) {
 /**
  * Creates a new set of credentials with the given username and password.
  * `password` should be UNHASHED; the function will call `hashPassword` to hash it.
- * @param {String} username 
- * @param {String} password 
+ * @param {String} username
+ * @param {String} password
  * @returns {Void}
  */
 async function updatePassword(username, password) {
@@ -48,8 +48,8 @@ async function updatePassword(username, password) {
 /**
  * Checks that the token is valid and stores the corrent username.
  * `checkToken` guarantees that the username is in the database if the token is valid.
- * @param {String} username 
- * @param {String} token 
+ * @param {String} username
+ * @param {String} token
  * @returns {Boolean} True if the token is valid, and false otherwise.
  */
 function checkToken(username, token) {
@@ -65,7 +65,7 @@ function checkToken(username, token) {
 /**
  * Creates a new token for the given username.
  * This token may be used for authentication purposes.
- * @param {String} username 
+ * @param {String} username
  * @returns A JWT token.
  */
 function generateToken(username) {
