@@ -6,7 +6,7 @@ var database = require('../database');
 /* GET home page. */
 router.get('/', async (req, res, next) => {
     res.render('mock-draft', {
-        title: 'NSBA',
+        title: 'NSBA2',
         username: req.session.username,
 
         players: await database.getMockDraft()

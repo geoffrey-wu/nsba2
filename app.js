@@ -104,7 +104,7 @@ app.use(function (err, req, res, next) {
 var { Server } = require('socket.io');
 var URLorigin;
 if (process.env.NODE_ENV === 'production') {
-    URLorigin = "https://nsba.herokuapp.com";
+    URLorigin = "https://nsba2.herokuapp.com";
 } else {
     URLorigin = "http://localhost:3000";
 }

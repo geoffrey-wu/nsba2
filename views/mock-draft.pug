@@ -1,7 +1,7 @@
 extends _layout
 
 block content
-    p.lead The Mock Draft was hosted on the official NSBA discord server at 9:30 PM CDT on May 21st, 2022.
+    p.lead The Mock Draft was hosted on the official NSBA2 discord server at 9:30 PM CDT on May 21st, 2022.
     p: h3 Players Selected:
     each i in [0, 1, 2]
         h5 Round #{i + 1}:
@@ -11,9 +11,9 @@ block content
                 th(onclick=`sortTable(1, isInt=false, tableId="table-${i}")` scope='col') Player
                 th(onclick=`sortTable(2, isInt=false, tableId="table-${i}")` scope='col') Profile
                 th(onclick=`sortTable(3, isInt=false, tableId="table-${i}")` scope='col') Grade
-            tbody 
+            tbody
                 each player, index in players.slice(15*i, 15*(i+1))
-                    tr 
+                    tr
                         td= index + 1
                         td= player.firstName + ' ' + player.lastName
                         td: a(href=`/players/${encodeURIComponent(player.username)}`)= player.username

@@ -2,7 +2,7 @@
 
 The official Github repository for the [National Science Bowl Association 2](https://nsba2.herokuapp.com) Website.
 
-This is a copy of the NSBA repository.
+This is a copy of the NSBA2 repository.
 
 ## Website Structure
 
@@ -24,6 +24,7 @@ api calls (which begin with `/api/`) go to the api router, which itself may call
 ## Database Structure
 
 The main principle behind the design of the database is that reading is much more common than writing.
+
 - reads occur every time a user visits the website
 - writes only occur when a username or team name changes
 
@@ -85,7 +86,7 @@ result = {
                 statline: [4s, 0s, -4s]
             }, ...
         },
-    }, 
+    },
     away: {
         name: away_team_name,
         score: points_scored,

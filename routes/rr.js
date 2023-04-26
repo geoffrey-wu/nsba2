@@ -15,13 +15,13 @@ router.get('/leaderboard', async (req, res, next) => {
 
 router.get('/pickem', (req, res, next) => {
     res.render('rr/pickem', {
-        title: 'NSBA',
+        title: 'NSBA2',
         username: req.session.username
     });
 });
 
 router.get('/results', async (req, res, next) => {
-    res.render('rr/results', { 
+    res.render('rr/results', {
         title: 'Results',
         username: req.session.username,
 
@@ -35,7 +35,7 @@ router.get('/results', async (req, res, next) => {
 /* GET home page. */
 router.get('/schedule', async (req, res, next) => {
     res.render('rr/schedule', {
-        title: 'NSBA',
+        title: 'NSBA2',
         username: req.session.username,
 
         schedule: await database.getSchedule()
@@ -54,7 +54,7 @@ router.get('/standings', async (req, res, next) => {
 
 router.get('/vods', (req, res, next) => {
     res.render('rr/vods', {
-        title: 'NSBA',
+        title: 'NSBA2',
         username: req.session.username
     });
 });

@@ -3,12 +3,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const { MongoClient, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba.ujpbt.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba2.ujpbt.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
 
 client.connect().then(async () => {
-    const database = client.db('nsba');
+    const database = client.db('nsba2');
     const users = database.collection('users');
     const draft = database.collection('draft');
     const teams = database.collection('teams');

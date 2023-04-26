@@ -3,14 +3,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const { MongoClient, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba.ujpbt.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://geoffreywu42:${process.env.MONGODB_PASSWORD ? process.env.MONGODB_PASSWORD : 'password'}@nsba2.pffs1dx.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
 client.connect().then(() => {
     console.log('connected to mongodb');
 });
 
-const database = client.db('nsba');
+const database = client.db('nsba2');
 const draft = database.collection('draft');
 const mockDraft = database.collection('mock-draft');
 const schedule = database.collection('schedule');
@@ -19,7 +19,7 @@ const users = database.collection('users');
 const results = database.collection('results');
 
 /**
- * 
+ *
  * @param {String} username the username of the user you are trying to retrieve.
  * @param {String} role the role of the user. Must be either 'player', 'GM', or 'Admin'.
  * @returns {Promise<JSON>} JSON-like user object matching the parameters. Returns undefined if no users match the query.
@@ -38,7 +38,7 @@ async function getUser(username, role = '', project = { picture: 0 }) {
 /**
  * Finds and returns the user with the given id.
  * If no user is found, returns `null`.
- * @param {String} id 
+ * @param {String} id
  * @returns <Promise<JSON>> - JSON-like user object.
  */
 async function getUserById(id) {
@@ -137,7 +137,7 @@ async function getDraft() {
 }
 
 /**
- * 
+ *
  * @returns {Promise<Number>} 0-indexed number of the current draft pick.
  */
 async function getCurrentDraftNumber() {
@@ -146,16 +146,16 @@ async function getCurrentDraftNumber() {
 }
 
 /**
- * 
- * @param {Number} number 
- * @returns 
+ *
+ * @param {Number} number
+ * @returns
  */
 async function getDraftPick(number) {
     return await draft.findOne({ _id: number });
 }
 
 /**
- * 
+ *
  * @returns {Promise<JSON>} JSON-like draft object.
  */
 async function getPreviousDraftPick() {
@@ -169,7 +169,7 @@ async function getPreviousDraftPick() {
 }
 
 /**
- * 
+ *
  * @returns {Promise<JSON>} JSON-like draft object.
  */
 async function getCurrentDraftPick() {
@@ -183,7 +183,7 @@ async function getCurrentDraftPick() {
 }
 
 /**
- * 
+ *
  * @returns {Promise<JSON>} JSON-like draft object.
  */
 async function getNextDraftPick() {
@@ -197,7 +197,7 @@ async function getNextDraftPick() {
 }
 
 /**
- * 
+ *
  * @param {String} playerName - the name of the player that was drafted.
  */
 async function draftPlayer(playerName, teamName) {
@@ -253,7 +253,7 @@ async function createTeam(username) {
 
 /**
  * Adds the result to the database and updates corresponding team stats.
- * @param {JSON} result 
+ * @param {JSON} result
  */
 async function addResult(result) {
     try {
@@ -355,7 +355,7 @@ async function updateUser(username, newValues) {
 /**
  * Updates team with the given `teamName` by setting the value of `key` to `value`.
  * This method guarantees consistency throughout the database if the team name changes.
- * @param {String} teamName 
+ * @param {String} teamName
  * @param {JSON} newValues
  */
 async function updateTeam(teamName, newValues) {
@@ -373,11 +373,11 @@ async function updateTeam(teamName, newValues) {
 /**
  * Finds and replaces user with given `username` with `newUser`.
  * If `username` does not exist, adds `newUser` to database.
- * 
+ *
  * If you want to edit attributes, use `updateUser` or `updateUsers` instead.
  * This function will delete all existing fields, even if there is no corresponding field to replace it with.
- * @param {String} username 
- * @param {JSON} newUser 
+ * @param {String} username
+ * @param {JSON} newUser
  */
 async function replaceUser(username, newUser) {
     const query = { username: username };
@@ -389,4 +389,3 @@ module.exports = {
     createUser, createTeam, addResult, updateUser, updateTeam, replaceUser,
     getMockDraft, getDraft, getCurrentDraftNumber, getDraftPick, getPreviousDraftPick, getCurrentDraftPick, getNextDraftPick, draftPlayer
 };
-
