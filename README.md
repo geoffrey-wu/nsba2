@@ -1,6 +1,8 @@
-# NSBA
+# NSBA2
 
-The official Github repository for the [National Science Bowl Association](https://nsba.herokuapp.com) Website.
+The official Github repository for the [National Science Bowl Association 2](https://nsba2.herokuapp.com) Website.
+
+This is a copy of the NSBA repository.
 
 ## Website Structure
 
