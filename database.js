@@ -223,7 +223,7 @@ async function getCombine() {
 async function createUser(username, user) {
     user['_id'] = (new ObjectId()).toString();
     user['username'] = username;
-    if (!(role in user)) {
+    if (!user.role) {
         user['role'] = 'Player';
     }
 
