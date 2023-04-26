@@ -20,13 +20,13 @@ block content
                                 .row.mb-2
                                     .col-auto
                                         span.h6: u #{location === 'home' ? 'Home' : 'Away'} Team:
-                                        |  
-                                        span(id=`${location}-team-name`) 
+                                        |
+                                        span(id=`${location}-team-name`)
                                 .row.mb-2.align-items-center
                                     .col-2: b Team:
                                     .col-2: input.form-control(id=`${location}-team-bonus` type='number' placeholder='Bonus Points')
                                     .col-auto
-                                        | Total Points: 
+                                        | Total Points:
                                         span(id=`${location}-team-score`) 0
                                         |  points
 
@@ -46,7 +46,7 @@ block content
                     button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
                     button#submit.btn.btn-primary(type='button') Add Result
 
-    each round in [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    each round in [1]
         h4 Round #{round}:
         each result in results.filter(element => element.week === round)
             - let totals = { home: Array(5).fill(0), away: Array(5).fill(0) }
@@ -91,7 +91,7 @@ block content
 
             hr.mt-0
 
-block scripts 
+block scripts
     script.
         var schedule = !{JSON.stringify(schedule)};
         var teams = !{JSON.stringify(teams)};

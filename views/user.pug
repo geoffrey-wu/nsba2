@@ -21,14 +21,14 @@ block content
                 strong Discord:
                 = ' ' + user.discord
             p
-                strong Team: 
+                strong Team:
                 if user.team
                     a(href=`/teams/${encodeURIComponent(user.team)}`)= user.team
                 else
                     = ' N/A'
             p
                 if user.role === 'Player'
-                    strong Draft Pick: 
+                    strong Draft Pick:
                     = (user.draftPick ? '#' + user.draftPick : 'N/A')
 
     h4 Bio:
@@ -36,7 +36,7 @@ block content
         include _bio.pug
     else
         p N/A
-    
+
     if user.role === 'Player' && user.eligible
         h4 Stats:
         .table-responsive: table.table.table-hover.text-center
@@ -62,7 +62,7 @@ block content
                             - totals[3] += playerResult.statline[1]
                             - totals[4] += playerResult.statline[2]
                             - totals[5] += playerResult.points
-                            tr 
+                            tr
                                 td= result.week
                                 td.text-start= (location === 'home') ? 'vs. ' + result.away.name : 'at ' + result.home.name
                                 td= playerResult.tuh

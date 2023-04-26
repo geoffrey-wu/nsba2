@@ -4,44 +4,42 @@ block styles
     link(href='/draft.css' rel='stylesheet')
 
 block content
-    p.text-muted The results of the mock draft are 
-        a(href='/mock-draft') here
-        | .
-    p.lead The draft began on June 11th, 2022 at 8:00 PM CDT and ended at 10:00 PM CDT. You can view the results of the draft below.
+    p.text-muted The results of the mock draft will be #[a(href='/mock-draft') here].
+    //- p.lead The draft began on June 11th, 2022 at 8:00 PM CDT and ended at 10:00 PM CDT. You can view the results of the draft below.
 
-    //.row.mb-4
+    //- .row.mb-4
         #previous.col-3.pt-2.mx-auto.border.border-danger
             h5 Previous Pick [
                 span#previous-number= previousPick ? previousPick._id : '-'
                 | ]
             .mb-1 GM:
-                | 
+                |
                 span#previous-gm= previousPick ? previousPick.gm : '-'
             .mb-1 Team:
-                | 
+                |
                 span#previous-team= previousPick ? previousPick.team : '-'
             .mb-3 Player:
-                | 
+                |
                 span#previous-player= previousPick ? previousPick.player : '-'
         #currentPick.col-3.pt-2.mx-auto.border.border-success
             h5.mb-3 Current Pick [
                 span#current-number= currentPick ? currentPick._id : '-'
                 | ]
             .mb-1 GM:
-                | 
+                |
                 span#current-gm= currentPick ? currentPick.gm : '-'
             .mb-1 Team:
-                | 
+                |
                 span#current-team= currentPick ? currentPick.team : '-'
         #nextPick.col-3.pt-2.mx-auto.border.border-warning
             h5 Next Pick [
                 span#next-number= nextPick ? nextPick._id : '-'
                 | ]
             .mb-1 GM:
-                | 
+                |
                 span#next-gm= nextPick ? nextPick.gm : '-'
             .mb-1 Team:
-                | 
+                |
                 span#next-team= nextPick ? nextPick.team : '-'
             .mb-3
 
@@ -55,7 +53,7 @@ block content
             th(onclick='sortTable(4)' scope='col') Drafting GM
             th(onclick='sortTable(5, isInt=true)' scope='col') Combine Score
             th(onclick='sortTable(6, isInt=true)' scope='col'): a(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Modified Combine Score.') MCS
-        tbody 
+        tbody
             each pick, index in picks
                 - let username = pick.player
                 - let player = players.filter(element => element.username === username)[0]

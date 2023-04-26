@@ -13,13 +13,11 @@ block content
                 button#remove-profile-picture.mt-1.btn.btn-secondary Remove
                 <input type="file" id="input" class="d-none">
         .col-12.col-md-8
-            p: h1 Welcome, 
-                span#username #{user.username}
-                | !
+            p: h1 Welcome, #[span#username #{user.username}]!
             p <strong>Name:</strong> #{user.firstName} #{user.lastName}
 
             p
-                strong Grade: 
+                strong Grade:
                 = ' ' + user.grade
             p
                 strong Email:
@@ -34,22 +32,24 @@ block content
                 else
                     = ' N/A'
             p
-                strong Team: 
+                strong Team:
+                |
+                |
                 if user.team
                     a(href='/my-team')= user.team
                 else
                     = 'N/A'
-        
+
             a.btn.btn-primary.me-2(href=`/edit-profile`) Edit profile
             a.btn.btn-primary.me-2(href=`/edit-password`) Edit password
             button.btn.btn-primary(type='button' onclick='logout()') Logout
 
-    h2 Bio 
+    h2 Bio
     if user.bio
         include _bio.pug
-    else 
+    else
         p No bio set.
-    
+
     p: a.btn.btn-primary.me-2(href=`/edit-bio`) Edit bio
 
 block scripts

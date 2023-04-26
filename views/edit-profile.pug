@@ -43,16 +43,14 @@ block content
                 label.form-label(for="role") Role (Player/GM):
                 select#role.form-select.disabled(name='role' disabled)
                     option(value=user.role selected) #{user.role}
-                    
+
         .col-12.mb-3
             label.form-label(for='password') Password
             input#password.form-control(type='password' name='password' required='' value='Uj1v3GAW+5fH' disabled)
-            #passwordHelp.form-text For security reasons, to reset your password, click 
-                a(href="/edit-password") here
-                | .
+            #passwordHelp.form-text For security reasons, to reset your password, click #[a(href="/edit-password") here].
             .invalid-feedback
                 | Enter your password.
-            
+
         button#submission.btn.btn-primary(type='submit') Edit Profile
 
 block scripts
